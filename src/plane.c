@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../rtv1.h"
+#include "../rt.h"
 
 double				ft_check_plane(t_plane *plane, t_ray *ray)
 {

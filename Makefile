@@ -1,4 +1,4 @@
-NAME = "RTV1"
+NAME = "RT"
 
 SRC =	src/main.c \
 		src/ini.c \

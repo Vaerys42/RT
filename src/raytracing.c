@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../rtv1.h"
+#include "../rt.h"
 
 void		put_pxl(t_data *data, int x, int y, t_material *color)
 {

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../rtv1.h"
+#include "../rt.h"
 
 double		disc_eq(double a, double b, double delta)
 {

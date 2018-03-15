@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../rtv1.h"
+#include "../rt.h"
 
 double		ft_check_sphere(t_sphere *sphere, t_ray *ray)
 {

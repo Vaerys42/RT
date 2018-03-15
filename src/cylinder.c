@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../rtv1.h"
+#include "../rt.h"
 
 double		ft_check_cylinder(t_cylinder *cylinder, t_ray *ray)
 {
