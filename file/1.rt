@@ -1,0 +1,12 @@
+camera
+coo: 0 0 0
+rot: 0 0 0
+sphere
+coo: 0 0 10
+radius: 1
+color: 1 0 0
+shine: 2
+light
+coo: 2 0 8
+color: 1 1 1
+pow: 0.5
