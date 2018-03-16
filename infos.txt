@@ -1,0 +1,7 @@
+Normale sphere -> calculer vecteur du centre au point touché puis normalize
+Normale cylindre -> prendre x et z de l'origine, et y du point touché. Puis calculer vecteur du point obtenu au point touché et normalize
+Normale cone -> Même principe que le cylindre
+Normale plan -> Dispo depuis le parser :-)
+
+http://heigeas.free.fr/laure/ray_tracing/principes.html
+
