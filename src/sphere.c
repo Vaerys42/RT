@@ -33,16 +33,24 @@ void		new_sphere_dst(t_rt *rt, int type, double tmp)
 {
 	rt->inter->dst = tmp;
 	if (type == 0)
+	{
 		rt->inter->obj = SPH;
+		rt->inter->mat->r = rt->sphere->color->r;
+		rt->inter->mat->g = rt->sphere->color->g;
+		rt->inter->mat->b = rt->sphere->color->b;
+	}
 	if (type == 1 && rt->inter->obj == SPH)
 	{
-		rt->inter->mat->r += rt->sphere->color->r;
-		rt->inter->mat->g += rt->sphere->color->g;
-		rt->inter->mat->b += rt->sphere->color->b;
 		rt->light->shine = rt->sphere->shine;
 		rt->inter->angle->o = ft_sub_vect(rt->inter->point,
 		rt->sphere->o);
 		rt->inter->angle->dir = ft_normalize(rt->inter->angle->o);
+	}
+	else if (type == 1)
+	{
+		rt->inter->mat->r /= 2;
+		rt->inter->mat->g /= 2;
+		rt->inter->mat->b /= 2;
 	}
 }
 

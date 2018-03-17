@@ -50,17 +50,25 @@ void		new_cone_dst(t_rt *rt, int type, double tmp)
 {
 	rt->inter->dst = tmp;
 	if (type == 0)
+	{
 		rt->inter->obj = CON;
+		rt->inter->mat->r = rt->cone->color->r;
+		rt->inter->mat->g = rt->cone->color->g;
+		rt->inter->mat->b = rt->cone->color->b;
+	}
 	if (type == 1 && rt->inter->obj == CON)
 	{
-		rt->inter->mat->r += rt->cone->color->r;
-		rt->inter->mat->g += rt->cone->color->g;
-		rt->inter->mat->b += rt->cone->color->b;
 		rt->light->shine = rt->cone->shine;
 		rt->inter->angle->dir.x = rt->inter->point.x - rt->cone->o.x;
 		rt->inter->angle->dir.y = rt->inter->point.y;
 		rt->inter->angle->dir.z = rt->inter->point.z - rt->cone->o.z;
 		rt->inter->angle->dir = ft_normalize(rt->inter->angle->dir);
+	}
+	else if (type == 1)
+	{
+		rt->inter->mat->r /= 2;
+		rt->inter->mat->g /= 2;
+		rt->inter->mat->b /= 2;
 	}
 }
 

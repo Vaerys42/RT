@@ -7,6 +7,10 @@ radius: 1
 color: 1 0 0
 shine: 2
 light
-coo: 2 0 8
+coo: 2 0 6
 color: 1 1 1
 pow: 0.5
+plane
+coo: 0 0 20
+color: 0 1 0
+norm: 0 0 1
