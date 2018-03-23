@@ -29,6 +29,8 @@ int			ft_check_obj(char *str, int fd, t_rt *rt)
 		return (ft_add_cone(fd, rt));
 	else if (ft_strcmp(str, "cylinder") == 0)
 		return (ft_add_cylinder(fd, rt));
+	else if (ft_strcmp(str, "cube") == 0)
+		return (ft_add_cube(fd, rt));
 	else if (ft_strcmp(str, "camera") == 0)
 		return (ft_add_cam(fd, rt));
 	else if (ft_strcmp(str, "light") == 0)
@@ -46,12 +48,15 @@ void		ft_ini_struct(t_rt *rt)
 	rt->plane = NULL;
 	rt->cone = NULL;
 	rt->cylinder = NULL;
+	rt->cube = NULL;
 	rt->cam = NULL;
 	rt->light = NULL;
 	rt->start->sph = NULL;
 	rt->start->pln = NULL;
 	rt->start->con = NULL;
 	rt->start->cyl = NULL;
+	rt->start->cub = NULL;
+	rt->start->lgh = NULL;
 }
 
 void		parser(t_rt *rt, char *file)

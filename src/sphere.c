@@ -24,7 +24,7 @@ double		ft_check_sphere(t_sphere *sphere, t_ray *ray)
 	b = 2 * (scal(ray->dir, ray->obj));
 	c = scal(ray->obj, ray->obj) - pow(sphere->radius, 2);
 	delta = b * b - (4 * a * c);
-	if (delta < -0.0001)
+	if (delta < - EPS)
 		return (0);
 	return (disc_eq(a, b, delta));
 }
@@ -35,9 +35,9 @@ void		new_sphere_dst(t_rt *rt, int type, double tmp)
 	if (type == 0)
 	{
 		rt->inter->obj = SPH;
-		rt->inter->mat->r = rt->sphere->color->r;
-		rt->inter->mat->g = rt->sphere->color->g;
-		rt->inter->mat->b = rt->sphere->color->b;
+		rt->inter->mat->r = rt->sphere->color->r * rt->light->amb;
+		rt->inter->mat->g = rt->sphere->color->g * rt->light->amb;
+		rt->inter->mat->b = rt->sphere->color->b * rt->light->amb;
 	}
 	if (type == 1 && rt->inter->obj == SPH)
 	{
@@ -45,12 +45,9 @@ void		new_sphere_dst(t_rt *rt, int type, double tmp)
 		rt->inter->angle->o = ft_sub_vect(rt->inter->point,
 		rt->sphere->o);
 		rt->inter->angle->dir = ft_normalize(rt->inter->angle->o);
-	}
-	else if (type == 1)
-	{
-		rt->inter->mat->r /= 2;
-		rt->inter->mat->g /= 2;
-		rt->inter->mat->b /= 2;
+		rt->inter->mat->r *= 2;
+		rt->inter->mat->g *= 2;
+		rt->inter->mat->b *= 2;
 	}
 }
 

@@ -22,6 +22,8 @@ SRC =	src/main.c \
 		src/cam_p.c \
 		src/light_p.c \
 		src/transparence.c \
+		src/cube.c \
+		src/cube_p.c \
 
 LIBS = -framework OpenGL -framework Appkit minilibx_macos/libmlx.a libft/libft.a
 

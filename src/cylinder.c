@@ -26,7 +26,7 @@ double		ft_check_cylinder(t_cylinder *cylinder, t_ray *ray)
 	c = scal(ray->obj, ray->obj) - pow(scal(ray->obj, cylinder->dir), 2) -
 	pow(cylinder->radius, 2);
 	delta = b * b - (4 * a * c);
-	if (delta < -0.0001)
+	if (delta < - EPS)
 		return (0);
 	return (disc_eq(a, b, delta));
 }
@@ -37,9 +37,9 @@ void		new_cylinder_dst(t_rt *rt, int type, double tmp)
 	if (type == 0)
 	{
 		rt->inter->obj = CYL;
-		rt->inter->mat->r = rt->cylinder->color->r;
-		rt->inter->mat->g = rt->cylinder->color->g;
-		rt->inter->mat->b = rt->cylinder->color->b;
+		rt->inter->mat->r = rt->cylinder->color->r * rt->light->amb;
+		rt->inter->mat->g = rt->cylinder->color->g * rt->light->amb;
+		rt->inter->mat->b = rt->cylinder->color->b * rt->light->amb;
 	}
 	if (type == 1 && rt->inter->obj == CYL)
 	{
@@ -50,12 +50,9 @@ void		new_cylinder_dst(t_rt *rt, int type, double tmp)
 		rt->inter->angle->dir.z = rt->inter->point.z -
 		rt->cylinder->o.z;
 		rt->inter->angle->dir = ft_normalize(rt->inter->angle->dir);
-	}
-	else if (type == 1)
-	{
-		rt->inter->mat->r /= 2;
-		rt->inter->mat->g /= 2;
-		rt->inter->mat->b /= 2;
+		rt->inter->mat->r *= 2;
+		rt->inter->mat->g *= 2;
+		rt->inter->mat->b *= 2;
 	}
 }
 

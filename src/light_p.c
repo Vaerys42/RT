@@ -26,13 +26,16 @@ void		ft_light_info(t_light *light)
 int			light_list(t_rt *rt, t_light *light)
 {
 	ft_light_info(light);
-	if (rt->light != NULL)
+	if (rt->start->lgh == NULL)
 	{
-		free(light->color);
-		free(light);
+		rt->light = light;
+		rt->start->lgh = rt->light;
 	}
 	else
-		rt->light = light;
+	{
+		rt->light->next = light;
+		rt->light = rt->light->next;
+	}
 	return (1);
 }
 
@@ -47,6 +50,7 @@ t_light		*light_ini(void)
 	light->power = -1;
 	light->shine = -1;
 	light->amb = 0.2;
+	light->next = NULL;
 	return (light);
 }
 

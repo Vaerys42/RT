@@ -16,12 +16,13 @@
 # define WIN_LEN 640
 # define WIN_HEIGHT 480
 # define PLN_DST 100
-# define AMB_LIGHT 0.2
+# define EPS 0.0001
 
 # define SPH 1
 # define PLN 2
 # define CON 3
 # define CYL 4
+# define CUB 5
 
 # include "libft/includes/libft.h"
 # include "minilibx_macos/mlx.h"
@@ -94,6 +95,16 @@ typedef	struct			s_plane
 	struct s_plane		*next;
 }						t_plane;
 
+typedef	struct			s_cube
+{
+	t_material			*color;
+	double				radius;
+	t_coo				norm;
+	t_coo				o;
+	int					obj;
+	struct s_cube		*next;
+}						t_cube;
+
 typedef struct			s_light
 {
 	t_coo				o;
@@ -102,6 +113,7 @@ typedef struct			s_light
 	double				shine;
 	double				amb;
 	int					obj;
+	struct s_light		*next;
 }						t_light;
 
 typedef	struct			s_ray
@@ -144,6 +156,8 @@ typedef	struct			s_start
 	t_plane				*pln;
 	t_cone				*con;
 	t_cylinder			*cyl;
+	t_cube				*cub;
+	t_light				*lgh;
 }						t_start;
 
 typedef	struct			s_rt
@@ -156,6 +170,7 @@ typedef	struct			s_rt
 	t_plane				*plane;
 	t_cone				*cone;
 	t_cylinder			*cylinder;
+	t_cube				*cube;
 	t_view				*view;
 	t_ray				*light_ray;
 	t_inter				*inter;
@@ -226,5 +241,8 @@ t_coo					ft_rotation(t_coo vect, t_coo rot);
 void					make_rot(t_rt *rt);
 
 double					disc_eq(double a, double b, double delta);
+t_coo					ft_det_vect(t_coo vect1, t_coo vect2);
+void					check_cube_inter(t_rt *rt, int type);
+int						ft_add_cube(int fd, t_rt *rt);
 
 #endif
