@@ -26,6 +26,13 @@ void		make_rot(t_rt *rt)
 		rt->cone->dir = ft_rotation(rt->cone->dir, rt->cone->rot);
 		rt->cone = rt->cone->next;
 	}
+	rt->cube = rt->start->cub;
+	while (rt->cube != NULL)
+	{
+		rt->cube->u = ft_rotation(rt->cube->u, rt->cube->u);
+		rt->cube->v = ft_rotation(rt->cube->v, rt->cube->v);
+		rt->cube = rt->cube->next;
+	}
 }
 
 t_coo		ft_rotation_2(t_coo vect, t_coo rot)

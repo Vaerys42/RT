@@ -101,6 +101,11 @@ typedef	struct			s_cube
 	double				radius;
 	t_coo				norm;
 	t_coo				o;
+	t_coo				a;
+	t_coo				u;
+	t_coo				v;
+	t_coo				w;
+	t_coo				rot;
 	int					obj;
 	struct s_cube		*next;
 }						t_cube;

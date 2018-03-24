@@ -1,11 +1,11 @@
 camera
-coo: 0 0 0
-rot: 0 0 0
+coo: 4 3 2
+rot: -20 30 0
 cube
-coo: 1 1 30
-radius: 0.5
-color: 1 0 0
+coo: 0 0 10
+radius: 1
+color: 1 0 1
 light
-coo: 2 0 3
-color: 1 1 0
-pow: 0.3
+coo: 0 0 0
+color: 1 1 1
+pow: 0.2

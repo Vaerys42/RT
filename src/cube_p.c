@@ -31,9 +31,15 @@ t_cube		*ini_cube(void)
 		ft_malloc_error();
 	cube->next = NULL;
 	cube->o = ft_new_vect(0, 0, 0);
+    cube->a = ft_new_vect(0, 0, 0);
+    cube->u = ft_new_vect(0, 0, 0);
+    cube->v = ft_new_vect(0, 0, 0);
+    cube->w = ft_new_vect(0, 0, 0);
+    cube->rot = ft_new_vect(0, 0, 0);
 	cube->color = NULL;
 	cube->norm = ft_new_vect(0, 1, 0);
 	cube->obj = 0;
+    cube->radius = -1;
 	return (cube);
 }
 
@@ -69,6 +75,8 @@ void		ft_cube_line(char **datas, int fd, t_rt *rt, t_cube *cube)
 		cube->color = get_color(datas);
 	else if (ft_strcmp(datas[0], "norm:") == 0)
 		cube->norm = get_coo(datas, 6);
+    else if (ft_strcmp(datas[0], "rot:") == 0)
+		cube->rot = get_coo(datas, 6);
     else if (ft_strcmp(datas[0], "radius:") == 0)
 		cube->radius = get_radius(datas);
 	else if (datas[1] == NULL && ft_check_obj(datas[0], fd, rt) == 1)

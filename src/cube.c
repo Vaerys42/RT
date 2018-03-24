@@ -12,50 +12,62 @@
 
 #include "../rt.h"
 
-void				ft_face_cube(t_cube *cube, int i)
+void				ft_face_cube(t_rt *rt, t_cube *cube, int i)
 {
+    if (i == 1)
+        {
+            cube->a = ft_new_vect(cube->o.x + cube->radius, cube->o.y + cube->radius, cube->o.z - cube->radius);
+            cube->v = ft_new_vect(0, - cube->radius * 2, 0);
+            cube->u = ft_new_vect(0, 0, cube->radius * 2);
+        }
 	if (i == 2)
-        cube->norm = ft_new_vect(0, -1, 0);
-
+        {
+            cube->a = ft_new_vect(cube->o.x - cube->radius, cube->o.y + cube->radius, cube->o.z + cube->radius);
+            cube->v = ft_new_vect(0, - cube->radius * 2, 0);
+            cube->u = ft_new_vect(0, 0, - cube->radius * 2);
+        }
+    if (i == 3)
+        {
+            cube->a = ft_new_vect(cube->o.x - cube->radius, cube->o.y + cube->radius, cube->o.z + cube->radius);
+            cube->u = ft_new_vect(cube->radius * 2, 0, 0);
+            cube->v = ft_new_vect(0, 0, - cube->radius * 2);
+        }
+    if (i == 4)
+        {
+            cube->a = ft_new_vect(cube->o.x - cube->radius, cube->o.y - cube->radius, cube->o.z - cube->radius);
+            cube->u = ft_new_vect(cube->radius * 2, 0, 0);
+            cube->v = ft_new_vect(0, 0 , cube->radius * 2);
+            }
+    if (i == 5)
+        {
+            cube->a = ft_new_vect(cube->o.x + cube->radius, cube->o.y - cube->radius, cube->o.z + cube->radius);
+            cube->u = ft_new_vect(0, cube->radius * 2, 0);
+            cube->v = ft_new_vect(- cube->radius * 2, 0, 0);
+        }
+    if (i == 6)
+        {
+            cube->a = ft_new_vect(cube->o.x - cube->radius, cube->o.y + cube->radius, cube->o.z - cube->radius);
+            cube->u = ft_new_vect(cube->radius * 2, 0, 0);
+            cube->v = ft_new_vect(0, - cube->radius * 2, 0);
+        }
+    rt->inter->angle->dir = ft_normalize(ft_det_vect(cube->u, cube->v));
 }
 
 double				ft_check_cube(t_cube *cube, t_ray *ray)
 {
-	double		tmin = -9999;
-	double		tmax = 9999;
-    t_coo       L;
-    double      d;
-    double      m;
-    double      t1;
-    double      t2;
+    double      D;
+    double      a;
+    double      b;
     double      t;
 
-	L = ft_sub_vect(cube->o, ray->o);
-    d = scal(cube->norm, L);
-    m = scal(cube->norm, ray->dir);
-    printf("d %f m %f\n", d, m);
-    if (fabs(m) < EPS && fabs(d) > cube->radius)
-        return (0);
-    else
-    {
-        t1 = (d - cube->radius) / m;
-        t2 = (d + cube->radius) / m;
-        if (t1 > t2)
-        {
-            t = t1;
-            t1 = t2;
-            t2 = t;
-        }
-        if (t1 > tmin)
-            tmin = t1;
-        if (t2 < tmax)
-            tmax = t2;
-        if (tmin > tmax || tmax < 0)
-            return (0);
-    }
-    if (tmin > 0)
-        return (tmin);
-    return (tmax);
+    ray->obj = ft_sub_vect(ray->o, cube->a);
+    D = - scal(ft_det_vect(cube->u, cube->v), ray->dir);
+    a = - (scal(ft_det_vect(ray->obj, cube->v), ray->dir)) / D;
+    b = - (scal(ft_det_vect(cube->u, ray->obj), ray->dir)) / D;
+    t = scal(ft_det_vect(cube->u, cube->v), ray->obj) / D;
+    if (a > 0 && b > 0 && a <= 1 && b <= 1)
+        return (t);
+    return (0);
 }
 
 void				new_cube_dst(t_rt *rt, int type, double tmp)
@@ -72,7 +84,6 @@ void				new_cube_dst(t_rt *rt, int type, double tmp)
 	}
 	if (type == 1 && rt->inter->obj == CUB && rt->inter->num == rt->cube->obj)
 	{
-		rt->inter->angle->dir = rt->cube->norm;
 		rt->inter->mat->r *= 2;
 		rt->inter->mat->g *= 2;
 		rt->inter->mat->b *= 2;
@@ -90,9 +101,9 @@ void				check_cube_inter(t_rt *rt, int type)
 		while (rt->cube != NULL)
 		{
 			i = 1;
-			while (i <= 2)
+			while (i <= 6)
 			{
-				ft_face_cube(rt->cube, i);			
+				ft_face_cube(rt, rt->cube, i);
 				if (type == 0)
 					tmp = ft_check_cube(rt->cube, rt->ray);
 				else
