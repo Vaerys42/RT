@@ -5,6 +5,7 @@ cube
 coo: 0 0 10
 radius: 1
 color: 1 0 1
+shine: 0
 light
 coo: 0 0 0
 color: 1 1 1

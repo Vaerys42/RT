@@ -18,6 +18,8 @@ void		ft_cube_info(t_cube *cube)
 		ft_putstr("Needs color for cube (0 to 1). Ex : color: 1 0 1\n");
     else if (cube->radius == -1)
 		ft_putstr("Needs radius for cube. Ex radius: 3\n");
+	else if (cube->shine < 0)
+		ft_putstr("Needs shine for sphere. Ex shine: 0.5\n");
 	else
 		return ;
 	exit(-1);
@@ -34,7 +36,7 @@ t_cube		*ini_cube(void)
     cube->a = ft_new_vect(0, 0, 0);
     cube->u = ft_new_vect(0, 0, 0);
     cube->v = ft_new_vect(0, 0, 0);
-    cube->w = ft_new_vect(0, 0, 0);
+    cube->shine = -1;
     cube->rot = ft_new_vect(0, 0, 0);
 	cube->color = NULL;
 	cube->norm = ft_new_vect(0, 1, 0);
@@ -77,6 +79,8 @@ void		ft_cube_line(char **datas, int fd, t_rt *rt, t_cube *cube)
 		cube->norm = get_coo(datas, 6);
     else if (ft_strcmp(datas[0], "rot:") == 0)
 		cube->rot = get_coo(datas, 6);
+	else if (ft_strcmp(datas[0], "shine:") == 0)
+		cube->shine = get_radius(datas);
     else if (ft_strcmp(datas[0], "radius:") == 0)
 		cube->radius = get_radius(datas);
 	else if (datas[1] == NULL && ft_check_obj(datas[0], fd, rt) == 1)

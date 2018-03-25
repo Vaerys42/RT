@@ -20,21 +20,12 @@ void		ft_brillance(t_rt *rt)
 	scal(rt->light_ray->dir, rt->inter->angle->dir), rt->inter->angle->dir)));
 	if (-scal(rt->light_ray->dir, rt->inter->angle->dir) < 0.01)
 		return ;
-	if (rt->inter->mat->r > 0)
-	{
-		rt->inter->mat->r += rt->light->color->r * rt->light->shine *
-		pow(scal(spec, ft_sub_vect(spec, rt->light_ray->dir)), 5);
-	}
-	if (rt->inter->mat->g > 0)
-	{
-		rt->inter->mat->g += rt->light->color->r * rt->light->shine *
-		pow(scal(spec, ft_sub_vect(spec, rt->light_ray->dir)), 5);
-	}
-	if (rt->inter->mat->b > 0)
-	{
-		rt->inter->mat->b += rt->light->color->r * rt->light->shine *
-		pow(scal(spec, ft_sub_vect(spec, rt->light_ray->dir)), 5);
-	}
+	rt->inter->mat->r += rt->light->color->r * rt->light->shine *
+	pow(scal(spec, ft_sub_vect(spec, rt->light_ray->dir)), 2);
+	rt->inter->mat->g += rt->light->color->r * rt->light->shine *
+	pow(scal(spec, ft_sub_vect(spec, rt->light_ray->dir)), 2);
+	rt->inter->mat->b += rt->light->color->r * rt->light->shine *
+	pow(scal(spec, ft_sub_vect(spec, rt->light_ray->dir)), 2);
 }
 
 void		ft_get_point(t_rt *rt)
@@ -55,6 +46,18 @@ void		ft_light_diffuse(t_rt *rt)
 		rt->inter->mat->g += rt->light->color->g * angle * rt->light->power;
 	if (rt->inter->mat->b > 0)
 		rt->inter->mat->b += rt->light->color->b * angle * rt->light->power;
+			double	max;
+
+	max = 1.0;
+	if (rt->inter->mat->r > max)
+		max = rt->inter->mat->r;
+	if (rt->inter->mat->b > max)
+		max = rt->inter->mat->b;
+	if (rt->inter->mat->g > max)
+		max = rt->inter->mat->g;
+	rt->inter->mat->r = rt->inter->mat->r / max;
+	rt->inter->mat->g = rt->inter->mat->g / max;
+	rt->inter->mat->b = rt->inter->mat->b / max;
 }
 
 void		ft_get_light(t_rt *rt)

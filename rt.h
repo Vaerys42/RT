@@ -104,7 +104,7 @@ typedef	struct			s_cube
 	t_coo				a;
 	t_coo				u;
 	t_coo				v;
-	t_coo				w;
+	double				shine;
 	t_coo				rot;
 	int					obj;
 	struct s_cube		*next;

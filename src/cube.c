@@ -17,14 +17,14 @@ void				ft_face_cube(t_rt *rt, t_cube *cube, int i)
     if (i == 1)
         {
             cube->a = ft_new_vect(cube->o.x + cube->radius, cube->o.y + cube->radius, cube->o.z - cube->radius);
-            cube->v = ft_new_vect(0, - cube->radius * 2, 0);
             cube->u = ft_new_vect(0, 0, cube->radius * 2);
+            cube->v = ft_new_vect(0, - cube->radius * 2, 0);
         }
 	if (i == 2)
         {
             cube->a = ft_new_vect(cube->o.x - cube->radius, cube->o.y + cube->radius, cube->o.z + cube->radius);
-            cube->v = ft_new_vect(0, - cube->radius * 2, 0);
             cube->u = ft_new_vect(0, 0, - cube->radius * 2);
+            cube->v = ft_new_vect(0, - cube->radius * 2, 0);
         }
     if (i == 3)
         {
@@ -84,6 +84,7 @@ void				new_cube_dst(t_rt *rt, int type, double tmp)
 	}
 	if (type == 1 && rt->inter->obj == CUB && rt->inter->num == rt->cube->obj)
 	{
+       // rt->light->shine = rt->cube->shine;
 		rt->inter->mat->r *= 2;
 		rt->inter->mat->g *= 2;
 		rt->inter->mat->b *= 2;
