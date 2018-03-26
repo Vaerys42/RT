@@ -78,7 +78,7 @@ void		ft_cube_line(char **datas, int fd, t_rt *rt, t_cube *cube)
 	else if (ft_strcmp(datas[0], "norm:") == 0)
 		cube->norm = get_coo(datas, 6);
     else if (ft_strcmp(datas[0], "rot:") == 0)
-		cube->rot = get_coo(datas, 6);
+		cube->rot = get_coo(datas, 7);
 	else if (ft_strcmp(datas[0], "shine:") == 0)
 		cube->shine = get_radius(datas);
     else if (ft_strcmp(datas[0], "radius:") == 0)

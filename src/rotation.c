@@ -29,8 +29,7 @@ void		make_rot(t_rt *rt)
 	rt->cube = rt->start->cub;
 	while (rt->cube != NULL)
 	{
-		rt->cube->u = ft_rotation(rt->cube->u, rt->cube->u);
-		rt->cube->v = ft_rotation(rt->cube->v, rt->cube->v);
+		rt->cube->u = ft_rotation(rt->cube->u, rt->cube->rot);
 		rt->cube = rt->cube->next;
 	}
 }

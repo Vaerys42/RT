@@ -48,7 +48,7 @@ t_light		*light_ini(void)
 	light->o = ft_new_vect(0, 0, 0);
 	light->color = NULL;
 	light->power = -1;
-	light->shine = -1;
+	light->shine = 0;
 	light->amb = 0.2;
 	light->next = NULL;
 	return (light);
