@@ -49,7 +49,7 @@ t_light		*light_ini(void)
 	light->color = NULL;
 	light->power = -1;
 	light->shine = 0;
-	light->amb = 0.2;
+	light->amb = 0.1;
 	light->next = NULL;
 	return (light);
 }

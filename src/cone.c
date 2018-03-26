@@ -63,9 +63,9 @@ void		new_cone_dst(t_rt *rt, int type, double tmp)
 		rt->inter->angle->dir.y = rt->inter->point.y;
 		rt->inter->angle->dir.z = rt->inter->point.z - rt->cone->o.z;
 		rt->inter->angle->dir = ft_normalize(rt->inter->angle->dir);
-		rt->inter->mat->r *= 1.2;
-		rt->inter->mat->g *= 1.2;
-		rt->inter->mat->b *= 1.2;
+		rt->inter->mat->r *= 2;
+		rt->inter->mat->g *= 2;
+		rt->inter->mat->b *= 2;
 	}
 }
 

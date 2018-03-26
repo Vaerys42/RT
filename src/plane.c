@@ -40,9 +40,9 @@ void				new_plane_dst(t_rt *rt, int type, double tmp)
 	{
 		rt->light->shine = 0;
 		rt->inter->angle->dir = rt->plane->norm;
-		rt->inter->mat->r *= 1.2;
-		rt->inter->mat->g *= 1.2;
-		rt->inter->mat->b *= 1.2;
+		rt->inter->mat->r *= 2;
+		rt->inter->mat->g *= 2;
+		rt->inter->mat->b *= 2;
 	}
 }
 

@@ -30,19 +30,25 @@ void		ft_check_expose(t_rt *rt)
 
 void		ft_brillance(t_rt *rt)
 {
-	t_coo		spec;
+	rt->light = rt->start->lgh;
+	while (rt->light)
+	{
+		t_coo		spec;
 
-	spec = ft_mult_vect(2 * scal(rt->ray->dir, rt->inter->angle->dir), 
-	rt->inter->angle->dir);
-	spec = ft_normalize(ft_sub_vect(spec, rt->ray->dir));
-	if (-scal(spec, ft_mult_vect(-1, rt->light_ray->dir)) < 0.01)
-		return ;
-	rt->inter->mat->r += rt->light->color->r * rt->light->shine *
-	pow(-scal(spec, ft_mult_vect(-1, rt->light_ray->dir)), 5);
-	rt->inter->mat->g += rt->light->color->r * rt->light->shine *
-	pow(-scal(spec, ft_mult_vect(-1, rt->light_ray->dir)), 5);
-	rt->inter->mat->b += rt->light->color->r * rt->light->shine *
-	pow(-scal(spec, ft_mult_vect(-1, rt->light_ray->dir)), 5);
+		rt->light_ray->dir = ft_normalize(ft_sub_vect(rt->inter->point,
+		rt->light->o));
+		spec = ft_normalize(ft_add_vect(rt->light_ray->dir, ft_mult_vect(-1 *
+		scal(rt->light_ray->dir, rt->inter->angle->dir), rt->inter->angle->dir)));
+		if (-scal(rt->light_ray->dir, rt->inter->angle->dir) < 0.01)
+			return ;
+		rt->inter->mat->r += rt->light->color->r * rt->light->shine *
+		pow(scal(spec, ft_sub_vect(spec, rt->light_ray->dir)), 2);
+		rt->inter->mat->g += rt->light->color->r * rt->light->shine *
+		pow(scal(spec, ft_sub_vect(spec, rt->light_ray->dir)), 2);
+		rt->inter->mat->b += rt->light->color->r * rt->light->shine *
+		pow(scal(spec, ft_sub_vect(spec, rt->light_ray->dir)), 2);
+			rt->light = rt->light->next;
+	}
 }
 
 void		ft_get_point(t_rt *rt)
@@ -53,17 +59,24 @@ void		ft_get_point(t_rt *rt)
 
 void		ft_light_diffuse(t_rt *rt)
 {
-	double		angle;
+	rt->light = rt->start->lgh;
+	while (rt->light)
+	{
+		double		angle;
 
-	angle = -scal(rt->light_ray->dir, rt->inter->angle->dir);
-	angle = (angle < 0.1) ? 0.1 : angle;
-	if (rt->inter->mat->r > 0)
-		rt->inter->mat->r += rt->light->color->r * angle * rt->light->power;
-	if (rt->inter->mat->g > 0)
-		rt->inter->mat->g += rt->light->color->g * angle * rt->light->power;
-	if (rt->inter->mat->b > 0)
-		rt->inter->mat->b += rt->light->color->b * angle * rt->light->power;	
-	ft_check_expose(rt);
+		rt->light_ray->dir = ft_normalize(ft_sub_vect(rt->inter->point,
+		rt->light->o));
+		angle = -scal(rt->light_ray->dir, rt->inter->angle->dir);
+		angle = (angle < 0.01) ? 0.01 : angle;
+		if (rt->inter->mat->r > 0)
+			rt->inter->mat->r += rt->light->color->r * angle * rt->light->power;
+		if (rt->inter->mat->g > 0)
+			rt->inter->mat->g += rt->light->color->g * angle * rt->light->power;
+		if (rt->inter->mat->b > 0)
+			rt->inter->mat->b += rt->light->color->b * angle * rt->light->power;	
+		ft_check_expose(rt);
+		rt->light = rt->light->next;
+	}
 }
 
 void		ft_get_light(t_rt *rt)
@@ -83,13 +96,9 @@ void		ft_get_light(t_rt *rt)
 		check_plane_inter(rt, 1);
 		rt->light = rt->light->next;
 	}
-	rt->light = rt->start->lgh;
-	while (rt->light)
-	{
-		ft_light_diffuse(rt);
-		ft_brillance(rt);
-		rt->light = rt->light->next;
-	}
+	ft_light_diffuse(rt);
+	ft_brillance(rt);
+		
 }
 
 void		ft_check_object(t_rt *rt)
