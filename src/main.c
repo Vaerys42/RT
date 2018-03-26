@@ -48,9 +48,9 @@ int			main(int argc, char **argv)
 	parser(rt, argv[1]);
 	ft_ini(rt);
 	if (rt->light != NULL)
-	{
 		ft_raytracing(rt);
-	}
+	ft_putstr("Test\n");
+	//aliasing(rt);
 	mlx_put_image_to_window(rt->data->mlx, rt->data->mlx_window,
 	rt->data->mlx_image, 0, 0);
 	window(rt);

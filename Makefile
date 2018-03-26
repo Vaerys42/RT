@@ -24,6 +24,7 @@ SRC =	src/main.c \
 		src/transparence.c \
 		src/cube.c \
 		src/cube_p.c \
+		src/aliasing.c \
 
 LIBS = -framework OpenGL -framework Appkit minilibx_macos/libmlx.a libft/libft.a
 

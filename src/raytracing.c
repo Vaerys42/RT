@@ -12,20 +12,6 @@
 
 #include "../rt.h"
 
-void		put_pxl(t_data *data, int x, int y, t_material *color)
-{
-	int		i;
-
-	if (x * 4 >= WIN_LEN * 4 || x * 4 < 0)
-		return ;
-	i = (x * 4) + (y * data->s_l);
-	if (i > WIN_HEIGHT * WIN_LEN * 4)
-		return ;
-	data->image_string[i] = color->b;
-	data->image_string[++i] = color->g;
-	data->image_string[++i] = color->r;
-}
-
 void		ft_convert(t_rt *rt)
 {
 	if (rt->inter->mat->r > 1.0)

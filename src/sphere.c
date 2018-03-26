@@ -45,9 +45,9 @@ void		new_sphere_dst(t_rt *rt, int type, double tmp)
 		rt->inter->angle->o = ft_sub_vect(rt->inter->point,
 		rt->sphere->o);
 		rt->inter->angle->dir = ft_normalize(rt->inter->angle->o);
-		rt->inter->mat->r *= 2;
-		rt->inter->mat->g *= 2;
-		rt->inter->mat->b *= 2;
+		rt->inter->mat->r *= 1.2;
+		rt->inter->mat->g *= 1.2;
+		rt->inter->mat->b *= 1.2;
 	}
 }
 

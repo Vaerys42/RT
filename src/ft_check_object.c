@@ -81,6 +81,11 @@ void		ft_get_light(t_rt *rt)
 		check_cylinder_inter(rt, 1);
 		check_cube_inter(rt, 1);
 		check_plane_inter(rt, 1);
+		rt->light = rt->light->next;
+	}
+	rt->light = rt->start->lgh;
+	while (rt->light)
+	{
 		ft_light_diffuse(rt);
 		ft_brillance(rt);
 		rt->light = rt->light->next;

@@ -86,9 +86,9 @@ void				new_cube_dst(t_rt *rt, int type, double tmp, int i)
 	{
         rt->light->shine = rt->cube->shine;
         ft_norm_cube(rt, i);
-		rt->inter->mat->r *= 2;
-		rt->inter->mat->g *= 2;
-		rt->inter->mat->b *= 2;
+		rt->inter->mat->r *= 1.2;
+		rt->inter->mat->g *= 1.2;
+		rt->inter->mat->b *= 1.2;
 	}
 }
 

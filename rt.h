@@ -250,4 +250,6 @@ t_coo					ft_det_vect(t_coo vect1, t_coo vect2);
 void					check_cube_inter(t_rt *rt, int type);
 int						ft_add_cube(int fd, t_rt *rt);
 
+void            		aliasing(t_rt *rt);
+
 #endif
