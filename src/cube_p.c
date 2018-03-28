@@ -39,7 +39,7 @@ t_cube		*ini_cube(void)
     cube->shine = -1;
     cube->rot = ft_new_vect(0, 0, 0);
 	cube->color = NULL;
-	cube->norm = ft_new_vect(0, 1, 0);
+	cube->dir = ft_new_vect(0, 1, 0);
 	cube->obj = 0;
     cube->radius = -1;
 	return (cube);
@@ -48,10 +48,6 @@ t_cube		*ini_cube(void)
 int			cube_lst(t_rt *rt, t_cube *cube)
 {
 	ft_cube_info(cube);
-	//cube->norm = ft_normalize(cube->norm);
-	//cube->supp = (-1) * cube->o.x * cube->norm.x +
-	//(-1) * cube->o.y * cube->norm.y +
-	//(-1) * cube->o.z * cube->norm.z;
 	if (rt->cube == NULL)
 	{
 		rt->cube = cube;
@@ -76,7 +72,7 @@ void		ft_cube_line(char **datas, int fd, t_rt *rt, t_cube *cube)
 	else if (ft_strcmp(datas[0], "color:") == 0)
 		cube->color = get_color(datas);
 	else if (ft_strcmp(datas[0], "norm:") == 0)
-		cube->norm = get_coo(datas, 6);
+		cube->dir = get_coo(datas, 6);
     else if (ft_strcmp(datas[0], "rot:") == 0)
 		cube->rot = get_coo(datas, 7);
 	else if (ft_strcmp(datas[0], "shine:") == 0)

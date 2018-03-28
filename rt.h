@@ -99,7 +99,7 @@ typedef	struct			s_cube
 {
 	t_material			*color;
 	double				radius;
-	t_coo				norm;
+	t_coo				dir;
 	t_coo				o;
 	t_coo				a;
 	t_coo				u;
