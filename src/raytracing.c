@@ -50,10 +50,10 @@ void		ft_raytracing(t_rt *rt)
 	int			y;
 
 	y = -1;
-	while (++y <= WIN_HEIGHT)
+	while (++y < WIN_HEIGHT)
 	{
 		x = -1;
-		while (++x <= WIN_LEN)
+		while (++x < WIN_LEN)
 		{
 			ft_ini_ray(rt, x, y);
 			ft_ray(rt, x, y);

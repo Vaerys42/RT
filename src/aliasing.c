@@ -93,10 +93,10 @@ void            aliasing(t_rt *rt)
 
     y = -1;
     prev = rt->data->image_string;
-    while (++y <= WIN_HEIGHT)
+    while (++y < WIN_HEIGHT)
 	{
 		x = -1;
-		while (++x <= WIN_LEN)
+		while (++x < WIN_LEN)
         {
             if (y == 0 && x == WIN_LEN)
                 random = x;
