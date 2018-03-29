@@ -73,17 +73,17 @@ void				ft_norm_cube(t_rt *rt, int i)
 {
     rt->inter->angle->dir = ft_new_vect(0, 0, 0);
 	if (i == 1)
-        rt->inter->angle->dir = ft_new_vect(0, 0, 1);
+        rt->inter->angle->dir = ft_rotation(ft_new_vect(0, 0, 1), rt->cube->rot);
     if (i == 2)
-        rt->inter->angle->dir = ft_new_vect(1, 0, 0);
+        rt->inter->angle->dir = ft_rotation(ft_new_vect(1, 0, 0), rt->cube->rot);
     if (i == 3)
-        rt->inter->angle->dir = ft_new_vect(0, - 1, 0);
+        rt->inter->angle->dir = ft_rotation(ft_new_vect(0, - 1, 0), rt->cube->rot);
     if (i == 4)
-        rt->inter->angle->dir = ft_new_vect(0, 0, - 1);
+        rt->inter->angle->dir = ft_rotation(ft_new_vect(0, 0, - 1), rt->cube->rot);
     if (i == 5)
-        rt->inter->angle->dir = ft_new_vect(- 1, 0 , 0);
+        rt->inter->angle->dir = ft_rotation(ft_new_vect(- 1, 0 , 0), rt->cube->rot);
     if (i == 6)
-        rt->inter->angle->dir = ft_new_vect(0, 1, 0);
+        rt->inter->angle->dir = ft_rotation(ft_new_vect(0, 1, 0), rt->cube->rot);
 }
 
 double				ft_check_cube(t_cube *cube, t_ray *ray)
