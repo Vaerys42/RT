@@ -16,25 +16,34 @@ void		ft_create(t_rt *rt)
 {
 	if (!(rt->data = (t_data*)malloc(sizeof(t_data))))
 		ft_malloc_error();
-	if (!(rt->data->mlx = mlx_init()))
+	if (SDL_Init(SDL_INIT_EVENTS | SDL_INIT_VIDEO) < 0)
 		ft_exit();
-	if (!(rt->data->mlx_window = mlx_new_window(rt->data->mlx,
-	WIN_LEN, WIN_HEIGHT, "RTV1")))
+	if (!(rt->data->sdl_window = SDL_CreateWindow("RT - SDL", SDL_WINDOWPOS_CENTERED,
+	SDL_WINDOWPOS_CENTERED, WIN_LEN, WIN_HEIGHT, 0)))
 		ft_exit();
-	if (!(rt->data->mlx_image = mlx_new_image(rt->data->mlx,
-	WIN_LEN, WIN_HEIGHT)))
+	if (!(rt->data->sdl_renderer = SDL_CreateRenderer(rt->data->sdl_window, -1, 0)))
 		ft_exit();
-	if (!(rt->data->image_string = mlx_get_data_addr(rt->data->mlx_image,
-	&rt->data->bpp, &rt->data->s_l, &rt->data->endian)))
+	if (!(rt->data->sdl_texture = SDL_CreateTexture(rt->data->sdl_renderer,
+	SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, WIN_LEN, WIN_HEIGHT)))
 		ft_exit();
-	rt->data->image_int = (int*)(rt->data->image_string);
+	if (!(rt->data->image_int = (unsigned int*)malloc(WIN_HEIGHT * WIN_LEN * sizeof(unsigned int))))
+		ft_exit();
 }
 
 void		window(t_rt *rt)
 {
-	mlx_hook(rt->data->mlx_window, 2, 1L << 0, my_key_press, rt);
-	mlx_hook(rt->data->mlx_window, 17, 0, ft_exit_cross, rt);
-	mlx_loop(rt->data->mlx);
+	SDL_Event		ev;
+
+	while (1)
+	{
+		if (SDL_PollEvent(&ev) == 1)
+		{
+			if (ev.type == SDL_QUIT)
+				ft_exit_cross(rt);
+			else if (ev.type == SDL_KEYDOWN)
+				my_key_press(rt, ev.key.keysym);
+		}
+	}
 }
 
 int			main(int argc, char **argv)
@@ -49,9 +58,9 @@ int			main(int argc, char **argv)
 	ft_ini(rt);
 	if (rt->light != NULL)
 		ft_raytracing(rt);
-	aliasing(rt);
-	mlx_put_image_to_window(rt->data->mlx, rt->data->mlx_window,
-	rt->data->mlx_image, 0, 0);
+	SDL_UpdateTexture(rt->data->sdl_texture, NULL, rt->data->image_int, WIN_LEN * sizeof(unsigned int));
+	SDL_RenderCopy(rt->data->sdl_renderer, rt->data->sdl_texture, NULL, NULL);
+	SDL_RenderPresent(rt->data->sdl_renderer);
 	window(rt);
 	return (0);
 }

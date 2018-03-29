@@ -26,7 +26,7 @@ SRC =	src/main.c \
 		src/cube_p.c \
 		src/aliasing.c \
 
-LIBS = -framework OpenGL -framework Appkit minilibx_macos/libmlx.a libft/libft.a
+LIBS = libft/libft.a SDL.framework/SDL2
 
 OBJ =	$(patsubst src/%.c,obj/%.o,$(SRC))
 
@@ -35,7 +35,6 @@ OBJ =	$(patsubst src/%.c,obj/%.o,$(SRC))
 all : $(NAME)
 
 $(NAME) : $(OBJ)
-		make -C minilibx_macos/
 		gcc $(LIBS) $(OBJ) -o $(NAME)
 
 obj/%.o: src/%.c

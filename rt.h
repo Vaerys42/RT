@@ -25,6 +25,7 @@
 # define CUB 5
 
 # include "libft/includes/libft.h"
+# include "SDL.framework/Headers/SDL.h"
 # include "minilibx_macos/mlx.h"
 # include "math.h"
 
@@ -51,7 +52,10 @@ typedef	struct			s_data
 	int					s_l;
 	int					bpp;
 	int					endian;
-	int					*image_int;
+	unsigned int		*image_int;
+	SDL_Window			*sdl_window;
+	SDL_Renderer		*sdl_renderer;
+	SDL_Texture			*sdl_texture;
 }						t_data;
 
 typedef struct			s_cylinder
@@ -199,7 +203,7 @@ t_coo					get_coo(char **str, int err);
 t_material				*get_color(char **str);
 double					get_radius(char **str);
 
-int						my_key_press(int key, t_rt *rt);
+int						my_key_press(t_rt *rt, SDL_Keysym key);
 int						ft_exit_cross(t_rt *rt);
 void					put_pxl(t_data *data, int x, int y, t_material *color);
 void					move_color(t_material *c, double r, double g, double b);

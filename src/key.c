@@ -12,11 +12,14 @@
 
 #include "../rt.h"
 
-int			my_key_press(int key, t_rt *rt)
+int			my_key_press(t_rt *rt, SDL_Keysym key)
 {
-	if (key == 53)
+	if (key.sym == SDLK_ESCAPE)
 	{
-		mlx_destroy_window(rt->data->mlx, rt->data->mlx_window);
+		SDL_DestroyTexture(rt->data->sdl_texture);
+		SDL_DestroyRenderer(rt->data->sdl_renderer);
+		SDL_DestroyWindow(rt->data->sdl_window);
+		SDL_Quit();
 		exit(1);
 	}
 	return (0);
@@ -24,7 +27,10 @@ int			my_key_press(int key, t_rt *rt)
 
 int			ft_exit_cross(t_rt *rt)
 {
-	mlx_destroy_image(rt->data->mlx, rt->data->mlx_image);
+	SDL_DestroyTexture(rt->data->sdl_texture);
+	SDL_DestroyRenderer(rt->data->sdl_renderer);
+	SDL_DestroyWindow(rt->data->sdl_window);
+	SDL_Quit();
 	exit(EXIT_SUCCESS);
 	return (0);
 }
