@@ -17,6 +17,7 @@
 # define WIN_HEIGHT 480
 # define PLN_DST 100
 # define EPS 0.0001
+# define ANTIALIA 4
 
 # define SPH 1
 # define PLN 2
@@ -26,7 +27,6 @@
 
 # include "libft/includes/libft.h"
 # include "SDL.framework/Headers/SDL.h"
-# include "minilibx_macos/mlx.h"
 # include "math.h"
 
 typedef	struct			s_material
@@ -45,13 +45,6 @@ typedef	struct			s_coo
 
 typedef	struct			s_data
 {
-	void				*mlx;
-	void				*mlx_window;
-	void				*mlx_image;
-	char				*image_string;
-	int					s_l;
-	int					bpp;
-	int					endian;
 	unsigned int		*image_int;
 	SDL_Window			*sdl_window;
 	SDL_Renderer		*sdl_renderer;
@@ -184,6 +177,7 @@ typedef	struct			s_rt
 	t_ray				*light_ray;
 	t_inter				*inter;
 	t_start				*start;
+	int					rand;
 }						t_rt;
 
 void					ft_malloc_error(void);
