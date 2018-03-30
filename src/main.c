@@ -58,7 +58,7 @@ int			main(int argc, char **argv)
 	ft_ini(rt);
 	if (rt->light != NULL)
 		ft_raytracing(rt);
-	aliasing(rt);
+	//aliasing(rt);
 	SDL_UpdateTexture(rt->data->sdl_texture, NULL, rt->data->image_int, WIN_LEN * sizeof(unsigned int));
 	SDL_RenderCopy(rt->data->sdl_renderer, rt->data->sdl_texture, NULL, NULL);
 	SDL_RenderPresent(rt->data->sdl_renderer);

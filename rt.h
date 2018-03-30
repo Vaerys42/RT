@@ -249,5 +249,7 @@ void					check_cube_inter(t_rt *rt, int type);
 int						ft_add_cube(int fd, t_rt *rt);
 
 void            		aliasing(t_rt *rt);
+void					ft_ray(t_rt *rt, int x, int y, int type);
+void					ft_ini_ray(t_rt *rt, double x, double y);
 
 #endif

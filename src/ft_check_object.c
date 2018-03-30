@@ -43,9 +43,9 @@ void		ft_brillance(t_rt *rt)
 			return ;
 		rt->inter->mat->r += rt->light->color->r * rt->light->shine *
 		pow(scal(spec, ft_sub_vect(spec, rt->light_ray->dir)), 2);
-		rt->inter->mat->g += rt->light->color->r * rt->light->shine *
+		rt->inter->mat->g += rt->light->color->g * rt->light->shine *
 		pow(scal(spec, ft_sub_vect(spec, rt->light_ray->dir)), 2);
-		rt->inter->mat->b += rt->light->color->r * rt->light->shine *
+		rt->inter->mat->b += rt->light->color->b * rt->light->shine *
 		pow(scal(spec, ft_sub_vect(spec, rt->light_ray->dir)), 2);
 			rt->light = rt->light->next;
 	}
@@ -97,8 +97,7 @@ void		ft_get_light(t_rt *rt)
 		rt->light = rt->light->next;
 	}
 	ft_light_diffuse(rt);
-	ft_brillance(rt);
-		
+	ft_brillance(rt);	
 }
 
 void		ft_check_object(t_rt *rt)
