@@ -26,7 +26,7 @@ SRC =	src/main.c \
 		src/cube_p.c \
 		src/aliasing.c \
 
-LIBS = libft/libft.a SDL.framework/SDL2
+LIBS = libft/libft.a /Users/dominique/Documents/RT/SDL.framework/SDL2
 
 OBJ =	$(patsubst src/%.c,obj/%.o,$(SRC))
 

@@ -13,7 +13,7 @@ norm: 0 1 0
 color: 0 0 1
 light
 coo: 2 0 3
-color: 1 1 0
+color: 1 0 1
 pow: 0.3
 cylinder
 coo: -1 0 10

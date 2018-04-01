@@ -18,6 +18,7 @@
 # define PLN_DST 100
 # define EPS 0.0001
 # define ANTIALIA 4
+# define MAX 9999
 
 # define SPH 1
 # define PLN 2
@@ -146,6 +147,7 @@ typedef	struct			s_inter
 {
 	double				dst;
 	t_material			*mat;
+	t_material			*objcol;
 	t_ray				*angle;
 	t_coo				point;
 	int					obj;

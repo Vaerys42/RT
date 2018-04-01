@@ -34,18 +34,19 @@ void		ft_brillance(t_rt *rt)
 	while (rt->light)
 	{
 		t_coo		spec;
+		double		angle;
 
 		rt->light_ray->dir = ft_normalize(ft_sub_vect(rt->inter->point,
 		rt->light->o));
-		spec = ft_normalize(ft_add_vect(rt->light_ray->dir, ft_mult_vect(-1 *
-		scal(rt->light_ray->dir, rt->inter->angle->dir), rt->inter->angle->dir)));
-		if (-scal(rt->light_ray->dir, rt->inter->angle->dir) < 0.01)
-			return ;
-		rt->inter->mat->r += rt->light->color->r * rt->light->shine *
+		angle = - scal(rt->light_ray->dir, rt->inter->angle->dir);
+		angle = (angle < 0.01) ? 0.01 : angle;
+		spec = ft_normalize(ft_add_vect(rt->light_ray->dir, 
+		ft_mult_vect(angle, rt->inter->angle->dir)));
+		rt->inter->mat->r += rt->light->shine *
 		pow(scal(spec, ft_sub_vect(spec, rt->light_ray->dir)), 2);
-		rt->inter->mat->g += rt->light->color->g * rt->light->shine *
+		rt->inter->mat->g += rt->light->shine *
 		pow(scal(spec, ft_sub_vect(spec, rt->light_ray->dir)), 2);
-		rt->inter->mat->b += rt->light->color->b * rt->light->shine *
+		rt->inter->mat->b += rt->light->shine *
 		pow(scal(spec, ft_sub_vect(spec, rt->light_ray->dir)), 2);
 			rt->light = rt->light->next;
 	}
@@ -68,12 +69,9 @@ void		ft_light_diffuse(t_rt *rt)
 		rt->light->o));
 		angle = -scal(rt->light_ray->dir, rt->inter->angle->dir);
 		angle = (angle < 0.01) ? 0.01 : angle;
-		if (rt->inter->mat->r > 0)
-			rt->inter->mat->r += rt->light->color->r * angle * rt->light->power;
-		if (rt->inter->mat->g > 0)
-			rt->inter->mat->g += rt->light->color->g * angle * rt->light->power;
-		if (rt->inter->mat->b > 0)
-			rt->inter->mat->b += rt->light->color->b * angle * rt->light->power;	
+		rt->inter->mat->r += rt->light->color->r * angle * rt->light->power;
+		rt->inter->mat->g += rt->light->color->g * angle * rt->light->power;
+		rt->inter->mat->b += rt->light->color->b * angle * rt->light->power;	
 		ft_check_expose(rt);
 		rt->light = rt->light->next;
 	}
@@ -84,7 +82,7 @@ void		ft_get_light(t_rt *rt)
 	rt->light = rt->start->lgh;
 	while (rt->light)
 	{
-		rt->inter->dst = 99999;
+		rt->inter->dst = MAX;
 		rt->light_ray->o = rt->light->o;
 		rt->light_ray->dir = ft_normalize(ft_sub_vect(rt->inter->point,
 		rt->light->o));
@@ -97,7 +95,7 @@ void		ft_get_light(t_rt *rt)
 		rt->light = rt->light->next;
 	}
 	ft_light_diffuse(rt);
-	ft_brillance(rt);	
+	ft_brillance(rt);
 }
 
 void		ft_check_object(t_rt *rt)
@@ -105,7 +103,7 @@ void		ft_check_object(t_rt *rt)
 	int		i;
 
 	i = 0;
-	rt->inter->dst = 99999;
+	rt->inter->dst = MAX;
 	rt->inter->obj = 0;
 	rt->inter->angle->dir = rt->ray->dir;
 	rt->inter->mat->r = 0;
