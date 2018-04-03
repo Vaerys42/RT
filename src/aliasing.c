@@ -29,9 +29,9 @@ int				diff_color(int col1, int col2)
 
 	new1 = hex_rgb(col1);
 	new2 = hex_rgb(col2);
-	if (new1.r - new2.r > 100 || new1.g - new2.g > 100 || new1.b - new2.b > 100)
+	if (new1.r - new2.r > ANTIALIA || new1.g - new2.g > ANTIALIA || new1.b - new2.b > ANTIALIA)
 		return (1);
-	if (new2.r - new1.r > 100 || new2.g - new1.g > 100 || new2.b - new1.b > 100)
+	if (new2.r - new1.r > ANTIALIA || new2.g - new1.g > ANTIALIA || new2.b - new1.b > ANTIALIA)
 		return (1);
 	return (0);
 }
@@ -58,7 +58,7 @@ t_material	new_ray_alia(t_rt *rt, double x, double y)
 	return (new);
 }
 
-void		mix_color(t_rt *rt, double x, double y)
+void		mix_color(t_rt *rt, int x, int y)
 {
 	t_material		new[6];
 
@@ -69,10 +69,7 @@ void		mix_color(t_rt *rt, double x, double y)
 	new[4] = new_ray_alia(rt, x + 0.70, y + 0.70);
 	new[5].r = (new[4].r + new[3].r + new[2].r + new[1].r + new[0].r) / 5;
 	new[5].g = (new[4].g + new[3].g + new[2].g + new[1].g + new[0].g) / 5;
-	new[5].g = (new[4].b + new[3].b + new[2].b + new[1].b + new[0].b) / 5;
-	new[5].r = 255;
-	new[5].g = 255;
-	new[5].b = 255;
+	new[5].b = (new[4].b + new[3].b + new[2].b + new[1].b + new[0].b) / 5;
 	put_pxl(rt->data, x, y, &new[5]);
 }
 

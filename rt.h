@@ -17,7 +17,7 @@
 # define WIN_HEIGHT 480
 # define PLN_DST 100
 # define EPS 0.0001
-# define ANTIALIA 4
+# define ANTIALIA 50
 # define MAX 9999
 
 # define SPH 1
