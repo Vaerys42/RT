@@ -52,11 +52,23 @@ typedef	struct			s_data
 	SDL_Texture			*sdl_texture;
 }						t_data;
 
+typedef	struct			s_plane
+{
+	t_material			*color;
+	t_coo				norm;
+	t_coo				o;
+	double				supp;
+	int					obj;
+	struct s_plane		*next;
+}						t_plane;
+
 typedef struct			s_cylinder
 {
 	t_coo				o;
 	t_coo				rot;
 	t_coo				dir;
+	t_plane				*pln;
+	int					cut;
 	double				radius;
 	double				shine;
 	t_material			*color;
@@ -82,16 +94,6 @@ typedef	struct			s_sphere
 	double				shine;
 	struct s_sphere		*next;
 }						t_sphere;
-
-typedef	struct			s_plane
-{
-	t_material			*color;
-	t_coo				norm;
-	t_coo				o;
-	double				supp;
-	int					obj;
-	struct s_plane		*next;
-}						t_plane;
 
 typedef	struct			s_cube
 {

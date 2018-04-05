@@ -100,9 +100,6 @@ void		ft_get_light(t_rt *rt)
 
 void		ft_check_object(t_rt *rt)
 {
-	int		i;
-
-	i = 0;
 	rt->inter->dst = MAX;
 	rt->inter->obj = 0;
 	rt->inter->angle->dir = rt->ray->dir;

@@ -18,6 +18,8 @@ void		make_rot(t_rt *rt)
 	while (rt->cylinder != NULL)
 	{
 		rt->cylinder->dir = ft_rotation(rt->cylinder->dir, rt->cylinder->rot);
+		if (rt->cylinder->pln != NULL)
+			rt->cylinder->pln->norm = ft_rotation(rt->cylinder->pln->norm, rt->cylinder->rot);
 		rt->cylinder = rt->cylinder->next;
 	}
 	rt->cone = rt->start->con;

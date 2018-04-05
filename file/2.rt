@@ -1,12 +1,16 @@
 camera
-coo: 0 0 0
+coo: 0 0 -20
 rot: 0 0 0
 cylinder
+plno: 0 1 10
+plnc: 1 1 0
+plnn: 0.3 1 0.1
 coo: 0 0 10
-radius: 0.5
+radius: 1
 color: 0 1 0
-shine: 0
+shine: 0.5
+rot: 30 0 0
 light
-coo: 2 0 3
+coo: -5 5 0
 color: 1 1 0
 pow: 0.3
