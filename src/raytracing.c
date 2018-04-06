@@ -35,6 +35,7 @@ void		ft_ray(t_rt *rt, int x, int y, int type)
 	if (type == 2)
 		return ;
 	put_pxl(rt->data, x, y, rt->inter->mat);
+	put_pxl_base(rt->data, x, y, rt->inter->mat);
 }
 
 void		ft_ini_ray(t_rt *rt, double x, double y)
@@ -61,4 +62,5 @@ void		ft_raytracing(t_rt *rt)
 			ft_ray(rt, x, y, 1);
 		}
 	}
+	aliasing(rt);
 }

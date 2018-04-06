@@ -45,12 +45,16 @@ void	ft_malloc_ini(t_rt *rt)
 		ft_malloc_error();
 	if (!(rt->inter->mat = (t_material*)malloc(sizeof(t_material))))
 		ft_malloc_error();
+	if (!(rt->op = (t_options*)malloc(sizeof(t_options))))
+		ft_malloc_error();	
 }
 
 void	ft_ini(t_rt *rt)
 {
 	ft_malloc_ini(rt);
 	ft_ini_cam(rt);
+	rt->op->sepia = 0;
+	rt->op->blwh = 0;
 	rt->ray->o = rt->cam->pos;
 	rt->plane = rt->start->pln;
 	rt->inter->obj = -1;

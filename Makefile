@@ -25,6 +25,8 @@ SRC =	src/main.c \
 		src/cube.c \
 		src/cube_p.c \
 		src/aliasing.c \
+		src/filter.c \
+		src/pixel.c \
 
 LIBS = libft/libft.a SDL.framework/SDL2
 

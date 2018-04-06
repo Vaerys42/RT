@@ -28,20 +28,30 @@ void		ft_create(t_rt *rt)
 		ft_exit();
 	if (!(rt->data->image_int = (unsigned int*)malloc(WIN_HEIGHT * WIN_LEN * sizeof(unsigned int))))
 		ft_exit();
+	if (!(rt->data->image_base = (unsigned int*)malloc(WIN_HEIGHT * WIN_LEN * sizeof(unsigned int))))
+		ft_exit();
 }
 
 void		window(t_rt *rt)
+{
+	SDL_UpdateTexture(rt->data->sdl_texture, NULL, rt->data->image_int, WIN_LEN * sizeof(unsigned int));
+	SDL_RenderCopy(rt->data->sdl_renderer, rt->data->sdl_texture, NULL, NULL);
+	SDL_RenderPresent(rt->data->sdl_renderer);
+}
+
+void		get_event(t_rt *rt)
 {
 	SDL_Event		ev;
 
 	while (1)
 	{
-		if (SDL_PollEvent(&ev) == 1)
+		if (SDL_WaitEvent(&ev) == 1)
 		{
 			if (ev.type == SDL_QUIT)
 				ft_exit_cross(rt);
-			else if (ev.type == SDL_KEYDOWN)
+			else if (ev.type == SDL_KEYDOWN & ev.key.repeat == 0)
 				my_key_press(rt, ev.key.keysym);
+			window(rt);
 		}
 	}
 }
@@ -58,10 +68,6 @@ int			main(int argc, char **argv)
 	ft_ini(rt);
 	if (rt->light != NULL)
 		ft_raytracing(rt);
-	aliasing(rt);
-	SDL_UpdateTexture(rt->data->sdl_texture, NULL, rt->data->image_int, WIN_LEN * sizeof(unsigned int));
-	SDL_RenderCopy(rt->data->sdl_renderer, rt->data->sdl_texture, NULL, NULL);
-	SDL_RenderPresent(rt->data->sdl_renderer);
-	window(rt);
+	get_event(rt);
 	return (0);
 }

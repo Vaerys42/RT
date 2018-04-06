@@ -50,6 +50,7 @@ typedef	struct			s_data
 	SDL_Window			*sdl_window;
 	SDL_Renderer		*sdl_renderer;
 	SDL_Texture			*sdl_texture;
+	unsigned int		*image_base;
 }						t_data;
 
 typedef struct			s_cylinder
@@ -164,6 +165,12 @@ typedef	struct			s_start
 	t_light				*lgh;
 }						t_start;
 
+typedef	struct			s_options
+{
+	int					sepia;
+	int					blwh;
+}						t_options;
+
 typedef	struct			s_rt
 {
 	t_data				*data;
@@ -179,7 +186,7 @@ typedef	struct			s_rt
 	t_ray				*light_ray;
 	t_inter				*inter;
 	t_start				*start;
-	int					rand;
+	t_options			*op;
 }						t_rt;
 
 void					ft_malloc_error(void);
@@ -203,6 +210,7 @@ int						my_key_press(t_rt *rt, SDL_Keysym key);
 int						ft_exit_cross(t_rt *rt);
 void					put_pxl(t_data *data, int x, int y, t_material *color);
 void					move_color(t_material *c, double r, double g, double b);
+void					put_pxl_base(t_data *data, int x, int y, t_material *color);
 
 void					ft_raytracing(t_rt *rt);
 
@@ -253,5 +261,13 @@ int						ft_add_cube(int fd, t_rt *rt);
 void            		aliasing(t_rt *rt);
 void					ft_ray(t_rt *rt, int x, int y, int type);
 void					ft_ini_ray(t_rt *rt, double x, double y);
+
+t_material				hex_rgb(int col);
+unsigned int			col_hexa(int r, int g, int b);
+void					ft_check_expose(t_material *mat, double max);
+
+void					sepia(t_rt *rt);
+void					bl_wh(t_rt *rt);
+void					cpy_image(unsigned int *tab1, unsigned int *tab2);
 
 #endif

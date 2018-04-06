@@ -12,20 +12,14 @@
 
 #include "../rt.h"
 
-void		ft_check_expose(t_rt *rt)
+void		ft_check_expose(t_material *mat, double max)
 {
-	double	max;
-
-	max = 1.0;
-	if (rt->inter->mat->r > max)
-		max = rt->inter->mat->r;
-	if (rt->inter->mat->b > max)
-		max = rt->inter->mat->b;
-	if (rt->inter->mat->g > max)
-		max = rt->inter->mat->g;
-	rt->inter->mat->r = rt->inter->mat->r / max;
-	rt->inter->mat->g = rt->inter->mat->g / max;
-	rt->inter->mat->b = rt->inter->mat->b / max;
+	if (mat->r > max)
+		mat->r = max;
+	if (mat->b > max)
+		mat->b = max;
+	if (mat->g > max)
+		mat->g = max;
 }
 
 void		ft_brillance(t_rt *rt)
@@ -72,7 +66,7 @@ void		ft_light_diffuse(t_rt *rt)
 		rt->inter->mat->r += rt->light->color->r * angle * rt->light->power;
 		rt->inter->mat->g += rt->light->color->g * angle * rt->light->power;
 		rt->inter->mat->b += rt->light->color->b * angle * rt->light->power;	
-		ft_check_expose(rt);
+		ft_check_expose(rt->inter->mat, 1.0);
 		rt->light = rt->light->next;
 	}
 }
