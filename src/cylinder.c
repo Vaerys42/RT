@@ -63,12 +63,12 @@ double		ft_check_cylinder(t_cylinder *cylinder, t_ray *ray)
 	t2 = (-b + sqrt(fabs(b * b - (4 * a * c)))) / (2 * a);
 	if (b * b - (4 * a * c) < - EPS)
 		return (0);
-	/*if (cylinder->pln == NULL)
+	if (cylinder->pln == NULL)
 		{
 			if (t1 > t2 && t2 > 0)
 				return (t2);
 			return (t1);
-		}*/
+		}
 	return (ft_inter_plane(ray, cylinder, t1, t2));
 }
 

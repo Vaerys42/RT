@@ -31,6 +31,8 @@ t_cone		*new_cone(void)
 
 	if (!(cone = (t_cone*)malloc(sizeof(t_cone))))
 		ft_malloc_error();
+	if (!(cone->pln = (t_plane*)malloc(sizeof(t_plane))))
+        ft_malloc_error();
 	cone->next = NULL;
 	cone->o = ft_new_vect(0, 0, 0);
 	cone->dir = ft_new_vect(0, 1, 0);
@@ -38,6 +40,10 @@ t_cone		*new_cone(void)
 	cone->rot = ft_new_vect(0, 0, 0);
 	cone->angle = -1;
 	cone->shine = -1;
+	cone->cut = 0;
+	cone->pln->o = ft_new_vect(MAX, MAX, MAX);
+	cone->pln->norm = cone->dir;
+	cone->pln->color = cone->color;
 	return (cone);
 }
 
@@ -75,6 +81,12 @@ void		ft_read_line(char **datas, t_cone *cone, t_rt *rt, int fd)
 		cone->angle = get_radius(datas);
 	else if (ft_strcmp(datas[0], "shine:") == 0)
 		cone->shine = get_radius(datas);
+	else if (ft_strcmp(datas[0], "plnn:") == 0)
+		cone->pln->norm = get_coo(datas, 7);
+	else if (ft_strcmp(datas[0], "plnc:") == 0)
+		cone->pln->color = get_color(datas);
+	else if (ft_strcmp(datas[0], "plno:") == 0)
+		cone->pln->o = get_coo(datas, 7);
 	else if (datas[1] == NULL && ft_check_obj(datas[0], fd, rt) == 1)
 		rand = 0;
 	else

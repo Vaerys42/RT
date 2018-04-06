@@ -80,6 +80,8 @@ typedef	struct			s_cone
 	t_coo				o;
 	t_coo				dir;
 	t_coo				rot;
+	t_plane				*pln;
+	int					cut;
 	double				angle;
 	double				shine;
 	t_material			*color;
@@ -89,8 +91,12 @@ typedef	struct			s_cone
 typedef	struct			s_sphere
 {
 	t_coo				o;
+	t_coo				dir;
+	t_coo				rot;
 	double				radius;
 	t_material			*color;
+	t_plane				*pln;
+	int					cut;
 	double				shine;
 	struct s_sphere		*next;
 }						t_sphere;

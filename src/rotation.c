@@ -26,7 +26,14 @@ void		make_rot(t_rt *rt)
 	while (rt->cone != NULL)
 	{
 		rt->cone->dir = ft_rotation(rt->cone->dir, rt->cone->rot);
+		rt->cone->pln->norm = ft_rotation(rt->cone->pln->norm, rt->cone->rot);
 		rt->cone = rt->cone->next;
+	}
+	while (rt->sphere != NULL)
+	{
+		rt->sphere->pln->norm = ft_add_vect(rt->sphere->pln->norm,rt->sphere->dir);
+		rt->sphere->pln->norm = ft_rotation(rt->sphere->pln->norm, rt->sphere->rot);
+		rt->sphere = rt->sphere->next;
 	}
 	rt->cube = rt->start->cub;
 }

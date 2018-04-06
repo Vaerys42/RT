@@ -47,11 +47,18 @@ t_sphere	*sph_ini(void)
 
 	if (!(sphere = (t_sphere*)malloc(sizeof(t_sphere))))
 		ft_malloc_error();
+	if (!(sphere->pln = (t_plane*)malloc(sizeof(t_plane))))
+		ft_malloc_error();
 	sphere->next = NULL;
 	sphere->o = ft_new_vect(0, 0, 0);
+	sphere->dir = ft_new_vect(0, 1, 0);
 	sphere->color = NULL;
+	sphere->rot = ft_new_vect(0, 0, 0);
 	sphere->radius = -1;
 	sphere->shine = -1;
+	sphere->pln->o = ft_new_vect(MAX, MAX, MAX);
+	sphere->pln->norm = ft_new_vect(0, 1, 0);
+	sphere->pln->color = sphere->color;
 	return (sphere);
 }
 
@@ -69,6 +76,14 @@ void		ft_sphere_line(char **datas, t_sphere *sphere, t_rt *rt, int fd)
 		sphere->radius = get_radius(datas);
 	else if (ft_strcmp(datas[0], "shine:") == 0)
 		sphere->shine = get_radius(datas);
+	else if (ft_strcmp(datas[0], "rot:") == 0)
+		sphere->rot = get_coo(datas, 7);
+	else if (ft_strcmp(datas[0], "plnn:") == 0)
+		sphere->pln->norm = get_coo(datas, 7);
+	else if (ft_strcmp(datas[0], "plnc:") == 0)
+		sphere->pln->color = get_color(datas);
+	else if (ft_strcmp(datas[0], "plno:") == 0)
+		sphere->pln->o = get_coo(datas, 7);
 	else if (datas[1] == NULL && ft_check_obj(datas[0], fd, rt) == 1)
 		rand = 0;
 	else
