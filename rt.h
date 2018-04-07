@@ -25,6 +25,7 @@
 # define CON 3
 # define CYL 4
 # define CUB 5
+# define ELL 6
 
 # include "libft/includes/libft.h"
 # include "SDL.framework/Headers/SDL.h"
@@ -62,13 +63,18 @@ typedef	struct			s_plane
 	struct s_plane		*next;
 }						t_plane;
 
+typedef	struct			s_object
+{
+	t_plane				*pln;
+	double				cut;
+}						t_object;
+
 typedef struct			s_cylinder
 {
 	t_coo				o;
 	t_coo				rot;
 	t_coo				dir;
-	t_plane				*pln;
-	int					cut;
+	t_object			*obj;
 	double				radius;
 	double				shine;
 	t_material			*color;
@@ -80,8 +86,7 @@ typedef	struct			s_cone
 	t_coo				o;
 	t_coo				dir;
 	t_coo				rot;
-	t_plane				*pln;
-	int					cut;
+	t_object			*obj;
 	double				angle;
 	double				shine;
 	t_material			*color;
@@ -95,11 +100,24 @@ typedef	struct			s_sphere
 	t_coo				rot;
 	double				radius;
 	t_material			*color;
-	t_plane				*pln;
-	int					cut;
+	t_object			*obj;
 	double				shine;
 	struct s_sphere		*next;
 }						t_sphere;
+
+typedef	struct			s_ellipse
+{
+	t_coo				o;
+	t_coo				dir;
+	t_coo				rot;
+	t_coo				rad1;
+	t_coo				rad2;
+	t_coo				rad3;
+	t_material			*color;
+	t_object			*obj;
+	double				shine;
+	struct s_ellipse		*next;
+}						t_ellipse;
 
 typedef	struct			s_cube
 {
@@ -169,6 +187,7 @@ typedef	struct			s_start
 	t_cone				*con;
 	t_cylinder			*cyl;
 	t_cube				*cub;
+	t_ellipse			*ell;
 	t_light				*lgh;
 }						t_start;
 
@@ -183,10 +202,12 @@ typedef	struct			s_rt
 	t_cone				*cone;
 	t_cylinder			*cylinder;
 	t_cube				*cube;
+	t_ellipse			*ellipse;
 	t_view				*view;
 	t_ray				*light_ray;
 	t_inter				*inter;
 	t_start				*start;
+	t_object			*obj;
 	int					rand;
 }						t_rt;
 
@@ -253,7 +274,7 @@ void					ft_get_point(t_rt *rt);
 t_coo					ft_rotation(t_coo vect, t_coo rot);
 void					make_rot(t_rt *rt);
 
-double					disc_eq(double a, double b, double delta);
+double					disc_eq(double a, double b, double c, double delta);
 t_coo					ft_det_vect(t_coo vect1, t_coo vect2);
 void					check_cube_inter(t_rt *rt, int type);
 int						ft_add_cube(int fd, t_rt *rt);
@@ -261,5 +282,9 @@ int						ft_add_cube(int fd, t_rt *rt);
 void            		aliasing(t_rt *rt);
 void					ft_ray(t_rt *rt, int x, int y, int type);
 void					ft_ini_ray(t_rt *rt, double x, double y);
+double      			ft_inter_plane_ini(t_ray *ray, t_object *obj, double a, double b, double c);
+double					ft_inter_plane_obj(t_object *obj, double dc, double t, double t1, double t2);
+void					check_ellipse_inter(t_rt *rt, int type);
+int						ft_add_ellipse(int fd, t_rt *rt);;
 
 #endif

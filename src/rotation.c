@@ -18,24 +18,31 @@ void		make_rot(t_rt *rt)
 	while (rt->cylinder != NULL)
 	{
 		rt->cylinder->dir = ft_rotation(rt->cylinder->dir, rt->cylinder->rot);
-		if (rt->cylinder->pln != NULL)
-			rt->cylinder->pln->norm = ft_rotation(rt->cylinder->pln->norm, rt->cylinder->rot);
+		if (rt->cylinder->obj->pln != NULL)
+			rt->cylinder->obj->pln->norm = ft_rotation(rt->cylinder->obj->pln->norm, rt->cylinder->rot);
 		rt->cylinder = rt->cylinder->next;
 	}
 	rt->cone = rt->start->con;
 	while (rt->cone != NULL)
 	{
 		rt->cone->dir = ft_rotation(rt->cone->dir, rt->cone->rot);
-		rt->cone->pln->norm = ft_rotation(rt->cone->pln->norm, rt->cone->rot);
+		rt->cone->obj->pln->norm = ft_rotation(rt->cone->obj->pln->norm, rt->cone->rot);
 		rt->cone = rt->cone->next;
 	}
 	while (rt->sphere != NULL)
 	{
-		rt->sphere->pln->norm = ft_add_vect(rt->sphere->pln->norm,rt->sphere->dir);
-		rt->sphere->pln->norm = ft_rotation(rt->sphere->pln->norm, rt->sphere->rot);
+		rt->sphere->obj->pln->norm = ft_add_vect(rt->sphere->obj->pln->norm,rt->sphere->dir);
+		rt->sphere->obj->pln->norm = ft_rotation(rt->sphere->obj->pln->norm, rt->sphere->rot);
 		rt->sphere = rt->sphere->next;
 	}
-	rt->cube = rt->start->cub;
+	while (rt->ellipse != NULL)
+	{
+		rt->ellipse->rad1 = ft_rotation(rt->ellipse->rad1,rt->ellipse->rot);
+		rt->ellipse->rad2 = ft_rotation(rt->ellipse->rad2,rt->ellipse->rot);
+		rt->ellipse->rad3 = ft_rotation(rt->ellipse->rad3,rt->ellipse->rot);
+		rt->ellipse->obj->pln->norm = ft_rotation(rt->ellipse->obj->pln->norm, rt->ellipse->rot);
+		rt->ellipse = rt->ellipse->next;
+	}
 }
 
 t_coo		ft_rotation_2(t_coo vect, t_coo rot)

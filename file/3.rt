@@ -9,7 +9,7 @@ shine: 0
 plno: 0 1 10
 plnn: 0 1 0
 plnc: 1 1 0
-rot: 30 -40 0
+rot: 90 0 0
 plane
 coo: 0 -1 0
 norm: 0 1 0

@@ -45,6 +45,10 @@ void	ft_malloc_ini(t_rt *rt)
 		ft_malloc_error();
 	if (!(rt->inter->mat = (t_material*)malloc(sizeof(t_material))))
 		ft_malloc_error();
+	if (!(rt->obj = (t_object*)malloc(sizeof(t_object))))
+		ft_malloc_error();
+	if (!(rt->obj->pln = (t_plane*)malloc(sizeof(t_plane))))
+		ft_malloc_error();
 }
 
 void	ft_ini(t_rt *rt)

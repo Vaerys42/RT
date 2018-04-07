@@ -3,10 +3,10 @@ coo: 0 0 0
 rot: 0 0 0
 sphere
 plno: 0 0.6 10
-plnn: 0.5 0.5 0
+plnn: 0 1 0
 plnc: 1 1 0
 coo: 0 0 10
-rot: 40 0 0
+rot: 30 0 0
 radius: 1
 color: 1 0 0
 shine: 1

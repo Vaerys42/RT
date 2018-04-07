@@ -31,6 +31,8 @@ int			ft_check_obj(char *str, int fd, t_rt *rt)
 		return (ft_add_cylinder(fd, rt));
 	else if (ft_strcmp(str, "cube") == 0)
 		return (ft_add_cube(fd, rt));
+	else if (ft_strcmp(str, "ellipse") == 0)
+		return (ft_add_ellipse(fd, rt));
 	else if (ft_strcmp(str, "camera") == 0)
 		return (ft_add_cam(fd, rt));
 	else if (ft_strcmp(str, "light") == 0)

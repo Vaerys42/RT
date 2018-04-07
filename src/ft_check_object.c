@@ -91,6 +91,7 @@ void		ft_get_light(t_rt *rt)
 		check_cone_inter(rt, 1);
 		check_cylinder_inter(rt, 1);
 		check_cube_inter(rt, 1);
+		check_ellipse_inter(rt, 1);
 		check_plane_inter(rt, 1);
 		rt->light = rt->light->next;
 	}
@@ -111,6 +112,7 @@ void		ft_check_object(t_rt *rt)
 	check_cone_inter(rt, 0);
 	check_cylinder_inter(rt, 0);
 	check_cube_inter(rt, 0);
+	check_ellipse_inter(rt, 0);
 	check_plane_inter(rt, 0);
 	if (rt->inter->dst <= 0.01)
 		rt->inter->dst = 0;

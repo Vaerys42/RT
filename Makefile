@@ -25,6 +25,9 @@ SRC =	src/main.c \
 		src/cube.c \
 		src/cube_p.c \
 		src/aliasing.c \
+		src/equation.c \
+		src/ellipse.c \
+		src/ellipse_p.c \
 
 LIBS = libft/libft.a SDL.framework/SDL2
 
