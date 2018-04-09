@@ -28,6 +28,8 @@ void		ft_sphere_info(t_sphere *sphere)
 int			sphere_list(t_rt *rt, t_sphere *sphere)
 {
 	ft_sphere_info(sphere);
+	if (sphere->pln != NULL && sphere->pln->color == NULL)
+		sphere->pln->color = sphere->color;
 	if (rt->sphere == NULL)
 	{
 		rt->sphere = sphere;
@@ -47,10 +49,7 @@ t_sphere	*sph_ini(void)
 
 	if (!(sphere = (t_sphere*)malloc(sizeof(t_sphere))))
 		ft_malloc_error();
-	if (!(sphere->obj = (t_object*)malloc(sizeof(t_object))))
-		ft_malloc_error();
-	if (!(sphere->obj->pln = (t_plane*)malloc(sizeof(t_plane))))
-		ft_malloc_error();
+	sphere->pln = NULL;
 	sphere->next = NULL;
 	sphere->o = ft_new_vect(0, 0, 0);
 	sphere->dir = ft_new_vect(0, 1, 0);
@@ -58,10 +57,26 @@ t_sphere	*sph_ini(void)
 	sphere->rot = ft_new_vect(0, 0, 0);
 	sphere->radius = -1;
 	sphere->shine = -1;
-	sphere->obj->pln->o = ft_new_vect(MAX, MAX, MAX);
-	sphere->obj->pln->norm = ft_new_vect(0, 1, 0);
-	sphere->obj->pln->color = sphere->color;
 	return (sphere);
+}
+
+void		inter_plane_sphere(t_sphere *sphere, char **datas)
+{
+	if (sphere->pln == NULL)
+	{
+		if (!(sphere->pln = (t_plane*)malloc(sizeof(t_plane))))
+			ft_malloc_error();
+		sphere->pln->o = (t_coo){0, 0, 0};
+		sphere->pln->norm = (t_coo){0, 1, 0};
+		sphere->pln->color = NULL;
+		sphere->pln->cut = 0;
+	}
+	if (ft_strcmp(datas[0], "plnn:") == 0)
+		sphere->pln->norm = get_coo(datas, 7);
+	else if (ft_strcmp(datas[0], "plnc:") == 0)
+		sphere->pln->color = get_color(datas);
+	else if (ft_strcmp(datas[0], "plno:") == 0)
+		sphere->pln->o = get_coo(datas, 7);
 }
 
 void		ft_sphere_line(char **datas, t_sphere *sphere, t_rt *rt, int fd)
@@ -80,12 +95,9 @@ void		ft_sphere_line(char **datas, t_sphere *sphere, t_rt *rt, int fd)
 		sphere->shine = get_radius(datas);
 	else if (ft_strcmp(datas[0], "rot:") == 0)
 		sphere->rot = get_coo(datas, 7);
-	else if (ft_strcmp(datas[0], "plnn:") == 0)
-		sphere->obj->pln->norm = get_coo(datas, 7);
-	else if (ft_strcmp(datas[0], "plnc:") == 0)
-		sphere->obj->pln->color = get_color(datas);
-	else if (ft_strcmp(datas[0], "plno:") == 0)
-		sphere->obj->pln->o = get_coo(datas, 7);
+	else if (ft_strcmp(datas[0], "plnn:") == 0 ||
+	ft_strcmp(datas[0], "plnc:") == 0 || ft_strcmp(datas[0], "plno:") == 0)
+		inter_plane_sphere(sphere, datas);
 	else if (datas[1] == NULL && ft_check_obj(datas[0], fd, rt) == 1)
 		rand = 0;
 	else

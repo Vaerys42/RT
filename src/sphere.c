@@ -12,6 +12,34 @@
 
 #include "../rt.h"
 
+void		cam_sphere_inter(t_rt *rt)
+{
+	rt->inter->obj = SPH;
+	rt->inter->mat->r = rt->sphere->color->r * rt->light->amb;
+	rt->inter->mat->g = rt->sphere->color->g * rt->light->amb;
+	rt->inter->mat->b = rt->sphere->color->b * rt->light->amb;
+	if (rt->sphere->pln != NULL && rt->sphere->pln->cut == 1)
+	{
+		rt->inter->mat->r = rt->sphere->pln->color->r * rt->light->amb;
+		rt->inter->mat->g = rt->sphere->pln->color->g * rt->light->amb;
+		rt->inter->mat->b = rt->sphere->pln->color->b * rt->light->amb;
+	}
+}
+
+void		light_sphere_inter(t_rt *rt)
+{
+	rt->light->shine = rt->sphere->shine;
+	rt->inter->angle->o = ft_sub_vect(rt->inter->point,
+	rt->sphere->o);
+	rt->inter->angle->dir = ft_rotation(rt->inter->angle->dir, rt->sphere->rot);
+	if (rt->sphere->pln != NULL && rt->sphere->pln->cut == 1)
+		rt->inter->angle->dir = ft_mult_vect(-1, rt->sphere->pln->norm);
+	rt->inter->angle->dir = ft_normalize(rt->inter->angle->o);
+	rt->inter->mat->r *= 2;
+	rt->inter->mat->g *= 2;
+	rt->inter->mat->b *= 2;
+}
+
 double		ft_check_sphere(t_sphere *sphere, t_ray *ray)
 {
 	double		a;
@@ -24,40 +52,18 @@ double		ft_check_sphere(t_sphere *sphere, t_ray *ray)
 	b = 2 * (scal(ray->dir, ray->obj));
 	c = scal(ray->obj, ray->obj) - pow(sphere->radius, 2);
 	delta = b * b - (4 * a * c);
-	if (sphere->obj->pln == NULL)
-        return (disc_eq(a, b, c, delta));
-	return (ft_inter_plane_ini(ray, sphere->obj, a, b, c));
+	if (sphere->pln == NULL)
+		return (disc_eq(a, b, c, delta));
+	return (ft_inter_plane_ini(ray, sphere->pln, a, b, c));
 }
 
 void		new_sphere_dst(t_rt *rt, int type, double tmp)
 {
 	rt->inter->dst = tmp;
 	if (type == 0)
-	{
-		rt->inter->obj = SPH;
-		rt->inter->mat->r = rt->sphere->color->r * rt->light->amb;
-		rt->inter->mat->g = rt->sphere->color->g * rt->light->amb;
-		rt->inter->mat->b = rt->sphere->color->b * rt->light->amb;
-		if (rt->sphere->obj->cut == 1 && rt->sphere->obj->pln != NULL)
-		{
-			rt->inter->mat->r = rt->sphere->obj->pln->color->r * rt->light->amb;
-			rt->inter->mat->g = rt->sphere->obj->pln->color->g * rt->light->amb;
-			rt->inter->mat->b = rt->sphere->obj->pln->color->b * rt->light->amb;
-		}
-	}
+		cam_sphere_inter(rt);
 	if (type == 1 && rt->inter->obj == SPH)
-	{
-		rt->light->shine = rt->sphere->shine;
-		rt->inter->angle->o = ft_sub_vect(rt->inter->point,
-		rt->sphere->o);
-		rt->inter->angle->dir = ft_rotation(rt->inter->angle->dir, rt->sphere->rot);
-		if (rt->sphere->obj->cut == 1)
-			rt->inter->angle->dir = ft_mult_vect(-1, rt->sphere->obj->pln->norm);	
-		rt->inter->angle->dir = ft_normalize(rt->inter->angle->o);
-		rt->inter->mat->r *= 2;
-		rt->inter->mat->g *= 2;
-		rt->inter->mat->b *= 2;
-	}
+		light_sphere_inter(rt);
 }
 
 void		check_sphere_inter(t_rt *rt, int type)
@@ -69,7 +75,8 @@ void		check_sphere_inter(t_rt *rt, int type)
 		rt->sphere = rt->start->sph;
 		while (rt->sphere != NULL)
 		{
-			rt->sphere->obj->cut = 0;
+			if (rt->sphere->pln != NULL)
+				rt->sphere->pln->cut = 0;
 			if (type == 0)
 				tmp = ft_check_sphere(rt->sphere, rt->ray);
 			else

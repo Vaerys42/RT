@@ -48,6 +48,7 @@ typedef	struct			s_coo
 typedef	struct			s_data
 {
 	unsigned int		*image_int;
+	unsigned int		*image_base;
 	SDL_Window			*sdl_window;
 	SDL_Renderer		*sdl_renderer;
 	SDL_Texture			*sdl_texture;
@@ -60,21 +61,16 @@ typedef	struct			s_plane
 	t_coo				o;
 	double				supp;
 	int					obj;
+	int					cut;
 	struct s_plane		*next;
 }						t_plane;
-
-typedef	struct			s_object
-{
-	t_plane				*pln;
-	double				cut;
-}						t_object;
 
 typedef struct			s_cylinder
 {
 	t_coo				o;
 	t_coo				rot;
 	t_coo				dir;
-	t_object			*obj;
+	t_plane				*pln;
 	double				radius;
 	double				shine;
 	t_material			*color;
@@ -86,7 +82,7 @@ typedef	struct			s_cone
 	t_coo				o;
 	t_coo				dir;
 	t_coo				rot;
-	t_object			*obj;
+	t_plane				*pln;
 	double				angle;
 	double				shine;
 	t_material			*color;
@@ -100,7 +96,7 @@ typedef	struct			s_sphere
 	t_coo				rot;
 	double				radius;
 	t_material			*color;
-	t_object			*obj;
+	t_plane				*pln;
 	double				shine;
 	struct s_sphere		*next;
 }						t_sphere;
@@ -114,7 +110,7 @@ typedef	struct			s_ellipse
 	t_coo				rad2;
 	t_coo				rad3;
 	t_material			*color;
-	t_object			*obj;
+	t_plane				*pln;
 	double				shine;
 	struct s_ellipse		*next;
 }						t_ellipse;
@@ -191,6 +187,12 @@ typedef	struct			s_start
 	t_light				*lgh;
 }						t_start;
 
+typedef	struct			s_options
+{
+	int					sepia;
+	int					blwh;
+}						t_options;
+
 typedef	struct			s_rt
 {
 	t_data				*data;
@@ -207,8 +209,7 @@ typedef	struct			s_rt
 	t_ray				*light_ray;
 	t_inter				*inter;
 	t_start				*start;
-	t_object			*obj;
-	int					rand;
+	t_options			*op;
 }						t_rt;
 
 void					ft_malloc_error(void);
@@ -231,7 +232,7 @@ double					get_radius(char **str);
 int						my_key_press(t_rt *rt, SDL_Keysym key);
 int						ft_exit_cross(t_rt *rt);
 void					put_pxl(t_data *data, int x, int y, t_material *color);
-void					move_color(t_material *c, double r, double g, double b);
+void					put_pxl_base(t_data *data, int x, int y, t_material *color);
 
 void					ft_raytracing(t_rt *rt);
 
@@ -282,9 +283,17 @@ int						ft_add_cube(int fd, t_rt *rt);
 void            		aliasing(t_rt *rt);
 void					ft_ray(t_rt *rt, int x, int y, int type);
 void					ft_ini_ray(t_rt *rt, double x, double y);
-double      			ft_inter_plane_ini(t_ray *ray, t_object *obj, double a, double b, double c);
-double					ft_inter_plane_obj(t_object *obj, double dc, double t, double t1, double t2);
+
+double      			ft_inter_plane_ini(t_ray *ray, t_plane *pln, double a, double b, double c);
+double					ft_inter_plane_obj(t_plane *pln, double dc, double t, double t1, double t2);
 void					check_ellipse_inter(t_rt *rt, int type);
 int						ft_add_ellipse(int fd, t_rt *rt);;
 
+t_material				hex_rgb(int col);
+unsigned int			col_hexa(int r, int g, int b);
+void					ft_check_expose(t_material *mat, double max);
+
+void					sepia(t_rt *rt);
+void					bl_wh(t_rt *rt);
+void					cpy_image(unsigned int *tab1, unsigned int *tab2);
 #endif

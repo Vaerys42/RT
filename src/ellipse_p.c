@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ellipse_p.c                                         :+:      :+:    :+:   */
+/*   ellipse_p.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kboucaud <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -26,6 +26,8 @@ void		ft_ellipse_info(t_ellipse *ellipse)
 int			ellipse_list(t_rt *rt, t_ellipse *ellipse)
 {
 	ft_ellipse_info(ellipse);
+	if (ellipse->pln != NULL && ellipse->pln->color == NULL)
+		ellipse->pln->color = ellipse->color;
 	if (rt->ellipse == NULL)
 	{
 		rt->ellipse = ellipse;
@@ -45,23 +47,36 @@ t_ellipse	*ell_ini(void)
 
 	if (!(ellipse = (t_ellipse*)malloc(sizeof(t_ellipse))))
 		ft_malloc_error();
-	if (!(ellipse->obj = (t_object*)malloc(sizeof(t_object))))
-		ft_malloc_error();
-	if (!(ellipse->obj->pln = (t_plane*)malloc(sizeof(t_plane))))
-		ft_malloc_error();
 	ellipse->next = NULL;
 	ellipse->o = ft_new_vect(0, 0, 0);
 	ellipse->dir = ft_new_vect(0, 1, 0);
 	ellipse->color = NULL;
 	ellipse->rot = ft_new_vect(0, 0, 0);
 	ellipse->rad1 = ft_new_vect(0, 0, 0);
-    ellipse->rad2 = ft_new_vect(0, 0, 0);
-    ellipse->rad3 = ft_new_vect(0, 0, 0);
+	ellipse->rad2 = ft_new_vect(0, 0, 0);
+	ellipse->rad3 = ft_new_vect(0, 0, 0);
 	ellipse->shine = -1;
-	ellipse->obj->pln->o = ft_new_vect(MAX, MAX, MAX);
-	ellipse->obj->pln->norm = ft_new_vect(0, 1, 0);
-	ellipse->obj->pln->color = ellipse->color;
+	ellipse->pln = NULL;
 	return (ellipse);
+}
+
+void		inter_plane_ellipse(t_ellipse *ellipse, char **datas)
+{
+	if (ellipse->pln != NULL)
+	{
+		if (!(ellipse->pln = (t_plane*)malloc(sizeof(t_plane))))
+			ft_malloc_error();
+		ellipse->pln->o = (t_coo){0, 0, 0};
+		ellipse->pln->norm = (t_coo){0, 1, 0};
+		ellipse->pln->color = NULL;
+		ellipse->pln->cut = 0;
+	}
+	if (ft_strcmp(datas[0], "plnn:") == 0)
+		ellipse->pln->norm = get_coo(datas, 7);
+	else if (ft_strcmp(datas[0], "plnc:") == 0)
+		ellipse->pln->color = get_color(datas);
+	else if (ft_strcmp(datas[0], "plno:") == 0)
+		ellipse->pln->o = get_coo(datas, 7);
 }
 
 void		ft_ellipse_line(char **datas, t_ellipse *ellipse, t_rt *rt, int fd)
@@ -76,26 +91,21 @@ void		ft_ellipse_line(char **datas, t_ellipse *ellipse, t_rt *rt, int fd)
 		ellipse->color = get_color(datas);
 	else if (ft_strcmp(datas[0], "rad1:") == 0)
 		ellipse->rad1 = get_coo(datas, 7);
-    else if (ft_strcmp(datas[0], "rad2:") == 0)
+	else if (ft_strcmp(datas[0], "rad2:") == 0)
 		ellipse->rad2 = get_coo(datas, 7);
-    else if (ft_strcmp(datas[0], "rad3:") == 0)
+	else if (ft_strcmp(datas[0], "rad3:") == 0)
 		ellipse->rad3 = get_coo(datas, 7);
 	else if (ft_strcmp(datas[0], "shine:") == 0)
 		ellipse->shine = get_radius(datas);
 	else if (ft_strcmp(datas[0], "rot:") == 0)
 		ellipse->rot = get_coo(datas, 7);
-	else if (ft_strcmp(datas[0], "plnn:") == 0)
-		ellipse->obj->pln->norm = get_coo(datas, 7);
-	else if (ft_strcmp(datas[0], "plnc:") == 0)
-		ellipse->obj->pln->color = get_color(datas);
-	else if (ft_strcmp(datas[0], "plno:") == 0)
-		ellipse->obj->pln->o = get_coo(datas, 7);
+	else if (ft_strcmp(datas[0], "plnn:") == 0 ||
+	ft_strcmp(datas[0], "plnc:") == 0 || ft_strcmp(datas[0], "plno:") == 0)
+		inter_plane_ellipse(ellipse, datas);
 	else if (datas[1] == NULL && ft_check_obj(datas[0], fd, rt) == 1)
 		rand = 0;
 	else
-		{
-            printf("%s\n", datas[0]);
-            ft_bad_arg(5);}
+		ft_bad_arg(5);
 }
 
 int			ft_add_ellipse(int fd, t_rt *rt)

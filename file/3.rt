@@ -6,10 +6,7 @@ coo: 0 -0.5 10
 angle: 40
 color: 1 1 0
 shine: 0
-plno: 0 1 10
-plnn: 0 1 0
-plnc: 1 1 0
-rot: 90 0 0
+rot: 0 0 0
 plane
 coo: 0 -1 0
 norm: 0 1 0

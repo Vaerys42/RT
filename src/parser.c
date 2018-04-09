@@ -19,10 +19,7 @@ int			ft_check_obj(char *str, int fd, t_rt *rt)
 	if (str[0] == 0)
 		return (0);
 	else if (ft_strcmp(str, "plane") == 0)
-	{
-		obj++;
-		return (ft_add_plane(fd, rt, obj));
-	}
+		return (ft_add_plane(fd, rt, obj++));
 	else if (ft_strcmp(str, "sphere") == 0)
 		return (ft_add_sphere(fd, rt));
 	else if (ft_strcmp(str, "cone") == 0)

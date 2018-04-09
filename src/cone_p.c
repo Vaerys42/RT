@@ -31,27 +31,41 @@ t_cone		*new_cone(void)
 
 	if (!(cone = (t_cone*)malloc(sizeof(t_cone))))
 		ft_malloc_error();
-	if (!(cone->obj = (t_object*)malloc(sizeof(t_object))))
-        ft_malloc_error();
-	if (!(cone->obj->pln = (t_plane*)malloc(sizeof(t_plane))))
-        ft_malloc_error();
 	cone->next = NULL;
+	cone->pln = NULL;
 	cone->o = ft_new_vect(0, 0, 0);
 	cone->dir = ft_new_vect(0, 1, 0);
 	cone->color = NULL;
 	cone->rot = ft_new_vect(0, 0, 0);
 	cone->angle = -1;
 	cone->shine = -1;
-	cone->obj->cut = 0;
-	cone->obj->pln->o = ft_new_vect(MAX, MAX, MAX);
-	cone->obj->pln->norm = cone->dir;
-	cone->obj->pln->color = cone->color;
 	return (cone);
+}
+
+void		inter_plane_cone(t_cone *cone, char **datas)
+{
+	if (cone->pln == NULL)
+	{
+		if (!(cone->pln = (t_plane*)malloc(sizeof(t_plane))))
+			ft_malloc_error();
+		cone->pln->o = (t_coo){0, 0, 0};
+		cone->pln->norm = (t_coo){0, 1, 0};
+		cone->pln->color = NULL;
+		cone->pln->cut = 0;
+	}
+	if (ft_strcmp(datas[0], "plnn:") == 0)
+		cone->pln->norm = get_coo(datas, 7);
+	else if (ft_strcmp(datas[0], "plnc:") == 0)
+		cone->pln->color = get_color(datas);
+	else if (ft_strcmp(datas[0], "plno:") == 0)
+		cone->pln->o = get_coo(datas, 7);
 }
 
 int			cone_lst(t_rt *rt, t_cone *cone)
 {
 	ft_cone_info(cone);
+	if (cone->pln != NULL && cone->pln->color == NULL)
+		cone->pln->color = cone->color;
 	cone->dir = ft_normalize(cone->dir);
 	cone->angle = (cone->angle * M_PI) / 180;
 	if (rt->cone == NULL)
@@ -83,12 +97,9 @@ void		ft_read_line(char **datas, t_cone *cone, t_rt *rt, int fd)
 		cone->angle = get_radius(datas);
 	else if (ft_strcmp(datas[0], "shine:") == 0)
 		cone->shine = get_radius(datas);
-	else if (ft_strcmp(datas[0], "plnn:") == 0)
-		cone->obj->pln->norm = get_coo(datas, 7);
-	else if (ft_strcmp(datas[0], "plnc:") == 0)
-		cone->obj->pln->color = get_color(datas);
-	else if (ft_strcmp(datas[0], "plno:") == 0)
-		cone->obj->pln->o = get_coo(datas, 7);
+	else if (ft_strcmp(datas[0], "plnn:") == 0 ||
+	ft_strcmp(datas[0], "plnc:") == 0 || ft_strcmp(datas[0], "plno:") == 0)
+		inter_plane_cone(cone, datas);
 	else if (datas[1] == NULL && ft_check_obj(datas[0], fd, rt) == 1)
 		rand = 0;
 	else

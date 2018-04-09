@@ -14,6 +14,7 @@
 
 int			my_key_press(t_rt *rt, SDL_Keysym key)
 {
+	cpy_image(rt->data->image_int, rt->data->image_base);
 	if (key.sym == SDLK_ESCAPE)
 	{
 		SDL_DestroyTexture(rt->data->sdl_texture);
@@ -22,6 +23,20 @@ int			my_key_press(t_rt *rt, SDL_Keysym key)
 		SDL_Quit();
 		exit(1);
 	}
+	else if (key.sym == SDLK_s)
+	{
+		rt->op->blwh = 0;
+		rt->op->sepia = !rt->op->sepia;
+	}
+	else if (key.sym == SDLK_b)
+	{
+		rt->op->blwh = !rt->op->blwh;
+		rt->op->sepia = 0;
+	}
+	if (rt->op->blwh)
+		bl_wh(rt);
+	if (rt->op->sepia)
+		sepia(rt);
 	return (0);
 }
 

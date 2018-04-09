@@ -21,13 +21,14 @@ SRC =	src/main.c \
 		src/rotation.c \
 		src/cam_p.c \
 		src/light_p.c \
-		src/transparence.c \
 		src/cube.c \
 		src/cube_p.c \
 		src/aliasing.c \
 		src/equation.c \
 		src/ellipse.c \
 		src/ellipse_p.c \
+		src/filter.c \
+		src/pixel.c \
 
 LIBS = libft/libft.a SDL.framework/SDL2
 

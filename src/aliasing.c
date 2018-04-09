@@ -12,16 +12,6 @@
 
 #include "../rt.h"
 
-t_material		hex_rgb(int col)
-{
-	t_material		new;
-
-	new.r = ((col >> 16) & 0xFF);
-	new.g = ((col >> 8) & 0xFF);
-	new.b = ((col) & 0xFF);
-	return (new);
-}
-
 int				diff_color(int col1, int col2)
 {
 	t_material		new1;
@@ -29,26 +19,16 @@ int				diff_color(int col1, int col2)
 
 	new1 = hex_rgb(col1);
 	new2 = hex_rgb(col2);
-	if (new1.r - new2.r > ANTIALIA || new1.g - new2.g > ANTIALIA || new1.b - new2.b > ANTIALIA)
+	if (new1.r - new2.r > ANTIALIA || new1.g - new2.g > ANTIALIA
+	|| new1.b - new2.b > ANTIALIA)
 		return (1);
-	if (new2.r - new1.r > ANTIALIA || new2.g - new1.g > ANTIALIA || new2.b - new1.b > ANTIALIA)
+	if (new2.r - new1.r > ANTIALIA || new2.g - new1.g > ANTIALIA
+	|| new2.b - new1.b > ANTIALIA)
 		return (1);
 	return (0);
 }
 
-unsigned int	col_hexa(int r, int g, int b)
-{
-	return ((((r << 8) + g) << 8) + b);
-}
-
-void		put_pxl(t_data *data, int x, int y, t_material *color)
-{
-	if (x * 4 >= WIN_LEN * 4 || x * 4 < 0)
-		return ;
-	data->image_int[x + (WIN_LEN * y)] = col_hexa(color->r, color->g, color->b);
-}
-
-t_material	new_ray_alia(t_rt *rt, double x, double y)
+t_material		new_ray_alia(t_rt *rt, double x, double y)
 {
 	t_material		new;
 
@@ -58,7 +38,7 @@ t_material	new_ray_alia(t_rt *rt, double x, double y)
 	return (new);
 }
 
-void		mix_color(t_rt *rt, int x, int y)
+void			mix_color(t_rt *rt, int x, int y)
 {
 	t_material		new[6];
 
@@ -73,21 +53,21 @@ void		mix_color(t_rt *rt, int x, int y)
 	put_pxl(rt->data, x, y, &new[5]);
 }
 
-void		aliasing(t_rt *rt)
+void			aliasing(t_rt *rt)
 {
 	int			x;
 	int			y;
 
 	y = -1;
-	rt->rand = 0;
 	while (++y < WIN_HEIGHT)
 	{
 		x = -1;
 		while (++x < WIN_LEN)
 		{
-			if (y != 0 && x != WIN_LEN - 1)
+			if (y != WIN_HEIGHT - 1 && x != WIN_LEN - 1)
 			{
-				if (diff_color(rt->data->image_int[x + (WIN_LEN * y)], rt->data->image_int[x + (WIN_LEN * y) + 1]) == 1)
+				if (diff_color(rt->data->image_int[x + (WIN_LEN * y)],
+				rt->data->image_int[x + (WIN_LEN * y) + 1]) == 1)
 					mix_color(rt, x, y);
 			}
 		}

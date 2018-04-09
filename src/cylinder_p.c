@@ -28,6 +28,8 @@ void		ft_cylinder_info(t_cylinder *cylinder)
 int			cylinder_list(t_rt *rt, t_cylinder *cylinder)
 {
 	ft_cylinder_info(cylinder);
+	if (cylinder->pln != NULL && cylinder->pln->color == NULL)
+		cylinder->pln->color = cylinder->color;
 	if (rt->cylinder == NULL)
 	{
 		rt->cylinder = cylinder;
@@ -47,21 +49,33 @@ t_cylinder	*cyl_ini(void)
 
 	if (!(cylinder = (t_cylinder*)malloc(sizeof(t_cylinder))))
 		ft_malloc_error();
-	if (!(cylinder->obj = (t_object*)malloc(sizeof(t_object))))
-        ft_malloc_error();
-	if (!(cylinder->obj->pln = (t_plane*)malloc(sizeof(t_plane))))
-        ft_malloc_error();
 	cylinder->dir = ft_new_vect(0, 1, 0);
 	cylinder->next = NULL;
 	cylinder->o = ft_new_vect(0, 0, 0);
 	cylinder->color = NULL;
 	cylinder->rot = ft_new_vect(0, 0, 0);
 	cylinder->radius = -1;
-	cylinder->obj->cut = 0;
-	cylinder->obj->pln->o = ft_new_vect(MAX, MAX, MAX);
-	cylinder->obj->pln->norm = cylinder->dir;
-	cylinder->obj->pln->color = cylinder->color;
+	cylinder->pln = NULL;
 	return (cylinder);
+}
+
+void		inter_plane_cylinder(t_cylinder *cylinder, char **datas)
+{
+	if (cylinder->pln == NULL)
+	{
+		if (!(cylinder->pln = (t_plane*)malloc(sizeof(t_plane))))
+			ft_malloc_error();
+		cylinder->pln->o = (t_coo){0, 0, 0};
+		cylinder->pln->norm = (t_coo){0, 1, 0};
+		cylinder->pln->color = NULL;
+		cylinder->pln->cut = 0;
+	}
+	if (ft_strcmp(datas[0], "plnn:") == 0)
+		cylinder->pln->norm = get_coo(datas, 7);
+	else if (ft_strcmp(datas[0], "plnc:") == 0)
+		cylinder->pln->color = get_color(datas);
+	else if (ft_strcmp(datas[0], "plno:") == 0)
+		cylinder->pln->o = get_coo(datas, 7);
 }
 
 void		ft_cyl_read_line(char **datas, t_cylinder *cyl, t_rt *rt, int fd)
@@ -80,12 +94,9 @@ void		ft_cyl_read_line(char **datas, t_cylinder *cyl, t_rt *rt, int fd)
 		cyl->rot = get_coo(datas, 7);
 	else if (ft_strcmp(datas[0], "shine:") == 0)
 		cyl->shine = get_radius(datas);
-    else if (ft_strcmp(datas[0], "plnn:") == 0)
-		cyl->obj->pln->norm = get_coo(datas, 7);
-	else if (ft_strcmp(datas[0], "plnc:") == 0)
-		cyl->obj->pln->color = get_color(datas);
-	else if (ft_strcmp(datas[0], "plno:") == 0)
-		cyl->obj->pln->o = get_coo(datas, 7);
+	else if (ft_strcmp(datas[0], "plnn:") == 0 ||
+	ft_strcmp(datas[0], "plnc:") == 0 || ft_strcmp(datas[0], "plno:") == 0)
+		inter_plane_cylinder(cyl, datas);
 	else if (datas[1] == NULL && ft_check_obj(datas[0], fd, rt) == 1)
 		rand = 0;
 	else

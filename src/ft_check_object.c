@@ -12,35 +12,29 @@
 
 #include "../rt.h"
 
-void		ft_check_expose(t_rt *rt)
+void		ft_check_expose(t_material *mat, double max)
 {
-	double	max;
-
-	max = 1.0;
-	if (rt->inter->mat->r > max)
-		max = rt->inter->mat->r;
-	if (rt->inter->mat->b > max)
-		max = rt->inter->mat->b;
-	if (rt->inter->mat->g > max)
-		max = rt->inter->mat->g;
-	rt->inter->mat->r = rt->inter->mat->r / max;
-	rt->inter->mat->g = rt->inter->mat->g / max;
-	rt->inter->mat->b = rt->inter->mat->b / max;
+	if (mat->r > max)
+		mat->r = max;
+	if (mat->b > max)
+		mat->b = max;
+	if (mat->g > max)
+		mat->g = max;
 }
 
 void		ft_brillance(t_rt *rt)
 {
+	t_coo		spec;
+	double		angle;
+
 	rt->light = rt->start->lgh;
 	while (rt->light)
 	{
-		t_coo		spec;
-		double		angle;
-
 		rt->light_ray->dir = ft_normalize(ft_sub_vect(rt->inter->point,
 		rt->light->o));
-		angle = - scal(rt->light_ray->dir, rt->inter->angle->dir);
+		angle = -scal(rt->light_ray->dir, rt->inter->angle->dir);
 		angle = (angle < 0.01) ? 0.01 : angle;
-		spec = ft_normalize(ft_add_vect(rt->light_ray->dir, 
+		spec = ft_normalize(ft_add_vect(rt->light_ray->dir,
 		ft_mult_vect(angle, rt->inter->angle->dir)));
 		rt->inter->mat->r += rt->light->shine *
 		pow(scal(spec, ft_sub_vect(spec, rt->light_ray->dir)), 2);
@@ -48,7 +42,7 @@ void		ft_brillance(t_rt *rt)
 		pow(scal(spec, ft_sub_vect(spec, rt->light_ray->dir)), 2);
 		rt->inter->mat->b += rt->light->shine *
 		pow(scal(spec, ft_sub_vect(spec, rt->light_ray->dir)), 2);
-			rt->light = rt->light->next;
+		rt->light = rt->light->next;
 	}
 }
 
@@ -60,21 +54,31 @@ void		ft_get_point(t_rt *rt)
 
 void		ft_light_diffuse(t_rt *rt)
 {
+	double		angle;
+
 	rt->light = rt->start->lgh;
 	while (rt->light)
 	{
-		double		angle;
-
 		rt->light_ray->dir = ft_normalize(ft_sub_vect(rt->inter->point,
 		rt->light->o));
 		angle = -scal(rt->light_ray->dir, rt->inter->angle->dir);
 		angle = (angle < 0.01) ? 0.01 : angle;
 		rt->inter->mat->r += rt->light->color->r * angle * rt->light->power;
 		rt->inter->mat->g += rt->light->color->g * angle * rt->light->power;
-		rt->inter->mat->b += rt->light->color->b * angle * rt->light->power;	
-		ft_check_expose(rt);
+		rt->inter->mat->b += rt->light->color->b * angle * rt->light->power;
+		ft_check_expose(rt->inter->mat, 1.0);
 		rt->light = rt->light->next;
 	}
+}
+
+void		check_forms(t_rt *rt, int type)
+{
+	check_sphere_inter(rt, type);
+	check_cone_inter(rt, type);
+	check_cylinder_inter(rt, type);
+	check_cube_inter(rt, type);
+	check_ellipse_inter(rt, type);
+	check_plane_inter(rt, type);
 }
 
 void		ft_get_light(t_rt *rt)
@@ -87,12 +91,7 @@ void		ft_get_light(t_rt *rt)
 		rt->light_ray->dir = ft_normalize(ft_sub_vect(rt->inter->point,
 		rt->light->o));
 		rt->light->shine = 0;
-		check_sphere_inter(rt, 1);
-		check_cone_inter(rt, 1);
-		check_cylinder_inter(rt, 1);
-		check_cube_inter(rt, 1);
-		check_ellipse_inter(rt, 1);
-		check_plane_inter(rt, 1);
+		check_forms(rt, 1);
 		rt->light = rt->light->next;
 	}
 	ft_light_diffuse(rt);
@@ -108,12 +107,7 @@ void		ft_check_object(t_rt *rt)
 	rt->inter->mat->g = 0;
 	rt->inter->mat->b = 0;
 	rt->light = rt->start->lgh;
-	check_sphere_inter(rt, 0);
-	check_cone_inter(rt, 0);
-	check_cylinder_inter(rt, 0);
-	check_cube_inter(rt, 0);
-	check_ellipse_inter(rt, 0);
-	check_plane_inter(rt, 0);
+	check_forms(rt, 0);
 	if (rt->inter->dst <= 0.01)
 		rt->inter->dst = 0;
 	if (rt->inter->dst != 0)

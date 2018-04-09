@@ -45,9 +45,7 @@ void	ft_malloc_ini(t_rt *rt)
 		ft_malloc_error();
 	if (!(rt->inter->mat = (t_material*)malloc(sizeof(t_material))))
 		ft_malloc_error();
-	if (!(rt->obj = (t_object*)malloc(sizeof(t_object))))
-		ft_malloc_error();
-	if (!(rt->obj->pln = (t_plane*)malloc(sizeof(t_plane))))
+	if (!(rt->op = (t_options*)malloc(sizeof(t_options))))
 		ft_malloc_error();
 }
 
@@ -59,5 +57,7 @@ void	ft_ini(t_rt *rt)
 	rt->plane = rt->start->pln;
 	rt->inter->obj = -1;
 	rt->cone = rt->start->con;
+	rt->op->sepia = 0;
+	rt->op->blwh = 0;
 	make_rot(rt);
 }

@@ -58,7 +58,7 @@ t_coo		ft_det_vect(t_coo vect1, t_coo vect2)
 	t_coo		new;
 
 	new.x = vect1.y * vect2.z - vect1.z * vect2.y;
-	new.y = - (vect1.x * vect2.z - vect1.z * vect2.x);
+	new.y = -(vect1.x * vect2.z - vect1.z * vect2.x);
 	new.z = vect1.x * vect2.y - vect1.y * vect2.x;
 	return (new);
 }
