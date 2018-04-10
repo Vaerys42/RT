@@ -70,7 +70,9 @@ int			main(int argc, char **argv)
 	if (!(rt = (t_rt*)malloc(sizeof(t_rt))))
 		ft_malloc_error();
 	parser(rt, argv[1]);
+	printf("Parser OK\n");
 	ft_ini(rt);
+	printf("Ini OK\n");
 	if (rt->light != NULL)
 		ft_raytracing(rt);
 	get_event(rt);

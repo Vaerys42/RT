@@ -38,6 +38,7 @@ void		cyl_cone_rot(t_rt *rt)
 void		make_rot(t_rt *rt)
 {
 	cyl_cone_rot(rt);
+	rt->sphere = rt->start->sph;
 	while (rt->sphere != NULL)
 	{
 		if (rt->sphere->pln != NULL)
@@ -49,6 +50,7 @@ void		make_rot(t_rt *rt)
 		}
 		rt->sphere = rt->sphere->next;
 	}
+	rt->ellipse = rt->start->ell;
 	while (rt->ellipse != NULL)
 	{
 		rt->ellipse->rad1 = ft_rotation(rt->ellipse->rad1, rt->ellipse->rot);

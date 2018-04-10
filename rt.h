@@ -216,10 +216,6 @@ void					ft_malloc_error(void);
 void					ft_bad_arg(int i);
 void					ft_exit(void);
 
-void					ft_sphere_info(t_sphere *sphere);
-void					ft_plane_info(t_plane *plane);
-void					ft_cone_info(t_cone *cone);
-
 void					ft_ini(t_rt *rt);
 void					ft_create(t_rt *rt);
 void					parser(t_rt *rt, char *file);
@@ -235,7 +231,6 @@ void					put_pxl(t_data *data, int x, int y, t_material *color);
 void					put_pxl_base(t_data *data, int x, int y, t_material *color);
 
 void					ft_raytracing(t_rt *rt);
-
 void					ft_check_object(t_rt *rt);
 
 t_coo					ft_new_vect(float x, float y, float z);
@@ -248,6 +243,7 @@ double					scal(t_coo vect1, t_coo vect2);
 double					ft_dst(t_coo point1, t_coo point2);
 double					ft_norme(t_coo vect);
 t_coo					ft_normalize(t_coo vect);
+double					disc_eq(double a, double b, double c, double delta);
 
 double					ft_check_sphere(t_sphere *sphere, t_ray *ray);
 void					check_sphere_inter(t_rt *rt, int type);
@@ -275,7 +271,6 @@ void					ft_get_point(t_rt *rt);
 t_coo					ft_rotation(t_coo vect, t_coo rot);
 void					make_rot(t_rt *rt);
 
-double					disc_eq(double a, double b, double c, double delta);
 t_coo					ft_det_vect(t_coo vect1, t_coo vect2);
 void					check_cube_inter(t_rt *rt, int type);
 int						ft_add_cube(int fd, t_rt *rt);
@@ -286,6 +281,7 @@ void					ft_ini_ray(t_rt *rt, double x, double y);
 
 double      			ft_inter_plane_ini(t_ray *ray, t_plane *pln, double a, double b, double c);
 double					ft_inter_plane_obj(t_plane *pln, double dc, double t, double t1, double t2);
+
 void					check_ellipse_inter(t_rt *rt, int type);
 int						ft_add_ellipse(int fd, t_rt *rt);;
 

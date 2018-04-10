@@ -7,6 +7,8 @@ angle: 40
 color: 1 1 0
 shine: 0
 rot: 0 0 0
+plnn: 0 1 0
+plno: 0 1 5
 plane
 coo: 0 -1 0
 norm: 0 1 0
