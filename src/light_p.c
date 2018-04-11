@@ -54,7 +54,7 @@ t_light		*light_ini(void)
 	return (light);
 }
 
-int			ft_add_light(int fd, t_rt *rt)
+int			ft_add_light(int fd, t_rt *rt, int id)
 {
 	int			ret;
 	char		*line;
@@ -62,6 +62,7 @@ int			ft_add_light(int fd, t_rt *rt)
 	t_light		*light;
 
 	light = light_ini();
+	light->id = id;
 	while ((ret = get_next_line(fd, &line)) > 0)
 	{
 		datas = ft_strsplit(line, ' ');

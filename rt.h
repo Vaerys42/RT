@@ -141,7 +141,7 @@ typedef struct			s_light
 	double				power;
 	double				shine;
 	double				amb;
-	int					obj;
+	int					id;
 	struct s_light		*next;
 }						t_light;
 
@@ -255,21 +255,21 @@ double					disc_eq(double a, double b, double c, double delta);
 double					ft_check_sphere(t_sphere *sphere, t_ray *ray);
 void					check_sphere_inter(t_rt *rt, int type);
 void					ft_ini_sphere(t_rt *rt);
-int						ft_add_sphere(int fd, t_rt *rt);
+int						ft_add_sphere(int fd, t_rt *rt, int id);
 
 void					check_plane_inter(t_rt *rt, int type);
 double					ft_check_plane(t_plane *plane, t_ray *ray);
 void					ft_ini_plane(t_rt *rt);
-int						ft_add_plane(int fd, t_rt *rt);
+int						ft_add_plane(int fd, t_rt *rt, int id);
 
 void					check_cone_inter(t_rt *rt, int type);
 double					ft_check_cone(t_cone *cone, t_ray *ray);
-int						ft_add_cone(int fd, t_rt *rt);
+int						ft_add_cone(int fd, t_rt *rt, int id);
 
-int						ft_add_cylinder(int fd, t_rt *rt);
+int						ft_add_cylinder(int fd, t_rt *rt, int id);
 void					check_cylinder_inter(t_rt *rt, int type);
 
-int						ft_add_light(int fd, t_rt *rt);
+int						ft_add_light(int fd, t_rt *rt, int id);
 
 int						ft_add_cam(int fd, t_rt *rt);
 
@@ -280,7 +280,7 @@ void					make_rot(t_rt *rt);
 
 t_coo					ft_det_vect(t_coo vect1, t_coo vect2);
 void					check_cube_inter(t_rt *rt, int type);
-int						ft_add_cube(int fd, t_rt *rt);
+int						ft_add_cube(int fd, t_rt *rt, int id);
 
 void					aliasing(t_rt *rt);
 void					ft_ray(t_rt *rt, int x, int y, int type);
@@ -292,7 +292,7 @@ double					ft_inter_plane_obj(t_plane *pln, double dc, double t,
 						double t1, double t2);
 
 void					check_ellipse_inter(t_rt *rt, int type);
-int						ft_add_ellipse(int fd, t_rt *rt);
+int						ft_add_ellipse(int fd, t_rt *rt, int id);
 
 t_material				hex_rgb(int col);
 unsigned int			col_hexa(int r, int g, int b);

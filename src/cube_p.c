@@ -46,10 +46,7 @@ t_cube		*ini_cube(void)
 
 int			cube_lst(t_rt *rt, t_cube *cube)
 {
-	static int		id = 0;
-
 	ft_cube_info(cube);
-	cube->id = id;
 	if (rt->cube == NULL)
 	{
 		rt->cube = cube;
@@ -60,7 +57,6 @@ int			cube_lst(t_rt *rt, t_cube *cube)
 		rt->cube->next = cube;
 		rt->cube = rt->cube->next;
 	}
-	id++;
 	return (1);
 }
 
@@ -88,7 +84,7 @@ void		ft_cube_line(char **datas, int fd, t_rt *rt, t_cube *cube)
 		ft_bad_arg(5);
 }
 
-int			ft_add_cube(int fd, t_rt *rt)
+int			ft_add_cube(int fd, t_rt *rt, int id)
 {
 	int			ret;
 	char		*line;
@@ -96,6 +92,7 @@ int			ft_add_cube(int fd, t_rt *rt)
 	t_cube		*cube;
 
 	cube = ini_cube();
+	cube->id = id;
 	while ((ret = get_next_line(fd, &line)) > 0)
 	{
 		datas = ft_strsplit(line, ' ');

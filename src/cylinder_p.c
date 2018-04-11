@@ -27,12 +27,9 @@ void		ft_cylinder_info(t_cylinder *cylinder)
 
 int			cylinder_list(t_rt *rt, t_cylinder *cylinder)
 {
-	static int				id = 0;
-
 	ft_cylinder_info(cylinder);
 	if (cylinder->pln != NULL && cylinder->pln->color == NULL)
 		cylinder->pln->color = cylinder->color;
-	cylinder->id = id;
 	if (rt->cylinder == NULL)
 	{
 		rt->cylinder = cylinder;
@@ -43,7 +40,6 @@ int			cylinder_list(t_rt *rt, t_cylinder *cylinder)
 		rt->cylinder->next = cylinder;
 		rt->cylinder = rt->cylinder->next;
 	}
-	id++;
 	return (1);
 }
 
@@ -107,7 +103,7 @@ void		ft_cyl_read_line(char **datas, t_cylinder *cyl, t_rt *rt, int fd)
 		ft_bad_arg(5);
 }
 
-int			ft_add_cylinder(int fd, t_rt *rt)
+int			ft_add_cylinder(int fd, t_rt *rt, int id)
 {
 	int			ret;
 	char		*line;
@@ -115,6 +111,7 @@ int			ft_add_cylinder(int fd, t_rt *rt)
 	t_cylinder	*cylinder;
 
 	cylinder = cyl_ini();
+	cylinder->id = id;
 	while ((ret = get_next_line(fd, &line)) > 0)
 	{
 		datas = ft_strsplit(line, ' ');

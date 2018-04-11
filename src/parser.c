@@ -14,24 +14,26 @@
 
 int			ft_check_obj(char *str, int fd, t_rt *rt)
 {
+	static int			id = 0;
+	
 	if (str[0] == 0)
 		return (0);
 	else if (ft_strcmp(str, "plane") == 0)
-		return (ft_add_plane(fd, rt));
+		return (ft_add_plane(fd, rt, id++));
 	else if (ft_strcmp(str, "sphere") == 0)
-		return (ft_add_sphere(fd, rt));
+		return (ft_add_sphere(fd, rt, id++));
 	else if (ft_strcmp(str, "cone") == 0)
-		return (ft_add_cone(fd, rt));
+		return (ft_add_cone(fd, rt, id++));
 	else if (ft_strcmp(str, "cylinder") == 0)
-		return (ft_add_cylinder(fd, rt));
+		return (ft_add_cylinder(fd, rt, id++));
 	else if (ft_strcmp(str, "cube") == 0)
-		return (ft_add_cube(fd, rt));
+		return (ft_add_cube(fd, rt, id++));
 	else if (ft_strcmp(str, "ellipse") == 0)
-		return (ft_add_ellipse(fd, rt));
+		return (ft_add_ellipse(fd, rt, id++));
 	else if (ft_strcmp(str, "camera") == 0)
 		return (ft_add_cam(fd, rt));
 	else if (ft_strcmp(str, "light") == 0)
-		return (ft_add_light(fd, rt));
+		return (ft_add_light(fd, rt, id++));
 	else
 		ft_bad_arg(5);
 	return (0);
