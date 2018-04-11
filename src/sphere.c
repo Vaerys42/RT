@@ -14,7 +14,7 @@
 
 void		cam_sphere_inter(t_rt *rt)
 {
-	rt->inter->obj = SPH;
+	rt->inter->obj = rt->sphere->id;
 	rt->inter->mat->r = rt->sphere->color->r * rt->light->amb;
 	rt->inter->mat->g = rt->sphere->color->g * rt->light->amb;
 	rt->inter->mat->b = rt->sphere->color->b * rt->light->amb;
@@ -26,8 +26,9 @@ void		cam_sphere_inter(t_rt *rt)
 	}
 }
 
-void		light_sphere_inter(t_rt *rt)
+void		light_sphere_inter(t_rt *rt, double tmp)
 {
+	rt->light->dst = tmp;
 	rt->light->shine = rt->sphere->shine;
 	rt->inter->angle->o = ft_sub_vect(rt->inter->point,
 	rt->sphere->o);
@@ -62,8 +63,8 @@ void		new_sphere_dst(t_rt *rt, int type, double tmp)
 	rt->inter->dst = tmp;
 	if (type == 0)
 		cam_sphere_inter(rt);
-	if (type == 1 && rt->inter->obj == SPH)
-		light_sphere_inter(rt);
+	if (type == 1 && rt->inter->obj == rt->sphere->id)
+		light_sphere_inter(rt, tmp);
 }
 
 void		check_sphere_inter(t_rt *rt, int type)

@@ -55,17 +55,19 @@ void		ft_get_point(t_rt *rt)
 void		ft_light_diffuse(t_rt *rt)
 {
 	double		angle;
+	double		dst;
 
 	rt->light = rt->start->lgh;
 	while (rt->light)
 	{
+		dst = 1 / rt->light->dst;
 		rt->light_ray->dir = ft_normalize(ft_sub_vect(rt->inter->point,
 		rt->light->o));
 		angle = -scal(rt->light_ray->dir, rt->inter->angle->dir);
 		angle = (angle < 0.01) ? 0.01 : angle;
-		rt->inter->mat->r += rt->light->color->r * angle * rt->light->power;
-		rt->inter->mat->g += rt->light->color->g * angle * rt->light->power;
-		rt->inter->mat->b += rt->light->color->b * angle * rt->light->power;
+		rt->inter->mat->r += dst * rt->light->color->r * angle * rt->light->power;
+		rt->inter->mat->g += dst * rt->light->color->g * angle * rt->light->power;
+		rt->inter->mat->b += dst * rt->light->color->b * angle * rt->light->power;
 		ft_check_expose(rt->inter->mat, 1.0);
 		rt->light = rt->light->next;
 	}

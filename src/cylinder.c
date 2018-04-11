@@ -14,7 +14,7 @@
 
 void		cam_cylinder_inter(t_rt *rt)
 {
-	rt->inter->obj = CYL;
+	rt->inter->obj = rt->cylinder->id;
 	rt->inter->mat->r = rt->cylinder->color->r * rt->light->amb;
 	rt->inter->mat->g = rt->cylinder->color->g * rt->light->amb;
 	rt->inter->mat->b = rt->cylinder->color->b * rt->light->amb;
@@ -26,8 +26,9 @@ void		cam_cylinder_inter(t_rt *rt)
 	}
 }
 
-void		light_cylinder_inter(t_rt *rt)
+void		light_cylinder_inter(t_rt *rt, double tmp)
 {
+	rt->light->dst = tmp;
 	rt->light->shine = rt->cylinder->shine;
 	rt->inter->angle->dir.x = rt->inter->point.x -
 	rt->cylinder->o.x;
@@ -68,8 +69,8 @@ void		new_cylinder_dst(t_rt *rt, int type, double tmp)
 	rt->inter->dst = tmp;
 	if (type == 0)
 		cam_cylinder_inter(rt);
-	if (type == 1 && rt->inter->obj == CYL)
-		light_cylinder_inter(rt);
+	if (type == 1 && rt->inter->obj == rt->cylinder->id)
+		light_cylinder_inter(rt, tmp);
 }
 
 void		check_cylinder_inter(t_rt *rt, int type)

@@ -9,10 +9,6 @@ plane
 coo: 0 1.5 0
 norm: 0 -1 0
 color: 0 1 0
-plane
-coo: 0 0 15
-norm: 0 0 -1
-color: 0 0 1
 cylinder
 coo: 1 0 10
 radius: 0.2
@@ -53,3 +49,7 @@ light
 coo: -2 1 7
 color: 1 1 1
 pow: 0.3
+plane
+coo: 0 0 15
+norm: 0 0 -1
+color: 0 0 1

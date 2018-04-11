@@ -131,6 +131,7 @@ typedef	struct			s_cube
 	double				shine;
 	t_coo				rot;
 	int					id;
+	int					side;
 	struct s_cube		*next;
 }						t_cube;
 
@@ -142,6 +143,7 @@ typedef struct			s_light
 	double				shine;
 	double				amb;
 	int					id;
+	double				dst;
 	struct s_light		*next;
 }						t_light;
 

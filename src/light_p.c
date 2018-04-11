@@ -50,6 +50,7 @@ t_light		*light_ini(void)
 	light->power = -1;
 	light->shine = 0;
 	light->amb = 0.1;
+	light->dst = -1;
 	light->next = NULL;
 	return (light);
 }

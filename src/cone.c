@@ -14,7 +14,7 @@
 
 void		cam_cone_inter(t_rt *rt)
 {
-	rt->inter->obj = CON;
+	rt->inter->obj = rt->cone->id;
 	rt->inter->mat->r = rt->cone->color->r * rt->light->amb;
 	rt->inter->mat->g = rt->cone->color->g * rt->light->amb;
 	rt->inter->mat->b = rt->cone->color->b * rt->light->amb;
@@ -26,8 +26,9 @@ void		cam_cone_inter(t_rt *rt)
 	}
 }
 
-void		light_cone_inter(t_rt *rt)
+void		light_cone_inter(t_rt *rt, double tmp)
 {
+	rt->light->dst = tmp;
 	rt->light->shine = rt->cone->shine;
 	rt->inter->angle->dir.x = rt->inter->point.x - rt->cone->o.x;
 	rt->inter->angle->dir.y = rt->inter->point.y;
@@ -66,8 +67,8 @@ void		new_cone_dst(t_rt *rt, int type, double tmp)
 	rt->inter->dst = tmp;
 	if (type == 0)
 		cam_cone_inter(rt);
-	if (type == 1 && rt->inter->obj == CON)
-		light_cone_inter(rt);
+	if (type == 1 && rt->inter->obj == rt->cone->id)
+		light_cone_inter(rt, tmp);
 }
 
 void		check_cone_inter(t_rt *rt, int type)
