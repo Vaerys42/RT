@@ -27,9 +27,12 @@ void		ft_cylinder_info(t_cylinder *cylinder)
 
 int			cylinder_list(t_rt *rt, t_cylinder *cylinder)
 {
+	static int				id = 0;
+
 	ft_cylinder_info(cylinder);
 	if (cylinder->pln != NULL && cylinder->pln->color == NULL)
 		cylinder->pln->color = cylinder->color;
+	cylinder->id = id;
 	if (rt->cylinder == NULL)
 	{
 		rt->cylinder = cylinder;
@@ -40,6 +43,7 @@ int			cylinder_list(t_rt *rt, t_cylinder *cylinder)
 		rt->cylinder->next = cylinder;
 		rt->cylinder = rt->cylinder->next;
 	}
+	id++;
 	return (1);
 }
 

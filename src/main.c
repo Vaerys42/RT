@@ -54,8 +54,14 @@ void		get_event(t_rt *rt)
 		{
 			if (ev.type == SDL_QUIT)
 				ft_exit_cross(rt);
-			else if (ev.type == SDL_KEYDOWN & ev.key.repeat == 0)
+			else if (ev.type == SDL_KEYDOWN && ev.key.repeat == 0)
 				my_key_press(rt, ev.key.keysym);
+			else if (ev.type == SDL_MOUSEBUTTONDOWN && ev.button.button == SDL_BUTTON_LEFT)
+				rt->op->maintain = 1;
+			else if (ev.type == SDL_MOUSEBUTTONUP && ev.button.button == SDL_BUTTON_LEFT)
+				rt->op->maintain = 0;
+			else if (ev.type == SDL_MOUSEMOTION && rt->op->maintain == 1)
+				move_object(rt, ev.motion.x, ev.motion.y);
 			window(rt);
 		}
 	}
@@ -70,9 +76,7 @@ int			main(int argc, char **argv)
 	if (!(rt = (t_rt*)malloc(sizeof(t_rt))))
 		ft_malloc_error();
 	parser(rt, argv[1]);
-	printf("Parser OK\n");
 	ft_ini(rt);
-	printf("Ini OK\n");
 	if (rt->light != NULL)
 		ft_raytracing(rt);
 	get_event(rt);

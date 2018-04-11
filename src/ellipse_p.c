@@ -25,9 +25,12 @@ void		ft_ellipse_info(t_ellipse *ellipse)
 
 int			ellipse_list(t_rt *rt, t_ellipse *ellipse)
 {
+	static int			id = 0;
+
 	ft_ellipse_info(ellipse);
 	if (ellipse->pln != NULL && ellipse->pln->color == NULL)
 		ellipse->pln->color = ellipse->color;
+	ellipse->id = id;
 	if (rt->ellipse == NULL)
 	{
 		rt->ellipse = ellipse;
@@ -38,6 +41,7 @@ int			ellipse_list(t_rt *rt, t_ellipse *ellipse)
 		rt->ellipse->next = ellipse;
 		rt->ellipse = rt->ellipse->next;
 	}
+	id++;
 	return (1);
 }
 

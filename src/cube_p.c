@@ -40,14 +40,16 @@ t_cube		*ini_cube(void)
 	cube->rot = ft_new_vect(0, 0, 0);
 	cube->color = NULL;
 	cube->dir = ft_new_vect(0, 1, 0);
-	cube->obj = 0;
 	cube->radius = -1;
 	return (cube);
 }
 
 int			cube_lst(t_rt *rt, t_cube *cube)
 {
+	static int		id = 0;
+
 	ft_cube_info(cube);
+	cube->id = id;
 	if (rt->cube == NULL)
 	{
 		rt->cube = cube;
@@ -58,6 +60,7 @@ int			cube_lst(t_rt *rt, t_cube *cube)
 		rt->cube->next = cube;
 		rt->cube = rt->cube->next;
 	}
+	id++;
 	return (1);
 }
 

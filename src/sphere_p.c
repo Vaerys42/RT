@@ -27,9 +27,12 @@ void		ft_sphere_info(t_sphere *sphere)
 
 int			sphere_list(t_rt *rt, t_sphere *sphere)
 {
+	static int			id = 0;
+
 	ft_sphere_info(sphere);
 	if (sphere->pln != NULL && sphere->pln->color == NULL)
 		sphere->pln->color = sphere->color;
+	sphere->id = id;
 	if (rt->sphere == NULL)
 	{
 		rt->sphere = sphere;
@@ -40,6 +43,7 @@ int			sphere_list(t_rt *rt, t_sphere *sphere)
 		rt->sphere->next = sphere;
 		rt->sphere = rt->sphere->next;
 	}
+	id++;
 	return (1);
 }
 
@@ -64,6 +68,7 @@ void		inter_plane_sphere(t_sphere *sphere, char **datas)
 {
 	if (sphere->pln == NULL)
 	{
+		printf("New cut plane\n");
 		if (!(sphere->pln = (t_plane*)malloc(sizeof(t_plane))))
 			ft_malloc_error();
 		sphere->pln->o = (t_coo){0, 0, 0};

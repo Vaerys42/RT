@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RTV1_H
-# define RTV1_H
+#ifndef RT_H
+# define RT_H
 
 # define WIN_LEN 640
 # define WIN_HEIGHT 480
@@ -28,8 +28,8 @@
 # define ELL 6
 
 # include "libft/includes/libft.h"
-# include "SDL.framework/Headers/SDL.h"
-# include "math.h"
+# include "SDL2.framework/Headers/SDL.h"
+# include <math.h>
 
 typedef	struct			s_material
 {
@@ -60,7 +60,7 @@ typedef	struct			s_plane
 	t_coo				norm;
 	t_coo				o;
 	double				supp;
-	int					obj;
+	int					id;
 	int					cut;
 	struct s_plane		*next;
 }						t_plane;
@@ -74,6 +74,7 @@ typedef struct			s_cylinder
 	double				radius;
 	double				shine;
 	t_material			*color;
+	int					id;
 	struct s_cylinder	*next;
 }						t_cylinder;
 
@@ -85,6 +86,7 @@ typedef	struct			s_cone
 	t_plane				*pln;
 	double				angle;
 	double				shine;
+	int					id;
 	t_material			*color;
 	struct s_cone		*next;
 }						t_cone;
@@ -98,6 +100,7 @@ typedef	struct			s_sphere
 	t_material			*color;
 	t_plane				*pln;
 	double				shine;
+	int					id;
 	struct s_sphere		*next;
 }						t_sphere;
 
@@ -112,7 +115,8 @@ typedef	struct			s_ellipse
 	t_material			*color;
 	t_plane				*pln;
 	double				shine;
-	struct s_ellipse		*next;
+	int					id;
+	struct s_ellipse	*next;
 }						t_ellipse;
 
 typedef	struct			s_cube
@@ -126,7 +130,7 @@ typedef	struct			s_cube
 	t_coo				v;
 	double				shine;
 	t_coo				rot;
-	int					obj;
+	int					id;
 	struct s_cube		*next;
 }						t_cube;
 
@@ -191,6 +195,7 @@ typedef	struct			s_options
 {
 	int					sepia;
 	int					blwh;
+	int					maintain;
 }						t_options;
 
 typedef	struct			s_rt
@@ -220,7 +225,8 @@ void					ft_ini(t_rt *rt);
 void					ft_create(t_rt *rt);
 void					parser(t_rt *rt, char *file);
 int						ft_check_obj(char *str, int fd, t_rt *rt);
-
+void					check_forms(t_rt *rt, int type);
+void					ft_reset(t_rt *rt);
 t_coo					get_coo(char **str, int err);
 t_material				*get_color(char **str);
 double					get_radius(char **str);
@@ -228,7 +234,8 @@ double					get_radius(char **str);
 int						my_key_press(t_rt *rt, SDL_Keysym key);
 int						ft_exit_cross(t_rt *rt);
 void					put_pxl(t_data *data, int x, int y, t_material *color);
-void					put_pxl_base(t_data *data, int x, int y, t_material *color);
+void					put_pxl_base(t_data *data, int x, int y,
+						t_material *color);
 
 void					ft_raytracing(t_rt *rt);
 void					ft_check_object(t_rt *rt);
@@ -253,11 +260,11 @@ int						ft_add_sphere(int fd, t_rt *rt);
 void					check_plane_inter(t_rt *rt, int type);
 double					ft_check_plane(t_plane *plane, t_ray *ray);
 void					ft_ini_plane(t_rt *rt);
+int						ft_add_plane(int fd, t_rt *rt);
 
 void					check_cone_inter(t_rt *rt, int type);
 double					ft_check_cone(t_cone *cone, t_ray *ray);
 int						ft_add_cone(int fd, t_rt *rt);
-int						ft_add_plane(int fd, t_rt *rt, int obj);
 
 int						ft_add_cylinder(int fd, t_rt *rt);
 void					check_cylinder_inter(t_rt *rt, int type);
@@ -275,15 +282,17 @@ t_coo					ft_det_vect(t_coo vect1, t_coo vect2);
 void					check_cube_inter(t_rt *rt, int type);
 int						ft_add_cube(int fd, t_rt *rt);
 
-void            		aliasing(t_rt *rt);
+void					aliasing(t_rt *rt);
 void					ft_ray(t_rt *rt, int x, int y, int type);
 void					ft_ini_ray(t_rt *rt, double x, double y);
 
-double      			ft_inter_plane_ini(t_ray *ray, t_plane *pln, double a, double b, double c);
-double					ft_inter_plane_obj(t_plane *pln, double dc, double t, double t1, double t2);
+double					ft_inter_plane_ini(t_ray *ray, t_plane *pln, double a,
+						double b, double c);
+double					ft_inter_plane_obj(t_plane *pln, double dc, double t,
+						double t1, double t2);
 
 void					check_ellipse_inter(t_rt *rt, int type);
-int						ft_add_ellipse(int fd, t_rt *rt);;
+int						ft_add_ellipse(int fd, t_rt *rt);
 
 t_material				hex_rgb(int col);
 unsigned int			col_hexa(int r, int g, int b);
@@ -292,4 +301,7 @@ void					ft_check_expose(t_material *mat, double max);
 void					sepia(t_rt *rt);
 void					bl_wh(t_rt *rt);
 void					cpy_image(unsigned int *tab1, unsigned int *tab2);
+
+void					move_object(t_rt *rt, int x, int y);
+
 #endif

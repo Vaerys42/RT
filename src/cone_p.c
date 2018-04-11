@@ -63,11 +63,14 @@ void		inter_plane_cone(t_cone *cone, char **datas)
 
 int			cone_lst(t_rt *rt, t_cone *cone)
 {
+	static int				id = 0;
+
 	ft_cone_info(cone);
 	if (cone->pln != NULL && cone->pln->color == NULL)
 		cone->pln->color = cone->color;
 	cone->dir = ft_normalize(cone->dir);
 	cone->angle = (cone->angle * M_PI) / 180;
+	cone->id = id;
 	if (rt->cone == NULL)
 	{
 		rt->cone = cone;
@@ -78,6 +81,7 @@ int			cone_lst(t_rt *rt, t_cone *cone)
 		rt->cone->next = cone;
 		rt->cone = rt->cone->next;
 	}
+	id++;
 	return (1);
 }
 

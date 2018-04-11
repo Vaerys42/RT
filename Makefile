@@ -29,8 +29,9 @@ SRC =	src/main.c \
 		src/ellipse_p.c \
 		src/filter.c \
 		src/pixel.c \
+		src/move_object.c \
 
-LIBS = libft/libft.a SDL.framework/SDL2
+LIBS = libft/libft.a SDL2.framework/SDL2
 
 OBJ =	$(patsubst src/%.c,obj/%.o,$(SRC))
 

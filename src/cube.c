@@ -115,13 +115,13 @@ void				new_cube_dst(t_rt *rt, int type, double tmp, int i)
 	if (type == 0)
 	{
 		rt->inter->obj = CUB;
-		rt->inter->num = rt->cube->obj;
+		rt->inter->num = rt->cube->id;
 		rt->inter->mat->r = rt->cube->color->r * rt->light->amb;
 		rt->inter->mat->g = rt->cube->color->g * rt->light->amb;
 		rt->inter->mat->b = rt->cube->color->b * rt->light->amb;
 		return ;
 	}
-	if (type == 1 && rt->inter->obj == CUB && i == rt->cube->obj)
+	if (type == 1 && rt->inter->obj == CUB && i == rt->cube->id)
 	{
 		rt->light->shine = rt->cube->shine;
 		ft_norm_cube(rt, i);
@@ -141,7 +141,7 @@ void				check_cube_inter(t_rt *rt, int type)
 		rt->cube = rt->start->cub;
 		while (rt->cube != NULL)
 		{
-			i = 1;
+			i = 0;
 			while (i <= 6)
 			{
 				ft_angle_cube(rt->cube, i);
@@ -153,7 +153,7 @@ void				check_cube_inter(t_rt *rt, int type)
 				if (tmp > 0.01 && tmp < rt->inter->dst)
 				{
 					if (type == 0)
-						rt->cube->obj = i;
+						rt->cube->id = i;
 					new_cube_dst(rt, type, tmp, i);
 				}
 				i++;

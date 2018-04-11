@@ -49,15 +49,19 @@ void	ft_malloc_ini(t_rt *rt)
 		ft_malloc_error();
 }
 
+void	ft_reset(t_rt *rt)
+{
+	rt->ray->o = rt->cam->pos;
+	rt->inter->obj = -1;
+	make_rot(rt);
+}
+
 void	ft_ini(t_rt *rt)
 {
 	ft_malloc_ini(rt);
 	ft_ini_cam(rt);
-	rt->ray->o = rt->cam->pos;
-	rt->plane = rt->start->pln;
-	rt->inter->obj = -1;
-	rt->cone = rt->start->con;
+	ft_reset(rt);
 	rt->op->sepia = 0;
 	rt->op->blwh = 0;
-	make_rot(rt);
+	rt->op->maintain = 0;
 }
