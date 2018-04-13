@@ -110,7 +110,7 @@ void		ft_check_object(t_rt *rt)
 	check_forms(rt, 0);
 	if (rt->inter->dst <= 0.01)
 		rt->inter->dst = 0;
-	if (rt->inter->dst != 0)
+	if (rt->inter->dst != MAX)
 	{
 		ft_get_point(rt);
 		ft_get_light(rt);

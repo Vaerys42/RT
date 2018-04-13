@@ -12,15 +12,20 @@
 
 #include "../rt.h"
 
+void		quit_sdl(t_rt *rt)
+{
+	SDL_DestroyTexture(rt->data->sdl_texture);
+	SDL_DestroyRenderer(rt->data->sdl_renderer);
+	SDL_DestroyWindow(rt->data->sdl_window);
+	SDL_Quit();
+}
+
 int			my_key_press(t_rt *rt, SDL_Keysym key)
 {
 	cpy_image(rt->data->image_int, rt->data->image_base);
 	if (key.sym == SDLK_ESCAPE)
 	{
-		SDL_DestroyTexture(rt->data->sdl_texture);
-		SDL_DestroyRenderer(rt->data->sdl_renderer);
-		SDL_DestroyWindow(rt->data->sdl_window);
-		SDL_Quit();
+		quit_sdl(rt);
 		exit(1);
 	}
 	else if (key.sym == SDLK_s)
@@ -33,6 +38,11 @@ int			my_key_press(t_rt *rt, SDL_Keysym key)
 		rt->op->blwh = !rt->op->blwh;
 		rt->op->sepia = 0;
 	}
+	else if (key.sym == SDLK_a)
+	{
+		rt->op->aa = !rt->op->aa;
+		aliasing(rt);
+	}
 	if (rt->op->blwh)
 		bl_wh(rt);
 	if (rt->op->sepia)
@@ -42,10 +52,7 @@ int			my_key_press(t_rt *rt, SDL_Keysym key)
 
 int			ft_exit_cross(t_rt *rt)
 {
-	SDL_DestroyTexture(rt->data->sdl_texture);
-	SDL_DestroyRenderer(rt->data->sdl_renderer);
-	SDL_DestroyWindow(rt->data->sdl_window);
-	SDL_Quit();
+	quit_sdl(rt);
 	exit(EXIT_SUCCESS);
 	return (0);
 }

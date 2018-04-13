@@ -15,6 +15,7 @@
 void		cam_cone_inter(t_rt *rt)
 {
 	rt->inter->obj = CON;
+	rt->inter->num = rt->cone->id;
 	rt->inter->mat->r = rt->cone->color->r * rt->light->amb;
 	rt->inter->mat->g = rt->cone->color->g * rt->light->amb;
 	rt->inter->mat->b = rt->cone->color->b * rt->light->amb;

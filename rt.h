@@ -17,7 +17,7 @@
 # define WIN_HEIGHT 480
 # define PLN_DST 100
 # define EPS 0.0001
-# define ANTIALIA 50
+# define ANTIALIA 30
 # define MAX 9999
 
 # define SPH 1
@@ -196,6 +196,10 @@ typedef	struct			s_options
 	int					sepia;
 	int					blwh;
 	int					maintain;
+	int					aa;
+	int					obj;
+	int					id;
+	int					cam_move;
 }						t_options;
 
 typedef	struct			s_rt
@@ -302,6 +306,8 @@ void					sepia(t_rt *rt);
 void					bl_wh(t_rt *rt);
 void					cpy_image(unsigned int *tab1, unsigned int *tab2);
 
-void					move_object(t_rt *rt, int x, int y);
+void					move_object(t_rt *rt, SDL_Event ev);
+void					get_obj(t_rt *rt, int x, int y);
+void					move_camera(t_rt *rt, SDL_Event ev);
 
 #endif

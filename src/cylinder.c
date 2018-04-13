@@ -15,6 +15,7 @@
 void		cam_cylinder_inter(t_rt *rt)
 {
 	rt->inter->obj = CYL;
+	rt->inter->num = rt->cylinder->id;
 	rt->inter->mat->r = rt->cylinder->color->r * rt->light->amb;
 	rt->inter->mat->g = rt->cylinder->color->g * rt->light->amb;
 	rt->inter->mat->b = rt->cylinder->color->b * rt->light->amb;

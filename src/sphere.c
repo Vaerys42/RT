@@ -15,6 +15,7 @@
 void		cam_sphere_inter(t_rt *rt)
 {
 	rt->inter->obj = SPH;
+	rt->inter->num = rt->sphere->id;
 	rt->inter->mat->r = rt->sphere->color->r * rt->light->amb;
 	rt->inter->mat->g = rt->sphere->color->g * rt->light->amb;
 	rt->inter->mat->b = rt->sphere->color->b * rt->light->amb;
