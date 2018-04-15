@@ -75,19 +75,19 @@ void				ft_norm_cube(t_rt *rt, int i)
 	if (i == 1)
 		rt->inter->angle->dir = ft_rotation(ft_new_vect(0, 0, 1),
 	rt->cube->rot);
-	if (i == 2)
+	else if (i == 2)
 		rt->inter->angle->dir = ft_rotation(ft_new_vect(1, 0, 0),
 	rt->cube->rot);
-	if (i == 3)
+	else if (i == 3)
 		rt->inter->angle->dir = ft_rotation(ft_new_vect(0, -1, 0),
 	rt->cube->rot);
-	if (i == 4)
+	else if (i == 4)
 		rt->inter->angle->dir = ft_rotation(ft_new_vect(0, 0, -1),
 	rt->cube->rot);
-	if (i == 5)
+	else if (i == 5)
 		rt->inter->angle->dir = ft_rotation(ft_new_vect(-1, 0, 0),
 	rt->cube->rot);
-	if (i == 6)
+	else if (i == 6)
 		rt->inter->angle->dir = ft_rotation(ft_new_vect(0, 1, 0),
 	rt->cube->rot);
 }
@@ -116,18 +116,15 @@ void				new_cube_dst(t_rt *rt, int type, double tmp, int i)
 	{
 		rt->inter->obj = CUB;
 		rt->inter->num = rt->cube->id;
-		rt->inter->mat->r = rt->cube->color->r * rt->light->amb;
-		rt->inter->mat->g = rt->cube->color->g * rt->light->amb;
-		rt->inter->mat->b = rt->cube->color->b * rt->light->amb;
+		rt->inter->col->r = rt->cube->color->r;
+		rt->inter->col->g = rt->cube->color->g;
+		rt->inter->col->b = rt->cube->color->b ;
 		return ;
 	}
-	if (type == 1 && rt->inter->obj == CUB && i == rt->cube->id)
+	if (type == 1 && rt->inter->num == rt->cube->id && i == rt->cube->id)
 	{
 		rt->light->shine = rt->cube->shine;
 		ft_norm_cube(rt, i);
-		rt->inter->mat->r *= 2;
-		rt->inter->mat->g *= 2;
-		rt->inter->mat->b *= 2;
 	}
 }
 

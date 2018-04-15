@@ -12,35 +12,6 @@
 
 #include "../rt.h"
 
-void		cam_sphere_inter(t_rt *rt)
-{
-	rt->inter->obj = SPH;
-	rt->inter->num = rt->sphere->id;
-	rt->inter->mat->r = rt->sphere->color->r * rt->light->amb;
-	rt->inter->mat->g = rt->sphere->color->g * rt->light->amb;
-	rt->inter->mat->b = rt->sphere->color->b * rt->light->amb;
-	if (rt->sphere->pln != NULL && rt->sphere->pln->cut == 1)
-	{
-		rt->inter->mat->r = rt->sphere->pln->color->r * rt->light->amb;
-		rt->inter->mat->g = rt->sphere->pln->color->g * rt->light->amb;
-		rt->inter->mat->b = rt->sphere->pln->color->b * rt->light->amb;
-	}
-}
-
-void		light_sphere_inter(t_rt *rt)
-{
-	rt->light->shine = rt->sphere->shine;
-	rt->inter->angle->o = ft_sub_vect(rt->inter->point,
-	rt->sphere->o);
-	rt->inter->angle->dir = ft_rotation(rt->inter->angle->dir, rt->sphere->rot);
-	if (rt->sphere->pln != NULL && rt->sphere->pln->cut == 1)
-		rt->inter->angle->dir = ft_mult_vect(-1, rt->sphere->pln->norm);
-	rt->inter->angle->dir = ft_normalize(rt->inter->angle->o);
-	rt->inter->mat->r *= 2;
-	rt->inter->mat->g *= 2;
-	rt->inter->mat->b *= 2;
-}
-
 double		ft_check_sphere(t_sphere *sphere, t_ray *ray)
 {
 	double		a;
@@ -58,12 +29,36 @@ double		ft_check_sphere(t_sphere *sphere, t_ray *ray)
 	return (ft_inter_plane_ini(ray, sphere->pln, a, b, c));
 }
 
+void		cam_sphere_inter(t_rt *rt)
+{
+	rt->inter->obj = SPH;
+	rt->inter->num = rt->sphere->id;
+	rt->inter->col->r = rt->sphere->color->r;
+	rt->inter->col->g = rt->sphere->color->g;
+	rt->inter->col->b = rt->sphere->color->b;
+	if (rt->sphere->pln != NULL && rt->sphere->pln->cut == 1)
+	{
+		rt->inter->col->r = rt->sphere->pln->color->r;
+		rt->inter->col->g = rt->sphere->pln->color->g;
+		rt->inter->col->b = rt->sphere->pln->color->b;
+	}
+}
+
+void		light_sphere_inter(t_rt *rt)
+{
+	rt->light->shine = rt->sphere->shine;
+	rt->inter->angle->dir = ft_sub_vect(rt->inter->point,
+	rt->sphere->o);
+	if (rt->sphere->pln != NULL && rt->sphere->pln->cut == 1)
+		rt->inter->angle->dir = rt->sphere->pln->norm;
+}
+
 void		new_sphere_dst(t_rt *rt, int type, double tmp)
 {
 	rt->inter->dst = tmp;
 	if (type == 0)
 		cam_sphere_inter(rt);
-	if (type == 1 && rt->inter->obj == SPH)
+	if (type == 1 && rt->inter->num == rt->sphere->id)
 		light_sphere_inter(rt);
 }
 

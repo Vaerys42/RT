@@ -59,5 +59,5 @@ void		ft_raytracing(t_rt *rt)
 			ft_ray(rt, x, y, 1);
 		}
 	}
-	aliasing(rt);
+	//aliasing(rt);
 }

@@ -12,35 +12,6 @@
 
 #include "../rt.h"
 
-void		cam_ellipse_inter(t_rt *rt)
-{
-	rt->inter->obj = ELL;
-	rt->inter->mat->r = rt->ellipse->color->r * rt->light->amb;
-	rt->inter->mat->g = rt->ellipse->color->g * rt->light->amb;
-	rt->inter->mat->b = rt->ellipse->color->b * rt->light->amb;
-	if (rt->ellipse->pln != NULL && rt->ellipse->pln->cut == 1)
-	{
-		rt->inter->mat->r = rt->ellipse->pln->color->r * rt->light->amb;
-		rt->inter->mat->g = rt->ellipse->pln->color->g * rt->light->amb;
-		rt->inter->mat->b = rt->ellipse->pln->color->b * rt->light->amb;
-	}
-}
-
-void		light_ellipse_inter(t_rt *rt)
-{
-	rt->light->shine = rt->ellipse->shine;
-	rt->inter->angle->o = ft_sub_vect(rt->inter->point,
-	rt->ellipse->o);
-	rt->inter->angle->dir = ft_rotation(rt->inter->angle->dir,
-	rt->ellipse->rot);
-	if (rt->ellipse->pln != NULL && rt->ellipse->pln->cut == 1)
-		rt->inter->angle->dir = ft_mult_vect(-1, rt->ellipse->pln->norm);
-	rt->inter->angle->dir = ft_normalize(rt->inter->angle->o);
-	rt->inter->mat->r *= 2;
-	rt->inter->mat->g *= 2;
-	rt->inter->mat->b *= 2;
-}
-
 double		ft_check_ellipse(t_ellipse *ellipse, t_ray *ray)
 {
 	double		a;
@@ -62,12 +33,36 @@ double		ft_check_ellipse(t_ellipse *ellipse, t_ray *ray)
 	return (ft_inter_plane_ini(ray, ellipse->pln, a, b, c));
 }
 
+void		cam_ellipse_inter(t_rt *rt)
+{
+	rt->inter->obj = ELL;
+	rt->inter->num = rt->ellipse->id;
+	rt->inter->col->r = rt->ellipse->color->r;
+	rt->inter->col->g = rt->ellipse->color->g;
+	rt->inter->col->b = rt->ellipse->color->b;
+	if (rt->ellipse->pln != NULL && rt->ellipse->pln->cut == 1)
+	{
+		rt->inter->col->r = rt->ellipse->pln->color->r;
+		rt->inter->col->g = rt->ellipse->pln->color->g;
+		rt->inter->col->b = rt->ellipse->pln->color->b;
+	}
+}
+
+void		light_ellipse_inter(t_rt *rt)
+{
+	rt->light->shine = rt->ellipse->shine;
+	rt->inter->angle->dir = ft_sub_vect(rt->inter->point,
+	rt->ellipse->o);
+	if (rt->ellipse->pln != NULL && rt->ellipse->pln->cut == 1)
+		rt->inter->angle->dir = rt->ellipse->pln->norm;
+}
+
 void		new_ellipse_dst(t_rt *rt, int type, double tmp)
 {
 	rt->inter->dst = tmp;
 	if (type == 0)
 		cam_ellipse_inter(rt);
-	if (type == 1 && rt->inter->obj == ELL)
+	if (type == 1 && rt->inter->num == rt->ellipse->id)
 		light_ellipse_inter(rt);
 }
 

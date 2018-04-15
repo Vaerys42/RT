@@ -3,7 +3,7 @@ coo: 4 3 2
 rot: -20 30 0
 cone
 coo: 1 -0.5 10
-angle: 40
+angle: 20
 color: 1 1 0
 shine: 0
 rot: 0 0 -40

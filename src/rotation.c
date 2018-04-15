@@ -97,3 +97,8 @@ t_coo		ft_rotation(t_coo vect, t_coo rot)
 	rot = ft_mult_vect(M_PI / 180, rot);
 	return (ft_rotation_2(vect, rot));
 }
+
+t_coo		ft_inv_rot(t_coo vect, t_coo rot)
+{
+	return (ft_rotation(vect, ft_mult_vect(-1, rot)));
+}

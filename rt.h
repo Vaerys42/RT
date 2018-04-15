@@ -19,6 +19,7 @@
 # define EPS 0.0001
 # define ANTIALIA 30
 # define MAX 9999
+# define AMB 0.1
 
 # define SPH 1
 # define PLN 2
@@ -173,7 +174,9 @@ typedef	struct			s_inter
 {
 	double				dst;
 	t_material			*mat;
-	t_material			*objcol;
+	t_material			*col;
+	t_material			*kdif;
+	t_material			*kspe;
 	t_ray				*angle;
 	t_coo				point;
 	int					obj;
@@ -309,5 +312,6 @@ void					cpy_image(unsigned int *tab1, unsigned int *tab2);
 void					move_object(t_rt *rt, SDL_Event ev);
 void					get_obj(t_rt *rt, int x, int y);
 void					move_camera(t_rt *rt, SDL_Event ev);
-
+t_coo					ft_inv_rot(t_coo vect, t_coo rot);
+void					move_color(t_material *c, double r, double g, double b);
 #endif

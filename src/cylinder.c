@@ -12,39 +12,6 @@
 
 #include "../rt.h"
 
-void		cam_cylinder_inter(t_rt *rt)
-{
-	rt->inter->obj = CYL;
-	rt->inter->num = rt->cylinder->id;
-	rt->inter->mat->r = rt->cylinder->color->r * rt->light->amb;
-	rt->inter->mat->g = rt->cylinder->color->g * rt->light->amb;
-	rt->inter->mat->b = rt->cylinder->color->b * rt->light->amb;
-	if (rt->cylinder->pln != NULL && rt->cylinder->pln->cut == 1)
-	{
-		rt->inter->mat->r = rt->cylinder->pln->color->r * rt->light->amb;
-		rt->inter->mat->g = rt->cylinder->pln->color->g * rt->light->amb;
-		rt->inter->mat->b = rt->cylinder->pln->color->b * rt->light->amb;
-	}
-}
-
-void		light_cylinder_inter(t_rt *rt)
-{
-	rt->light->shine = rt->cylinder->shine;
-	rt->inter->angle->dir.x = rt->inter->point.x -
-	rt->cylinder->o.x;
-	rt->inter->angle->dir.y = rt->inter->point.y;
-	rt->inter->angle->dir.z = rt->inter->point.z -
-	rt->cylinder->o.z;
-	rt->inter->angle->dir = ft_rotation(rt->inter->angle->dir,
-	rt->cylinder->rot);
-	if (rt->cylinder->pln != NULL && rt->cylinder->pln->cut == 1)
-		rt->inter->angle->dir = ft_mult_vect(-1, rt->cylinder->pln->norm);
-	rt->inter->angle->dir = ft_normalize(rt->inter->angle->dir);
-	rt->inter->mat->r *= 2;
-	rt->inter->mat->g *= 2;
-	rt->inter->mat->b *= 2;
-}
-
 double		ft_check_cylinder(t_cylinder *cylinder, t_ray *ray)
 {
 	double		a;
@@ -64,12 +31,42 @@ double		ft_check_cylinder(t_cylinder *cylinder, t_ray *ray)
 	return (ft_inter_plane_ini(ray, cylinder->pln, a, b, c));
 }
 
+void		cam_cylinder_inter(t_rt *rt)
+{
+	rt->inter->obj = CYL;
+	rt->inter->num = rt->cylinder->id;
+	rt->inter->col->r = rt->cylinder->color->r;
+	rt->inter->col->g = rt->cylinder->color->g;
+	rt->inter->col->b = rt->cylinder->color->b;
+	if (rt->cylinder->pln != NULL && rt->cylinder->pln->cut == 1)
+	{
+		rt->inter->col->r = rt->cylinder->pln->color->r;
+		rt->inter->col->g = rt->cylinder->pln->color->g;
+		rt->inter->col->b = rt->cylinder->pln->color->b;
+	}
+}
+
+void		light_cylinder_inter(t_rt *rt)
+{
+	t_coo		point;
+
+	rt->light->shine = rt->cylinder->shine;
+	point = ft_inv_rot(rt->inter->point, rt->cylinder->rot);
+	rt->inter->angle->dir.x = point.x - rt->cylinder->o.x;
+	rt->inter->angle->dir.y = point.y;
+	rt->inter->angle->dir.z = point.z - rt->cylinder->o.z;
+	rt->inter->angle->dir = ft_rotation(rt->inter->angle->dir,
+	rt->cylinder->rot);
+	if (rt->cylinder->pln != NULL && rt->cylinder->pln->cut == 1)
+		rt->inter->angle->dir = rt->cylinder->pln->norm;
+}
+
 void		new_cylinder_dst(t_rt *rt, int type, double tmp)
 {
 	rt->inter->dst = tmp;
 	if (type == 0)
 		cam_cylinder_inter(rt);
-	if (type == 1 && rt->inter->obj == CYL)
+	if (type == 1 && rt->inter->num == rt->cylinder->id)
 		light_cylinder_inter(rt);
 }
 

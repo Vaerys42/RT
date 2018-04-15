@@ -19,7 +19,8 @@ double		disc_eq(double a, double b, double c, double delta)
 
 	t1 = (-b - sqrt(fabs(b * b - (4 * a * c)))) / (2 * a);
 	t2 = (-b + sqrt(fabs(b * b - (4 * a * c)))) / (2 * a);
-	if (delta < -EPS)
+	//printf("delta %f\n", delta);
+	if (delta < - EPS)
 		return (0);
 	if (t1 > t2 && t2 > 0)
 		return (t2);
