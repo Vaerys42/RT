@@ -12,16 +12,8 @@
 
 #include "../rt.h"
 
-double		disc_eq(double a, double b, double c, double delta)
+double		disc_eq(double t1, double t2)
 {
-	double	t1;
-	double	t2;
-
-	t1 = (-b - sqrt(fabs(b * b - (4 * a * c)))) / (2 * a);
-	t2 = (-b + sqrt(fabs(b * b - (4 * a * c)))) / (2 * a);
-	//printf("delta %f\n", delta);
-	if (delta < - EPS)
-		return (0);
 	if (t1 > t2 && t2 > 0)
 		return (t2);
 	return (t1);
@@ -51,18 +43,12 @@ double		ft_inter_plane_obj(t_plane *pln, double dc, double t, double t1, double 
 	return (t1);
 }
 
-double		ft_inter_plane_ini(t_ray *ray, t_plane *pln, double a, double b, double c)
+double		ft_inter_plane_ini(t_ray *ray, t_plane *pln, double t1, double t2)
 {
 	double		t;
-	double		t1;
-	double		t2;
 	double		dc;
 	double		dw;
 
-	t1 = (-b - sqrt(fabs(b * b - (4 * a * c)))) / (2 * a);
-	t2 = (-b + sqrt(fabs(b * b - (4 * a * c)))) / (2 * a);
-	if (b * b - (4 * a * c) < -EPS)
-		return (0);
 	dc = scal(ray->dir, pln->norm);
 	dw = scal(ft_sub_vect(ray->o, pln->o), pln->norm);
 	t = -dw / dc;

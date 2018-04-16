@@ -15,8 +15,8 @@ color: 1 1 0
 pow: 0.4
 light
 coo: -4 10 0
-color: 1 1 0
-pow: 0.4
+color: 1 1 1
+pow: 0.3
 plane
 coo: 0 0 20
 color: 0 1 0

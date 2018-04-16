@@ -17,7 +17,8 @@ double		ft_check_cylinder(t_cylinder *cylinder, t_ray *ray)
 	double		a;
 	double		b;
 	double		c;
-	double		delta;
+	double		t1;
+	double		t2;
 
 	ray->obj = ft_sub_vect(ray->o, cylinder->o);
 	a = scal(ray->dir, ray->dir) - pow(scal(ray->dir, cylinder->dir), 2);
@@ -25,10 +26,13 @@ double		ft_check_cylinder(t_cylinder *cylinder, t_ray *ray)
 	scal(ray->obj, cylinder->dir)));
 	c = scal(ray->obj, ray->obj) - pow(scal(ray->obj, cylinder->dir), 2) -
 	pow(cylinder->radius, 2);
-	delta = b * b - (4 * a * c);
+	t1 = (-b - sqrt(fabs(b * b - (4 * a * c)))) / (2 * a);
+	t2 = (-b + sqrt(fabs(b * b - (4 * a * c)))) / (2 * a);
+	if (b * b - (4 * a * c) < -EPS)
+		return (0);
 	if (cylinder->pln == NULL)
-		return (disc_eq(a, b, c, delta));
-	return (ft_inter_plane_ini(ray, cylinder->pln, a, b, c));
+		return (disc_eq(t1, t2));
+	return (ft_inter_plane_ini(ray, cylinder->pln, t1, t2));
 }
 
 void		cam_cylinder_inter(t_rt *rt)
@@ -49,14 +53,14 @@ void		cam_cylinder_inter(t_rt *rt)
 void		light_cylinder_inter(t_rt *rt)
 {
 	t_coo		point;
+	t_coo		a;
 
 	rt->light->shine = rt->cylinder->shine;
 	point = ft_inv_rot(rt->inter->point, rt->cylinder->rot);
-	rt->inter->angle->dir.x = point.x - rt->cylinder->o.x;
-	rt->inter->angle->dir.y = point.y;
-	rt->inter->angle->dir.z = point.z - rt->cylinder->o.z;
-	rt->inter->angle->dir = ft_rotation(rt->inter->angle->dir,
-	rt->cylinder->rot);
+	a = ft_new_vect(rt->cylinder->o.x, point.y, 
+	rt->cylinder->o.z);
+	a = ft_rotation(a, rt->cylinder->rot);
+	rt->inter->angle->dir = ft_sub_vect(rt->inter->point, a);
 	if (rt->cylinder->pln != NULL && rt->cylinder->pln->cut == 1)
 		rt->inter->angle->dir = rt->cylinder->pln->norm;
 }

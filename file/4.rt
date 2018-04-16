@@ -13,7 +13,7 @@ cone
 coo: 0.7 -0.5 11
 angle: 15
 color: 1 1 0
-shine: 7
+shine: 3
 rot: -5 0 -45
 cylinder
 coo: -0.3 0 11
@@ -32,10 +32,10 @@ radius: 0.4
 color: 0 1 0
 shine: 3
 light
-coo: -4 5 -10
+coo: -3 2 5
 color: 1 1 1
-pow: 0.3
+pow: 0.2
 light
-coo: 4 5 -10
+coo: 3 1 5
 color: 1 1 1
-pow: 0.3
+pow: 0.2

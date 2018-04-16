@@ -19,7 +19,7 @@
 # define EPS 0.0001
 # define ANTIALIA 30
 # define MAX 9999
-# define AMB 0.1
+# define AMB 0.2
 
 # define SPH 1
 # define PLN 2
@@ -257,7 +257,7 @@ double					scal(t_coo vect1, t_coo vect2);
 double					ft_dst(t_coo point1, t_coo point2);
 double					ft_norme(t_coo vect);
 t_coo					ft_normalize(t_coo vect);
-double					disc_eq(double a, double b, double c, double delta);
+double					disc_eq(double t1, double t2);
 
 double					ft_check_sphere(t_sphere *sphere, t_ray *ray);
 void					check_sphere_inter(t_rt *rt, int type);
@@ -293,10 +293,9 @@ void					aliasing(t_rt *rt);
 void					ft_ray(t_rt *rt, int x, int y, int type);
 void					ft_ini_ray(t_rt *rt, double x, double y);
 
-double					ft_inter_plane_ini(t_ray *ray, t_plane *pln, double a,
-						double b, double c);
-double					ft_inter_plane_obj(t_plane *pln, double dc, double t,
-						double t1, double t2);
+double					ft_inter_plane_ini(t_ray *ray, t_plane *pln, double t1, double t2);
+//double					ft_inter_plane_obj(t_plane *pln, double dc, double t,
+//						double t1, double t2);
 
 void					check_ellipse_inter(t_rt *rt, int type);
 int						ft_add_ellipse(int fd, t_rt *rt, int id);

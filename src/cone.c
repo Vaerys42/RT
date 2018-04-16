@@ -18,17 +18,21 @@ double		ft_check_cone(t_cone *cone, t_ray *ray)
 	double		b;
 	double		c;
 	double		k;
-	double		delta;
+	double		t1;
+	double		t2;
 
 	k = pow(tan(cone->angle), 2) + 1;
 	ray->obj = ft_sub_vect(ray->o, cone->o);
 	a = scal(ray->dir, ray->dir) - k * pow(scal(ray->dir, cone->dir), 2);
 	b = 2 * (scal(ray->dir, ray->obj) - k * scal(ray->obj, cone->dir) * scal(ray->dir, cone->dir));
 	c = scal(ray->obj, ray->obj) - k * pow(scal(cone->dir, ray->obj), 2);
-	delta = b * b - (4 * a * c);
+	t1 = (-b - sqrt(fabs(b * b - (4 * a * c)))) / (2 * a);
+	t2 = (-b + sqrt(fabs(b * b - (4 * a * c)))) / (2 * a);
+	if (b * b - (4 * a * c) < -EPS)
+		return (0);
 	if (cone->pln == NULL)
-		return (disc_eq(a, b, c, delta));
-	return (ft_inter_plane_ini(ray, cone->pln, a, b, c));
+		return (disc_eq(t1, t2));
+	return (ft_inter_plane_ini(ray, cone->pln, t1, t2));
 }
 
 void		cam_cone_inter(t_rt *rt)
@@ -49,17 +53,17 @@ void		cam_cone_inter(t_rt *rt)
 void		light_cone_inter(t_rt *rt)
 {
 	t_coo		point;
-	double		k;
+	t_coo		a;
+	double		op;
 
-	k = pow(tan(rt->cone->angle), 2) + 1;
 	rt->light->shine = rt->cone->shine;
-	point = ft_inv_rot(rt->inter->point, rt->cone->rot);
-	rt->inter->angle->dir.x = point.x - rt->cone->o.x;
-	rt->inter->angle->dir.y = point.y + k * rt->cone->o.y;
-	rt->inter->angle->dir.z = point.z - rt->cone->o.z;
-	rt->inter->angle->dir = ft_rotation(rt->inter->angle->dir, rt->cone->rot);
+	point = ft_inv_rot(rt->cone->o, rt->cone->rot);
+	op = ft_norme(ft_sub_vect(rt->inter->point, rt->cone->o));
+	a = ft_new_vect(rt->cone->o.x, point.y + op / cos(rt->cone->angle / 2), rt->cone->o.z);
+	a = ft_rotation(a, rt->cone->rot);
+	rt->inter->angle->dir = ft_sub_vect(rt->inter->point, a);
 	if (rt->cone->pln != NULL && rt->cone->pln->cut == 1)
-		rt->inter->angle->dir = ft_mult_vect(-1, rt->cone->pln->norm);
+		rt->inter->angle->dir = rt->cone->pln->norm;
 }
 
 void		new_cone_dst(t_rt *rt, int type, double tmp)

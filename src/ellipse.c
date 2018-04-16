@@ -17,7 +17,8 @@ double		ft_check_ellipse(t_ellipse *ellipse, t_ray *ray)
 	double		a;
 	double		b;
 	double		c;
-	double		delta;
+	double		t1;
+	double 		t2;
 
 	ray->obj = ft_sub_vect(ray->o, ellipse->o);
 	a = pow(ray->dir.x / ellipse->rad1.x, 2) + pow(ray->dir.y
@@ -27,10 +28,13 @@ double		ft_check_ellipse(t_ellipse *ellipse, t_ray *ray)
 	ray->dir.z * ray->obj.z * pow(1 / ellipse->rad3.z, 2));
 	c = pow(ray->obj.x / ellipse->rad1.x, 2) + pow(ray->obj.y /
 	ellipse->rad2.y, 2) + pow(ray->obj.z / ellipse->rad3.z, 2) - 1;
-	delta = b * b - (4 * a * c);
+	t1 = (-b - sqrt(fabs(b * b - (4 * a * c)))) / (2 * a);
+	t2 = (-b + sqrt(fabs(b * b - (4 * a * c)))) / (2 * a);
+	if (b * b - (4 * a * c) < -EPS)
+		return (0);
 	if (ellipse->pln == NULL)
-		return (disc_eq(a, b, c, delta));
-	return (ft_inter_plane_ini(ray, ellipse->pln, a, b, c));
+		return (disc_eq(t1, t2));
+	return (ft_inter_plane_ini(ray, ellipse->pln,t1, t2));
 }
 
 void		cam_ellipse_inter(t_rt *rt)
