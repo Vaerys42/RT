@@ -74,7 +74,7 @@ void		ft_get_light(t_rt *rt)
 		rt->inter->dst = MAX;
 		rt->inter->angle->dir = rt->ray->dir;
 		rt->light_ray->o = rt->light->o;
-		rt->light_ray->dir = ft_normalize(ft_sub_vect(rt->inter->point,rt->light->o));
+		rt->light_ray->dir = ft_normalize(ft_sub_vect(rt->inter->point, rt->light->o));
 		rt->light->shine = 0;
 		check_forms(rt, 1);
 		ft_light_diffspec(rt);

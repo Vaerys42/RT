@@ -15,7 +15,7 @@
 int			ft_check_obj(char *str, int fd, t_rt *rt)
 {
 	static int			id = 0;
-	
+
 	if (str[0] == 0)
 		return (0);
 	else if (ft_strcmp(str, "plane") == 0)

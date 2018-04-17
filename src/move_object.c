@@ -54,7 +54,7 @@ void		move_cyl(t_rt *rt, SDL_Event ev)
 {
 	rt->cylinder = rt->start->cyl;
 	while (rt->cylinder->id != rt->op->id)
-		rt->cylinder = rt->cylinder->next; 
+		rt->cylinder = rt->cylinder->next;
 	if (ev.type == SDL_MOUSEMOTION)
 	{
 		rt->cylinder->o.x += (float)ev.motion.xrel / 100;

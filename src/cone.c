@@ -18,21 +18,19 @@ double		ft_check_cone(t_cone *cone, t_ray *ray)
 	double		b;
 	double		c;
 	double		k;
-	double		t1;
-	double		t2;
+	double		det;
 
 	k = pow(tan(cone->angle), 2) + 1;
 	ray->obj = ft_sub_vect(ray->o, cone->o);
 	a = scal(ray->dir, ray->dir) - k * pow(scal(ray->dir, cone->dir), 2);
 	b = 2 * (scal(ray->dir, ray->obj) - k * scal(ray->obj, cone->dir) * scal(ray->dir, cone->dir));
 	c = scal(ray->obj, ray->obj) - k * pow(scal(cone->dir, ray->obj), 2);
-	t1 = (-b - sqrt(fabs(b * b - (4 * a * c)))) / (2 * a);
-	t2 = (-b + sqrt(fabs(b * b - (4 * a * c)))) / (2 * a);
+	det = sqrt(fabs(b * b - (4 * a * c)));
 	if (b * b - (4 * a * c) < -EPS)
 		return (0);
 	if (cone->pln == NULL)
-		return (disc_eq(t1, t2));
-	return (ft_inter_plane_ini(ray, cone->pln, t1, t2));
+		return (disc_eq((-b - det) / (2 * a), (-b + det) / (2 * a)));
+	return (ft_inter_plane_ini(ray, cone->pln, (-b - det) / (2 * a), (-b + det) / (2 * a)));
 }
 
 void		cam_cone_inter(t_rt *rt)

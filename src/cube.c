@@ -118,7 +118,7 @@ void				new_cube_dst(t_rt *rt, int type, double tmp, int i)
 		rt->inter->num = rt->cube->id;
 		rt->inter->col->r = rt->cube->color->r;
 		rt->inter->col->g = rt->cube->color->g;
-		rt->inter->col->b = rt->cube->color->b ;
+		rt->inter->col->b = rt->cube->color->b;
 		return ;
 	}
 	if (type == 1 && rt->inter->num == rt->cube->id && i == rt->cube->id)

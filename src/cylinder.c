@@ -57,7 +57,7 @@ void		light_cylinder_inter(t_rt *rt)
 
 	rt->light->shine = rt->cylinder->shine;
 	point = ft_inv_rot(rt->inter->point, rt->cylinder->rot);
-	a = ft_new_vect(rt->cylinder->o.x, point.y, 
+	a = ft_new_vect(rt->cylinder->o.x, point.y,
 	rt->cylinder->o.z);
 	a = ft_rotation(a, rt->cylinder->rot);
 	rt->inter->angle->dir = ft_sub_vect(rt->inter->point, a);
