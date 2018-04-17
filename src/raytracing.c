@@ -28,9 +28,6 @@ void		ft_convert(t_rt *rt)
 void		ft_ray(t_rt *rt, int x, int y, int type)
 {
 	ft_check_object(rt);
-	if (rt->inter->mat->r == 0 && rt->inter->mat->g
-	== 0 && rt->inter->mat->b == 0)
-		return ;
 	ft_convert(rt);
 	if (type == 2)
 		return ;
@@ -62,5 +59,4 @@ void		ft_raytracing(t_rt *rt)
 			ft_ray(rt, x, y, 1);
 		}
 	}
-	aliasing(rt);
 }

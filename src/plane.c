@@ -29,20 +29,16 @@ void				new_plane_dst(t_rt *rt, int type, double tmp)
 	rt->inter->dst = tmp;
 	if (type == 0)
 	{
-		rt->inter->obj = rt->plane->id;
-		rt->inter->mat->r = rt->plane->color->r * rt->light->amb;
-		rt->inter->mat->g = rt->plane->color->g * rt->light->amb;
-		rt->inter->mat->b = rt->plane->color->b * rt->light->amb;
-		return ;
+		rt->inter->obj = PLN;
+		rt->inter->num = rt->plane->id;
+		rt->inter->col->r = rt->plane->color->r;
+		rt->inter->col->g = rt->plane->color->g;
+		rt->inter->col->b = rt->plane->color->b;
 	}
-	if (type == 1 && rt->inter->obj == rt->plane->id)
+	if (type == 1 && rt->inter->num == rt->plane->id)
 	{
-		rt->light->dst = tmp;
 		rt->light->shine = 0;
 		rt->inter->angle->dir = rt->plane->norm;
-		rt->inter->mat->r *= 2;
-		rt->inter->mat->g *= 2;
-		rt->inter->mat->b *= 2;
 	}
 }
 

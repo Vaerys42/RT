@@ -1,28 +1,41 @@
 camera
 coo: 0 0 0
 rot: 0 0 0
-cone
-coo: 1 -0.5 10
-angle: 40
-color: 1 1 0
-shine: 0
-rot: 0 0 -40
 plane
 coo: 0 -1 0
 norm: 0 1 0
+color: 0.7 0.6 0.7
+plane
+coo: 0 0 15
+norm: 0 0 -1
 color: 0 0 1
-light
-coo: 2 0 3
-color: 1 0 1
-pow: 0.3
+cone
+coo: 0.7 -0.5 11
+angle: 15
+color: 1 1 0
+shine: 3
+rot: -5 0 -45
 cylinder
-coo: -1 0 10
-radius: 0.5
-color: 0 1 0
-shine: 0
-rot: 0 0 40
+coo: -0.3 0 11
+radius: 0.3
+color: 1 0 1
+shine: 3
+rot: 0 0 45
 sphere
-coo: 0 -0.5 10
-radius: 0.7
+coo: -1.7 -0.6 10
+radius: 0.4
 color: 1 0 0
-shine: 1
+shine: 3
+sphere
+coo: 1.7 -0.6 10
+radius: 0.4
+color: 0 1 0
+shine: 3
+light
+coo: -3 2 5
+color: 1 1 1
+pow: 0.2
+light
+coo: 3 1 5
+color: 1 1 1
+pow: 0.2

@@ -12,42 +12,13 @@
 
 #include "../rt.h"
 
-void		cam_ellipse_inter(t_rt *rt)
-{
-	rt->inter->obj = rt->ellipse->id;
-	rt->inter->mat->r = rt->ellipse->color->r * rt->light->amb;
-	rt->inter->mat->g = rt->ellipse->color->g * rt->light->amb;
-	rt->inter->mat->b = rt->ellipse->color->b * rt->light->amb;
-	if (rt->ellipse->pln != NULL && rt->ellipse->pln->cut == 1)
-	{
-		rt->inter->mat->r = rt->ellipse->pln->color->r * rt->light->amb;
-		rt->inter->mat->g = rt->ellipse->pln->color->g * rt->light->amb;
-		rt->inter->mat->b = rt->ellipse->pln->color->b * rt->light->amb;
-	}
-}
-
-void		light_ellipse_inter(t_rt *rt, double tmp)
-{
-	rt->light->dst = tmp;
-	rt->light->shine = rt->ellipse->shine;
-	rt->inter->angle->o = ft_sub_vect(rt->inter->point,
-	rt->ellipse->o);
-	rt->inter->angle->dir = ft_rotation(rt->inter->angle->dir,
-	rt->ellipse->rot);
-	if (rt->ellipse->pln != NULL && rt->ellipse->pln->cut == 1)
-		rt->inter->angle->dir = ft_mult_vect(-1, rt->ellipse->pln->norm);
-	rt->inter->angle->dir = ft_normalize(rt->inter->angle->o);
-	rt->inter->mat->r *= 2;
-	rt->inter->mat->g *= 2;
-	rt->inter->mat->b *= 2;
-}
-
 double		ft_check_ellipse(t_ellipse *ellipse, t_ray *ray)
 {
 	double		a;
 	double		b;
 	double		c;
-	double		delta;
+	double		t1;
+	double		t2;
 
 	ray->obj = ft_sub_vect(ray->o, ellipse->o);
 	a = pow(ray->dir.x / ellipse->rad1.x, 2) + pow(ray->dir.y
@@ -57,10 +28,37 @@ double		ft_check_ellipse(t_ellipse *ellipse, t_ray *ray)
 	ray->dir.z * ray->obj.z * pow(1 / ellipse->rad3.z, 2));
 	c = pow(ray->obj.x / ellipse->rad1.x, 2) + pow(ray->obj.y /
 	ellipse->rad2.y, 2) + pow(ray->obj.z / ellipse->rad3.z, 2) - 1;
-	delta = b * b - (4 * a * c);
+	t1 = (-b - sqrt(fabs(b * b - (4 * a * c)))) / (2 * a);
+	t2 = (-b + sqrt(fabs(b * b - (4 * a * c)))) / (2 * a);
+	if (b * b - (4 * a * c) < -EPS)
+		return (0);
 	if (ellipse->pln == NULL)
-		return (disc_eq(a, b, c, delta));
-	return (ft_inter_plane_ini(ray, ellipse->pln, a, b, c));
+		return (disc_eq(t1, t2));
+	return (ft_inter_plane_ini(ray, ellipse->pln, t1, t2));
+}
+
+void		cam_ellipse_inter(t_rt *rt)
+{
+	rt->inter->obj = ELL;
+	rt->inter->num = rt->ellipse->id;
+	rt->inter->col->r = rt->ellipse->color->r;
+	rt->inter->col->g = rt->ellipse->color->g;
+	rt->inter->col->b = rt->ellipse->color->b;
+	if (rt->ellipse->pln != NULL && rt->ellipse->pln->cut == 1)
+	{
+		rt->inter->col->r = rt->ellipse->pln->color->r;
+		rt->inter->col->g = rt->ellipse->pln->color->g;
+		rt->inter->col->b = rt->ellipse->pln->color->b;
+	}
+}
+
+void		light_ellipse_inter(t_rt *rt)
+{
+	rt->light->shine = rt->ellipse->shine;
+	rt->inter->angle->dir = ft_sub_vect(rt->inter->point,
+	rt->ellipse->o);
+	if (rt->ellipse->pln != NULL && rt->ellipse->pln->cut == 1)
+		rt->inter->angle->dir = rt->ellipse->pln->norm;
 }
 
 void		new_ellipse_dst(t_rt *rt, int type, double tmp)
@@ -68,8 +66,8 @@ void		new_ellipse_dst(t_rt *rt, int type, double tmp)
 	rt->inter->dst = tmp;
 	if (type == 0)
 		cam_ellipse_inter(rt);
-	if (type == 1 && rt->inter->obj == rt->ellipse->id)
-		light_ellipse_inter(rt, tmp);
+	if (type == 1 && rt->inter->num == rt->ellipse->id)
+		light_ellipse_inter(rt);
 }
 
 void		check_ellipse_inter(t_rt *rt, int type)

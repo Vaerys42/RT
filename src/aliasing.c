@@ -59,17 +59,19 @@ void			aliasing(t_rt *rt)
 	int			y;
 
 	y = -1;
-	while (++y < WIN_HEIGHT)
+	if (rt->op->aa == 0)
+		return ;
+	while (++y < WIN_HEIGHT - 1)
 	{
 		x = -1;
-		while (++x < WIN_LEN)
+		while (++x < WIN_LEN - 1)
 		{
-			if (y != WIN_HEIGHT - 1 && x != WIN_LEN - 1)
-			{
-				if (diff_color(rt->data->image_int[x + (WIN_LEN * y)],
-				rt->data->image_int[x + (WIN_LEN * y) + 1]) == 1)
-					mix_color(rt, x, y);
-			}
+			if (diff_color(rt->data->image_int[x + (WIN_LEN * y)],
+			rt->data->image_int[x + (WIN_LEN * y) + 1]) == 1)
+				mix_color(rt, x, y);
+			else if (diff_color(rt->data->image_int[x + (WIN_LEN * y)],
+			rt->data->image_int[x + (WIN_LEN * (y + 1))]) == 1)
+				mix_color(rt, x, y);
 		}
 	}
 }

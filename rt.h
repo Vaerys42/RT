@@ -17,8 +17,9 @@
 # define WIN_HEIGHT 480
 # define PLN_DST 100
 # define EPS 0.0001
-# define ANTIALIA 50
+# define ANTIALIA 30
 # define MAX 9999
+# define AMB 0.2
 
 # define SPH 1
 # define PLN 2
@@ -131,7 +132,6 @@ typedef	struct			s_cube
 	double				shine;
 	t_coo				rot;
 	int					id;
-	int					side;
 	struct s_cube		*next;
 }						t_cube;
 
@@ -143,7 +143,6 @@ typedef struct			s_light
 	double				shine;
 	double				amb;
 	int					id;
-	double				dst;
 	struct s_light		*next;
 }						t_light;
 
@@ -175,7 +174,9 @@ typedef	struct			s_inter
 {
 	double				dst;
 	t_material			*mat;
-	t_material			*objcol;
+	t_material			*col;
+	t_material			*kdif;
+	t_material			*kspe;
 	t_ray				*angle;
 	t_coo				point;
 	int					obj;
@@ -198,6 +199,10 @@ typedef	struct			s_options
 	int					sepia;
 	int					blwh;
 	int					maintain;
+	int					aa;
+	int					obj;
+	int					id;
+	int					cam_move;
 }						t_options;
 
 typedef	struct			s_rt
@@ -252,7 +257,7 @@ double					scal(t_coo vect1, t_coo vect2);
 double					ft_dst(t_coo point1, t_coo point2);
 double					ft_norme(t_coo vect);
 t_coo					ft_normalize(t_coo vect);
-double					disc_eq(double a, double b, double c, double delta);
+double					disc_eq(double t1, double t2);
 
 double					ft_check_sphere(t_sphere *sphere, t_ray *ray);
 void					check_sphere_inter(t_rt *rt, int type);
@@ -288,10 +293,9 @@ void					aliasing(t_rt *rt);
 void					ft_ray(t_rt *rt, int x, int y, int type);
 void					ft_ini_ray(t_rt *rt, double x, double y);
 
-double					ft_inter_plane_ini(t_ray *ray, t_plane *pln, double a,
-						double b, double c);
-double					ft_inter_plane_obj(t_plane *pln, double dc, double t,
-						double t1, double t2);
+double					ft_inter_plane_ini(t_ray *ray, t_plane *pln, double t1, double t2);
+//double					ft_inter_plane_obj(t_plane *pln, double dc, double t,
+//						double t1, double t2);
 
 void					check_ellipse_inter(t_rt *rt, int type);
 int						ft_add_ellipse(int fd, t_rt *rt, int id);
@@ -304,6 +308,9 @@ void					sepia(t_rt *rt);
 void					bl_wh(t_rt *rt);
 void					cpy_image(unsigned int *tab1, unsigned int *tab2);
 
-void					move_object(t_rt *rt, int x, int y);
-
+void					move_object(t_rt *rt, SDL_Event ev);
+void					get_obj(t_rt *rt, int x, int y);
+void					move_camera(t_rt *rt, SDL_Event ev);
+t_coo					ft_inv_rot(t_coo vect, t_coo rot);
+void					move_color(t_material *c, double r, double g, double b);
 #endif

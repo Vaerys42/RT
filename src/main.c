@@ -57,11 +57,17 @@ void		get_event(t_rt *rt)
 			else if (ev.type == SDL_KEYDOWN && ev.key.repeat == 0)
 				my_key_press(rt, ev.key.keysym);
 			else if (ev.type == SDL_MOUSEBUTTONDOWN && ev.button.button == SDL_BUTTON_LEFT)
-				rt->op->maintain = 1;
+				get_obj(rt, ev.button.x, ev.button.y);
+			else if (ev.type == SDL_MOUSEBUTTONDOWN && ev.button.button == SDL_BUTTON_RIGHT)
+				rt->op->cam_move = 1;
 			else if (ev.type == SDL_MOUSEBUTTONUP && ev.button.button == SDL_BUTTON_LEFT)
 				rt->op->maintain = 0;
-			else if (ev.type == SDL_MOUSEMOTION && rt->op->maintain == 1)
-				move_object(rt, ev.motion.x, ev.motion.y);
+			else if (ev.type == SDL_MOUSEBUTTONUP && ev.button.button == SDL_BUTTON_RIGHT)
+				rt->op->cam_move = 0;
+			else if ((ev.type == SDL_MOUSEWHEEL || ev.type == SDL_MOUSEMOTION) && rt->op->maintain == 1)
+				move_object(rt, ev);
+			else if ((ev.type == SDL_MOUSEWHEEL || ev.type == SDL_MOUSEMOTION) && rt->op->cam_move == 1)
+				move_camera(rt, ev);
 			window(rt);
 		}
 	}
