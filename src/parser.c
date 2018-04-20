@@ -82,4 +82,5 @@ void		parser(t_rt *rt, char *file)
 		ft_putstr("Needs a cam\n");
 		exit(-1);
 	}
+	close(fd);
 }

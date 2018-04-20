@@ -59,6 +59,7 @@ void			aliasing(t_rt *rt)
 	int			y;
 
 	y = -1;
+	rt->op->aa = !rt->op->aa;
 	if (rt->op->aa == 0)
 		return ;
 	while (++y < WIN_HEIGHT - 1)

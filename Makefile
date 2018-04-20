@@ -30,8 +30,10 @@ SRC =	src/main.c \
 		src/filter.c \
 		src/pixel.c \
 		src/move_object.c \
+		src/free.c \
+		src/text.c \
 
-LIBS = libft/libft.a SDL2.framework/SDL2
+LIBS = libft/libft.a SDL2.framework/SDL2 SDL2_ttf.framework/SDL2_ttf
 
 OBJ =	$(patsubst src/%.c,obj/%.o,$(SRC))
 
@@ -44,7 +46,7 @@ $(NAME) : $(OBJ)
 
 obj/%.o: src/%.c
 	mkdir -p obj
-	gcc -Wall -Wextra -Werror -c $< -o $@
+	gcc -Wall -Wextra -Werror -c $< -o $@ -Ofast -mtune=native
 
 clean :
 	/bin/rm -rf obj

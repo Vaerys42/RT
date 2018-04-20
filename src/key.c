@@ -12,6 +12,37 @@
 
 #include "../rt.h"
 
+void		switch_file(t_rt *rt, int key)
+{
+	int			file_num;
+
+	file_num = key - 48;
+	free_parser(rt);
+	ft_putstr("Switching file...\n");
+	if (file_num == 1)
+		parser(rt, "file/1.rt");
+	else if (file_num == 2)
+		parser(rt, "file/2.rt");
+	else if (file_num == 3)
+		parser(rt, "file/3.rt");
+	else if (file_num == 4)
+		parser(rt, "file/4.rt");
+	else if (file_num == 5)
+		parser(rt, "file/5.rt");
+	else if (file_num == 6)
+		parser(rt, "file/6.rt");
+	else if (file_num == 7)
+		parser(rt, "file/7.rt");
+	else if (file_num == 8)
+		parser(rt, "file/8.rt");
+	else if (file_num == 9)
+		parser(rt, "file/9.rt");
+	ft_ini_cam(rt);
+	ft_reset(rt);
+	make_rot(rt);
+	ft_raytracing(rt);
+}
+
 void		quit_sdl(t_rt *rt)
 {
 	SDL_DestroyTexture(rt->data->sdl_texture);
@@ -39,10 +70,9 @@ int			my_key_press(t_rt *rt, SDL_Keysym key)
 		rt->op->sepia = 0;
 	}
 	else if (key.sym == SDLK_a)
-	{
-		rt->op->aa = !rt->op->aa;
 		aliasing(rt);
-	}
+	else if (key.sym >= SDLK_1 && key.sym <= SDLK_9)
+		switch_file(rt, key.sym);
 	if (rt->op->blwh)
 		bl_wh(rt);
 	if (rt->op->sepia)

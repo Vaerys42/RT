@@ -50,6 +50,9 @@ void		ft_raytracing(t_rt *rt)
 	int			y;
 
 	y = -1;
+	rt->light = rt->start->lgh;
+	if (rt->light == NULL)
+		return ;
 	while (++y < WIN_HEIGHT)
 	{
 		x = -1;

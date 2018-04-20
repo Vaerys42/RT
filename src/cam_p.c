@@ -14,13 +14,8 @@
 
 void		move_camera(t_rt *rt, SDL_Event ev)
 {
-	if (ev.type == SDL_MOUSEWHEEL)
-		rt->cam->pos.z += ev.wheel.y;
-	else if (ev.type == SDL_MOUSEMOTION)
-	{
-		rt->cam->rot.y += -(float)ev.motion.xrel / 20;
-		rt->cam->rot.x += -(float)ev.motion.yrel / 20;
-	}
+	rt->cam->rot.y += -(float)ev.motion.xrel / 20;
+	rt->cam->rot.x += -(float)ev.motion.yrel / 20;
 	ft_raytracing(rt);
 }
 

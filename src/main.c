@@ -66,7 +66,7 @@ void		get_event(t_rt *rt)
 				rt->op->cam_move = 0;
 			else if ((ev.type == SDL_MOUSEWHEEL || ev.type == SDL_MOUSEMOTION) && rt->op->maintain == 1)
 				move_object(rt, ev);
-			else if ((ev.type == SDL_MOUSEWHEEL || ev.type == SDL_MOUSEMOTION) && rt->op->cam_move == 1)
+			else if (ev.type == SDL_MOUSEMOTION && rt->op->cam_move == 1)
 				move_camera(rt, ev);
 			window(rt);
 		}
@@ -83,8 +83,7 @@ int			main(int argc, char **argv)
 		ft_malloc_error();
 	parser(rt, argv[1]);
 	ft_ini(rt);
-	if (rt->light != NULL)
-		ft_raytracing(rt);
+	ft_raytracing(rt);
 	get_event(rt);
 	return (0);
 }

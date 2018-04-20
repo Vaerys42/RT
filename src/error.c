@@ -44,5 +44,6 @@ void		ft_malloc_error(void)
 void		ft_exit(void)
 {
 	ft_putstr("error\n");
+	printf("%s\n", SDL_GetError());
 	exit(-1);
 }

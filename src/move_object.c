@@ -114,12 +114,10 @@ void		move_object(t_rt *rt, SDL_Event ev)
 {
 	if (rt->op->obj == SPH)
 		move_sphere(rt, ev);
-	else if (rt->op->obj == PLN)
-		move_plane(rt, ev);
-	else if (rt->op->obj == CYL)
-		move_cyl(rt, ev);
 	else if (rt->op->obj == CON)
 		move_cone(rt, ev);
+	else if (rt->op->obj == CYL)
+		move_cyl(rt, ev);
 	ft_reset(rt);
 	ft_raytracing(rt);
 }

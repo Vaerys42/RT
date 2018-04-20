@@ -17,7 +17,7 @@
 # define WIN_HEIGHT 480
 # define PLN_DST 100
 # define EPS 0.0001
-# define ANTIALIA 30
+# define ANTIALIA 10
 # define MAX 9999
 # define AMB 0.2
 
@@ -30,6 +30,7 @@
 
 # include "libft/includes/libft.h"
 # include "SDL2.framework/Headers/SDL.h"
+# include "SDL2_ttf.framework/Headers/SDL_ttf.h"
 # include <math.h>
 
 typedef	struct			s_material
@@ -52,7 +53,9 @@ typedef	struct			s_data
 	unsigned int		*image_base;
 	SDL_Window			*sdl_window;
 	SDL_Renderer		*sdl_renderer;
+	SDL_Surface			*sdl_surface;
 	SDL_Texture			*sdl_texture;
+	TTF_Font			*font;
 }						t_data;
 
 typedef	struct			s_plane
@@ -229,6 +232,7 @@ void					ft_bad_arg(int i);
 void					ft_exit(void);
 
 void					ft_ini(t_rt *rt);
+void					ft_ini_cam(t_rt *rt);
 void					ft_create(t_rt *rt);
 void					parser(t_rt *rt, char *file);
 int						ft_check_obj(char *str, int fd, t_rt *rt);
@@ -237,6 +241,7 @@ void					ft_reset(t_rt *rt);
 t_coo					get_coo(char **str, int err);
 t_material				*get_color(char **str);
 double					get_radius(char **str);
+void					free_parser(t_rt *rt);
 
 int						my_key_press(t_rt *rt, SDL_Keysym key);
 int						ft_exit_cross(t_rt *rt);
