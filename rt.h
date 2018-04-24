@@ -27,10 +27,14 @@
 # define CYL 4
 # define CUB 5
 # define ELL 6
+# define TOR 7
+# define PAR 8
+# define HYP 9
 
 # include "libft/includes/libft.h"
 # include "SDL2.framework/Headers/SDL.h"
 # include <math.h>
+# include <complex.h>
 
 typedef	struct			s_material
 {
@@ -105,6 +109,21 @@ typedef	struct			s_sphere
 	struct s_sphere		*next;
 }						t_sphere;
 
+typedef	struct			s_tore
+{
+	t_coo				o;
+	t_coo				dir;
+	t_coo				rot;
+	//t_coo				a;
+	double				radiusa;
+	double				radiusb;
+	t_material			*color;
+	t_plane				*pln;
+	double				shine;
+	int					id;
+	struct s_tore		*next;
+}						t_tore;
+
 typedef	struct			s_ellipse
 {
 	t_coo				o;
@@ -120,6 +139,20 @@ typedef	struct			s_ellipse
 	struct s_ellipse	*next;
 }						t_ellipse;
 
+typedef	struct			s_parabol
+{
+	t_coo				o;
+	t_coo				dir;
+	t_coo				rot;
+	double				rad1;
+	double				rad2;
+	t_material			*color;
+	t_plane				*pln;
+	double				shine;
+	int					id;
+	struct s_parabol	*next;
+}						t_parabol;
+
 typedef	struct			s_cube
 {
 	t_material			*color;
@@ -134,6 +167,16 @@ typedef	struct			s_cube
 	int					id;
 	struct s_cube		*next;
 }						t_cube;
+
+typedef struct			s_equa
+{
+	double				ini[5];
+	double				a[5];
+	_Complex double				x[4];
+	_Complex double				u[3];
+	_Complex double				v[3];
+	double				min;
+}						t_equa;
 
 typedef struct			s_light
 {
@@ -192,6 +235,8 @@ typedef	struct			s_start
 	t_cube				*cub;
 	t_ellipse			*ell;
 	t_light				*lgh;
+	t_tore				*tor;
+	t_parabol			*par;
 }						t_start;
 
 typedef	struct			s_options
@@ -217,11 +262,14 @@ typedef	struct			s_rt
 	t_cylinder			*cylinder;
 	t_cube				*cube;
 	t_ellipse			*ellipse;
+	t_parabol			*parabol;
+	t_tore				*tore;
 	t_view				*view;
 	t_ray				*light_ray;
 	t_inter				*inter;
 	t_start				*start;
 	t_options			*op;
+	t_equa				*equa;
 }						t_rt;
 
 void					ft_malloc_error(void);
@@ -294,8 +342,6 @@ void					ft_ray(t_rt *rt, int x, int y, int type);
 void					ft_ini_ray(t_rt *rt, double x, double y);
 
 double					ft_inter_plane_ini(t_ray *ray, t_plane *pln, double t1, double t2);
-//double					ft_inter_plane_obj(t_plane *pln, double dc, double t,
-//						double t1, double t2);
 
 void					check_ellipse_inter(t_rt *rt, int type);
 int						ft_add_ellipse(int fd, t_rt *rt, int id);
@@ -313,4 +359,13 @@ void					get_obj(t_rt *rt, int x, int y);
 void					move_camera(t_rt *rt, SDL_Event ev);
 t_coo					ft_inv_rot(t_coo vect, t_coo rot);
 void					move_color(t_material *c, double r, double g, double b);
+int						ft_add_tore(int fd, t_rt *rt, int id);
+void					check_tore_inter(t_rt *rt, int type);
+double  			    ft_min(t_rt *rt, t_equa *equa);
+void					ft_equa2(t_equa *equa, double a0, double a1, double a2);
+void					ft_equa3(t_rt *rt, double a0, double a1, double a2, double a3);
+void					ft_equa4(t_rt *rt);
+void					check_parabol_inter(t_rt *rt, int type);
+int						ft_add_parabol(int fd, t_rt *rt, int id);
+
 #endif

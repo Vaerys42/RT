@@ -30,6 +30,10 @@ int			ft_check_obj(char *str, int fd, t_rt *rt)
 		return (ft_add_cube(fd, rt, id++));
 	else if (ft_strcmp(str, "ellipse") == 0)
 		return (ft_add_ellipse(fd, rt, id++));
+	else if (ft_strcmp(str, "parabol") == 0)
+		return (ft_add_parabol(fd, rt, id++));
+	else if (ft_strcmp(str, "tore") == 0)
+		return (ft_add_tore(fd, rt, id++));
 	else if (ft_strcmp(str, "camera") == 0)
 		return (ft_add_cam(fd, rt));
 	else if (ft_strcmp(str, "light") == 0)
@@ -51,6 +55,8 @@ void		ft_ini_struct(t_rt *rt)
 	rt->cam = NULL;
 	rt->light = NULL;
 	rt->ellipse = NULL;
+	rt->tore = NULL;
+	rt->parabol = NULL;
 	rt->start->sph = NULL;
 	rt->start->pln = NULL;
 	rt->start->con = NULL;
@@ -58,6 +64,8 @@ void		ft_ini_struct(t_rt *rt)
 	rt->start->cub = NULL;
 	rt->start->lgh = NULL;
 	rt->start->ell = NULL;
+	rt->start->tor = NULL;
+	rt->start->par = NULL;
 }
 
 void		parser(t_rt *rt, char *file)

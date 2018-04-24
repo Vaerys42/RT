@@ -26,6 +26,7 @@ void		ft_get_point(t_rt *rt)
 {
 	rt->inter->point = ft_mult_vect(rt->inter->dst, rt->ray->dir);
 	rt->inter->point = ft_add_vect(rt->cam->pos, rt->inter->point);
+	//printf("x %f y %f z %f\n", rt->inter->point.x, rt->inter->point.y, rt->inter->point.z);
 }
 
 void		ft_apply_light(t_rt *rt)
@@ -62,6 +63,8 @@ void		check_forms(t_rt *rt, int type)
 	check_cylinder_inter(rt, type);
 	check_cube_inter(rt, type);
 	check_ellipse_inter(rt, type);
+	check_parabol_inter(rt, type);
+	check_tore_inter(rt, type);
 	check_plane_inter(rt, type);
 }
 

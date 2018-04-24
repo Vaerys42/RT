@@ -12,6 +12,29 @@
 
 #include "../rt.h"
 
+void		tore_para_rot(t_rt *rt)
+{
+rt->tore = rt->start->tor;
+	while (rt->tore != NULL)
+	{
+		rt->tore->dir = ft_rotation(rt->tore->dir,
+		rt->tore->rot);
+		if (rt->tore->pln != NULL)
+			rt->tore->pln->norm = ft_rotation(rt->tore->pln->norm,
+			rt->tore->rot);
+		rt->tore = rt->tore->next;
+	}
+rt->parabol = rt->start->par;
+	while (rt->parabol != NULL)
+	{
+		rt->parabol->dir = ft_rotation(rt->parabol->dir,
+		rt->parabol->rot);
+		if (rt->parabol->pln != NULL)
+			rt->parabol->pln->norm = ft_rotation(rt->parabol->pln->norm,
+			rt->parabol->rot);
+		rt->parabol = rt->parabol->next;
+	}
+}
 void		cyl_cone_rot(t_rt *rt)
 {
 	rt->cylinder = rt->start->cyl;
@@ -38,6 +61,7 @@ void		cyl_cone_rot(t_rt *rt)
 void		make_rot(t_rt *rt)
 {
 	cyl_cone_rot(rt);
+	tore_para_rot(rt);
 	rt->sphere = rt->start->sph;
 	while (rt->sphere != NULL)
 	{

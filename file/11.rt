@@ -1,0 +1,24 @@
+camera
+coo: 0 0 0
+rot: 0 0 0
+parabol
+coo: 0 -2 15
+rad1: 0.3
+rad2: 1
+plno: 0 2 15
+color: 1 0 1
+shine: 3
+rot: 20 0 20
+plnc: 1 1 0
+light
+coo: 1 0 0
+color: 1 1 1
+pow: 0.3
+plane
+coo: 0 0 20
+color: 0 1 0
+norm: 0 0 -1
+light
+coo: -1 3 0
+color: 1 1 1
+pow: 0.3

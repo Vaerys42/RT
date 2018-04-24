@@ -30,6 +30,10 @@ SRC =	src/main.c \
 		src/filter.c \
 		src/pixel.c \
 		src/move_object.c \
+		src/tore.c \
+		src/tore_p.c \
+		src/parabol.c \
+		src/parabol_p.c \
 
 LIBS = libft/libft.a SDL2.framework/SDL2
 

@@ -21,6 +21,7 @@ double		ft_check_sphere(t_sphere *sphere, t_ray *ray)
 	double		t2;
 
 	ray->obj = ft_sub_vect(ray->o, sphere->o);
+	
 	a = scal(ray->dir, ray->dir);
 	b = 2 * (scal(ray->dir, ray->obj));
 	c = scal(ray->obj, ray->obj) - pow(sphere->radius, 2);
