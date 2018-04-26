@@ -72,8 +72,8 @@ void		new_cone_dst(t_rt *rt, int type, double tmp)
 	rt->inter->dst = tmp;
 	if (type == 0)
 		cam_cone_inter(rt);
-	if (type == 1 && rt->inter->num == rt->cone->id)
-		light_cone_inter(rt);
+	if (type == 1)
+		rt->inter->light = rt->cone->id;
 }
 
 void		check_cone_inter(t_rt *rt, int type)
@@ -89,8 +89,11 @@ void		check_cone_inter(t_rt *rt, int type)
 				rt->cone->pln->cut = 0;
 			if (type == 0)
 				tmp = ft_check_cone(rt->cone, rt->ray);
-			else
+			if (type == 1)
 				tmp = ft_check_cone(rt->cone, rt->light_ray);
+			if (type == 2 && rt->inter->num == rt->cone->id &&
+			rt->inter->light == rt->cone->id)
+				light_cone_inter(rt);
 			if (tmp > 0.01 && tmp < rt->inter->dst)
 				new_cone_dst(rt, type, tmp);
 			rt->cone = rt->cone->next;

@@ -51,8 +51,8 @@ void		new_tore_dst(t_rt *rt, int type, double tmp)
 	rt->inter->dst = tmp;
 	if (type == 0)
 		cam_tore_inter(rt);
-	if (type == 1 && rt->inter->obj == TOR)
-		light_tore_inter(rt);
+	if (type == 1)
+		rt->inter->light = rt->tore->id;
 }
 
 void		check_tore_inter(t_rt *rt, int type)
@@ -68,8 +68,11 @@ void		check_tore_inter(t_rt *rt, int type)
 				rt->tore->pln->cut = 0;
 			if (type == 0)
 				tmp = ft_check_tore(rt, rt->ray);
-			else
+			if (type == 1)
 				tmp = ft_check_tore(rt, rt->light_ray);
+			if (type == 2 && rt->inter->num == rt->tore->id &&
+			rt->inter->light == rt->tore->id)
+				light_tore_inter(rt);
 			if (tmp > 0.01 && tmp < rt->inter->dst)
 				new_tore_dst(rt, type, tmp);
 			rt->tore = rt->tore->next;

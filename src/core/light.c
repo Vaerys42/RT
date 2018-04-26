@@ -50,12 +50,14 @@ void		ft_get_light(t_rt *rt)
 	while (rt->light)
 	{
 		rt->inter->dst = MAX;
+		rt->inter->light = -1;
 		rt->inter->angle->dir = rt->ray->dir;
 		rt->light_ray->o = rt->light->o;
 		rt->light_ray->dir = ft_normalize(
 		ft_sub_vect(rt->inter->point, rt->light->o));
 		rt->light->shine = 0;
 		check_forms(rt, 1);
+		check_forms(rt, 2);
 		ft_light_diffspec(rt);
 		rt->light = rt->light->next;
 	}

@@ -70,8 +70,8 @@ void		new_cylinder_dst(t_rt *rt, int type, double tmp)
 	rt->inter->dst = tmp;
 	if (type == 0)
 		cam_cylinder_inter(rt);
-	if (type == 1 && rt->inter->num == rt->cylinder->id)
-		light_cylinder_inter(rt);
+	if (type == 1)
+		rt->inter->light = rt->cylinder->id;
 }
 
 void		check_cylinder_inter(t_rt *rt, int type)
@@ -87,8 +87,11 @@ void		check_cylinder_inter(t_rt *rt, int type)
 				rt->cylinder->pln->cut = 0;
 			if (type == 0)
 				tmp = ft_check_cylinder(rt->cylinder, rt->ray);
-			else
+			if (type == 1)
 				tmp = ft_check_cylinder(rt->cylinder, rt->light_ray);
+			if (type == 2 && rt->inter->num == rt->cylinder->id && 
+			rt->inter->light == rt->cylinder->id)
+				light_cylinder_inter(rt);
 			if (tmp > 0.01 && tmp < rt->inter->dst)
 				new_cylinder_dst(rt, type, tmp);
 			rt->cylinder = rt->cylinder->next;

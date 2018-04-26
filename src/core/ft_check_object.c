@@ -20,6 +20,7 @@ void		ft_get_point(t_rt *rt)
 
 void		check_forms(t_rt *rt, int type)
 {
+	check_plane_inter(rt, type);
 	check_sphere_inter(rt, type);
 	check_cone_inter(rt, type);
 	check_cylinder_inter(rt, type);
@@ -27,7 +28,6 @@ void		check_forms(t_rt *rt, int type)
 	check_ellipse_inter(rt, type);
 	check_parabol_inter(rt, type);
 	check_tore_inter(rt, type);
-	check_plane_inter(rt, type);
 }
 
 void		ft_check_object(t_rt *rt)

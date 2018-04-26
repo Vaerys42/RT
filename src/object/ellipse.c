@@ -66,8 +66,8 @@ void		new_ellipse_dst(t_rt *rt, int type, double tmp)
 	rt->inter->dst = tmp;
 	if (type == 0)
 		cam_ellipse_inter(rt);
-	if (type == 1 && rt->inter->num == rt->ellipse->id)
-		light_ellipse_inter(rt);
+	if (type == 1)
+		rt->inter->light = rt->ellipse->id;
 }
 
 void		check_ellipse_inter(t_rt *rt, int type)
@@ -83,8 +83,11 @@ void		check_ellipse_inter(t_rt *rt, int type)
 				rt->ellipse->pln->cut = 0;
 			if (type == 0)
 				tmp = ft_check_ellipse(rt->ellipse, rt->ray);
-			else
+			if (type == 1)
 				tmp = ft_check_ellipse(rt->ellipse, rt->light_ray);
+			if (type == 2 && rt->inter->num == rt->ellipse->id &&
+			rt->inter->light == rt->ellipse->id)
+				light_ellipse_inter(rt);
 			if (tmp > 0.01 && tmp < rt->inter->dst)
 				new_ellipse_dst(rt, type, tmp);
 			rt->ellipse = rt->ellipse->next;

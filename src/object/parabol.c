@@ -68,8 +68,8 @@ void		new_parabol_dst(t_rt *rt, int type, double tmp)
 	rt->inter->dst = tmp;
 	if (type == 0)
 		cam_parabol_inter(rt);
-	if (type == 1 && rt->inter->num == rt->parabol->id)
-		light_parabol_inter(rt);
+	if (type == 1)
+		rt->inter->light = rt->parabol->id;
 }
 
 void		check_parabol_inter(t_rt *rt, int type)
@@ -85,8 +85,11 @@ void		check_parabol_inter(t_rt *rt, int type)
 				rt->parabol->pln->cut = 0;
 			if (type == 0)
 				tmp = ft_check_parabol(rt->parabol, rt->ray);
-			else
+			if (type == 1)
 				tmp = ft_check_parabol(rt->parabol, rt->light_ray);
+			if (type == 2 && rt->inter->num == rt->parabol->id
+			&& rt->inter->light == rt->parabol->id)
+				light_parabol_inter(rt);
 			if (tmp > 0.01 && tmp < rt->inter->dst)
 				new_parabol_dst(rt, type, tmp);
 			rt->parabol = rt->parabol->next;

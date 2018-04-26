@@ -64,8 +64,8 @@ void		new_sphere_dst(t_rt *rt, int type, double tmp)
 	rt->inter->dst = tmp;
 	if (type == 0)
 		cam_sphere_inter(rt);
-	if (type == 1 && rt->inter->num == rt->sphere->id)
-		light_sphere_inter(rt);
+	if (type == 1)
+		rt->inter->light = rt->sphere->id;
 }
 
 void		check_sphere_inter(t_rt *rt, int type)
@@ -81,8 +81,11 @@ void		check_sphere_inter(t_rt *rt, int type)
 				rt->sphere->pln->cut = 0;
 			if (type == 0)
 				tmp = ft_check_sphere(rt->sphere, rt->ray);
-			else
+			if (type == 1)
 				tmp = ft_check_sphere(rt->sphere, rt->light_ray);
+			if (type == 2 && rt->inter->num == rt->sphere->id
+			&& rt->inter->light == rt->sphere->id)
+				light_sphere_inter(rt);
 			if (tmp > 0.01 && tmp < rt->inter->dst)
 				new_sphere_dst(rt, type, tmp);
 			rt->sphere = rt->sphere->next;

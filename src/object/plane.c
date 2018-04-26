@@ -35,11 +35,8 @@ void				new_plane_dst(t_rt *rt, int type, double tmp)
 		rt->inter->col->g = rt->plane->color->g;
 		rt->inter->col->b = rt->plane->color->b;
 	}
-	if (type == 1 && rt->inter->num == rt->plane->id)
-	{
-		rt->light->shine = 0;
-		rt->inter->angle->dir = rt->plane->norm;
-	}
+	if (type == 1)
+		rt->inter->light = rt->plane->id;
 }
 
 void				check_plane_inter(t_rt *rt, int type)
@@ -53,8 +50,14 @@ void				check_plane_inter(t_rt *rt, int type)
 		{
 			if (type == 0)
 				tmp = ft_check_plane(rt->plane, rt->ray);
-			else
+			if (type == 1)
 				tmp = ft_check_plane(rt->plane, rt->light_ray);
+			if (type == 2 && rt->inter->num == rt->plane->id &&
+			rt->inter->light == rt->plane->id)
+			{
+				rt->light->shine = 0;
+				rt->inter->angle->dir = rt->plane->norm;
+			}
 			if (tmp > 0.01 && tmp < rt->inter->dst)
 				new_plane_dst(rt, type, tmp);
 			rt->plane = rt->plane->next;

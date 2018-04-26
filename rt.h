@@ -258,6 +258,7 @@ typedef	struct			s_inter
 	t_coo				point;
 	int					obj;
 	int					num;
+	int					light;
 }						t_inter;
 
 typedef	struct			s_start
