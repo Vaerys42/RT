@@ -1,0 +1,23 @@
+camera
+coo: 0 0 0
+rot: 0 0 0
+ellipse
+coo: 0 0 15
+rad1: 2 0 0
+rad2: 0 1.5 0
+rad3: 0 0 1
+color: 1 0 0
+shine: 1
+rot: 0 0 0
+light
+coo: 4 10 6
+color: 1 1 0
+pow: 0.4
+light
+coo: -4 10 0
+color: 1 1 1
+pow: 0.3
+plane
+coo: 0 0 20
+color: 0 1 0
+norm: 0 0 -1
