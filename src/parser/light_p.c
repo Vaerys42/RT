@@ -46,6 +46,8 @@ t_light		*light_ini(void)
 	if (!(light = (t_light*)malloc(sizeof(t_light))))
 		ft_malloc_error();
 	light->o = ft_new_vect(0, 0, 0);
+	light->dir = ft_new_vect(0, 0, 0);
+	light->norm = ft_new_vect(0, 0, 0);
 	light->color = NULL;
 	light->power = -1;
 	light->shine = 0;
@@ -61,8 +63,14 @@ void		ft_light_line(char **datas, t_light *light, t_rt *rt, int fd)
 		random = 0;
 	else if (ft_strcmp(datas[0], "coo:") == 0)
 		light->o = get_coo(datas, 2);
+	else if (ft_strcmp(datas[0], "dir:") == 0)
+		light->dir = get_coo(datas, 2);
+	else if (ft_strcmp(datas[0], "norm:") == 0)
+		light->norm = get_coo(datas, 2);
 	else if (ft_strcmp(datas[0], "color:") == 0)
 		light->color = get_color(datas);
+	else if (ft_strcmp(datas[0], "angle:") == 0)
+		light->angle = get_radius(datas);
 	else if (ft_strcmp(datas[0], "pow:") == 0)
 		light->power = get_radius(datas);
 	else if (datas[1] == NULL && ft_check_obj(datas[0], fd, rt) == 1)

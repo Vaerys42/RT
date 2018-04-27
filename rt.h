@@ -182,6 +182,9 @@ typedef struct			s_light
 {
 	t_coo				o;
 	t_material			*color;
+	t_coo				dir;
+	t_coo				norm;
+	double				angle;
 	double				power;
 	double				shine;
 	double				amb;
@@ -252,8 +255,9 @@ typedef	struct			s_inter
 	double				dst;
 	t_material			*mat;
 	t_material			*col;
-	t_material			*kdif;
-	t_material			*kspe;
+	t_material			*lgh;
+	//t_material			*kdif;
+	//t_material			*kspe;
 	t_ray				*angle;
 	t_coo				point;
 	int					obj;

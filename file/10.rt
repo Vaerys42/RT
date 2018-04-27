@@ -23,13 +23,11 @@ rot: 20 0 0
 color: 1 1 0
 shine: 1
 light
-coo: 2 -1 0
-color: 1 1 1
-pow: 0.1
-light
-coo: -2 1 0
-color: 1 1 1
-pow: 0.1
+coo: 0 0 0
+color: 1 0 0
+pow: 0.3
+angle: 7
+dir: 0 0 1
 plane
 coo: 0 0 20
 color: 0 1 0

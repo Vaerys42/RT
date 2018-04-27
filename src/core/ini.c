@@ -47,10 +47,12 @@ void	ft_malloc_ini(t_rt *rt)
 		ft_malloc_error();
 	if (!(rt->inter->col = (t_material*)malloc(sizeof(t_material))))
 		ft_malloc_error();
-	if (!(rt->inter->kdif = (t_material*)malloc(sizeof(t_material))))
+	if (!(rt->inter->lgh = (t_material*)malloc(sizeof(t_material))))
+		ft_malloc_error();
+	/*if (!(rt->inter->kdif = (t_material*)malloc(sizeof(t_material))))
 		ft_malloc_error();
 	if (!(rt->inter->kspe = (t_material*)malloc(sizeof(t_material))))
-		ft_malloc_error();
+		ft_malloc_error();*/
 	if (!(rt->op = (t_options*)malloc(sizeof(t_options))))
 		ft_malloc_error();
 	if (!(rt->equa = (t_equa*)malloc(sizeof(t_equa))))
