@@ -37,11 +37,15 @@ double		ft_check_cylinder(t_cylinder *cylinder, t_ray *ray)
 
 void		cam_cylinder_inter(t_rt *rt)
 {
+	t_coo		hit;
+
 	rt->inter->obj = CYL;
 	rt->inter->num = rt->cylinder->id;
 	rt->inter->col->r = rt->cylinder->color->r;
 	rt->inter->col->g = rt->cylinder->color->g;
 	rt->inter->col->b = rt->cylinder->color->b;
+	hit = ft_local_coo(rt->inter->point, rt->cylinder->o, rt->cylinder->rot);
+	ft_texture_all(rt, hit, rt->cylinder->texture);
 	if (rt->cylinder->pln != NULL && rt->cylinder->pln->cut == 1)
 	{
 		rt->inter->col->r = rt->cylinder->pln->color->r;

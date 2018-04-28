@@ -48,6 +48,9 @@ t_cylinder	*cyl_ini(void)
 	cylinder->radius = 1;
 	cylinder->shine = 0.5;
 	cylinder->pln = NULL;
+	if (!(cylinder->texture = (t_texture*)malloc(sizeof(t_texture))))
+		ft_malloc_error();
+	ft_ini_texture(cylinder->texture);
 	return (cylinder);
 }
 
@@ -91,6 +94,17 @@ void		ft_cyl_read_line(char **datas, t_cylinder *cyl, t_rt *rt, int fd)
 		inter_plane_cylinder(cyl, datas);
 	else if (datas[1] == NULL && ft_check_obj(datas[0], fd, rt) == 1)
 		rand = 0;
+	else if (ft_strcmp(datas[0], "texture:") == 0)
+		cyl->texture->type = get_texture_type(datas);
+	else if (ft_strcmp(datas[0], "scale:") == 0)
+		cyl->texture->scale = get_scale(datas, 8);
+	else if (ft_strcmp(datas[0], "offset:") == 0)
+		cyl->texture->offset = get_offset(datas, 9);
+	else if (ft_strcmp(datas[0], "path:") == 0)
+	{
+		cyl->texture->path = get_path(datas);
+		cyl->texture->surface = ft_upload_texture(cyl->texture->path);
+	}
 	else
 		ft_bad_arg(5);
 }

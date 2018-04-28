@@ -1,0 +1,13 @@
+camera
+coo: 0 0 0
+rot: 0 0 0
+cube
+coo: 0 0 10
+radius: 0.7
+color: 1 0 0
+shine: 2
+rot: 0 50 25
+light
+coo: 0 5 0
+color: 0 0 1
+pow: 0.2

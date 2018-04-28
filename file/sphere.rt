@@ -1,0 +1,17 @@
+camera
+coo: 0 0 -10
+rot: 0 0 0
+
+sphere
+coo: 0 0 0
+radius: 1
+color: 0 0 1
+shine: 0.5
+rot: 0 0 0
+texture: 1
+path: textures/earth_with-clouds.jpg
+
+light
+coo: 0 0 -5
+color: 1 1 1
+pow: 0.25

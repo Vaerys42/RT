@@ -16,8 +16,6 @@ void		ft_bad_arg(int i)
 {
 	if (i == 0)
 		ft_putstr("bad number of arguments\n");
-	else if (i == 1)
-		ft_putstr("bad file : please use a valid file\n");
 	else if (i == 2)
 		ft_putstr("Coordinate error\n");
 	else if (i == 3)
@@ -31,6 +29,12 @@ void		ft_bad_arg(int i)
 	else if (i == 7)
 		ft_putstr("Dir vector error\n");
 	else if (i == 8)
+		ft_putstr("Scale error\n");
+	else if (i == 9)
+		ft_putstr("Offset error\n");
+	else if (i == 10)
+		ft_putstr("Path error\n");
+	else if (i == 11)
 		ft_putstr("Ambiant light error\n");
 	else
 		ft_putstr("File error\n");

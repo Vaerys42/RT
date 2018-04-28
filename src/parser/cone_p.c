@@ -26,6 +26,9 @@ t_cone		*new_cone(void)
 	cone->rot = ft_new_vect(0, 0, 0);
 	cone->angle = -1;
 	cone->shine = -1;
+	if (!(cone->texture = (t_texture*)malloc(sizeof(t_texture))))
+		ft_malloc_error();
+	ft_ini_texture(cone->texture);
 	return (cone);
 }
 
@@ -89,6 +92,17 @@ void		ft_read_line(char **datas, t_cone *cone, t_rt *rt, int fd)
 		inter_plane_cone(cone, datas);
 	else if (datas[1] == NULL && ft_check_obj(datas[0], fd, rt) == 1)
 		random = 0;
+	else if (ft_strcmp(datas[0], "texture:") == 0)
+		cone->texture->type = get_texture_type(datas);
+	else if (ft_strcmp(datas[0], "scale:") == 0)
+		cone->texture->scale = get_scale(datas, 8);
+	else if (ft_strcmp(datas[0], "offset:") == 0)
+		cone->texture->offset = get_offset(datas, 9);
+	else if (ft_strcmp(datas[0], "path:") == 0)
+	{
+		cone->texture->path = get_path(datas);
+		cone->texture->surface = ft_upload_texture(cone->texture->path);
+	}
 	else
 		ft_bad_arg(5);
 }

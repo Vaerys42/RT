@@ -31,6 +31,9 @@ t_plane		*ini_plane(void)
 	plane->o = ft_new_vect(0, 0, 0);
 	plane->color = NULL;
 	plane->norm = ft_new_vect(0, 1, 0);
+	if (!(plane->texture = (t_texture*)malloc(sizeof(t_texture))))
+		ft_malloc_error();
+	ft_ini_texture(plane->texture);
 	return (plane);
 }
 
@@ -68,6 +71,17 @@ void		ft_plane_line(char **datas, int fd, t_rt *rt, t_plane *plane)
 		plane->norm = get_coo(datas, 6);
 	else if (datas[1] == NULL && ft_check_obj(datas[0], fd, rt) == 1)
 		rand = 0;
+	else if (ft_strcmp(datas[0], "texture:") == 0)
+		plane->texture->type = get_texture_type(datas);
+	else if (ft_strcmp(datas[0], "scale:") == 0)
+		plane->texture->scale = get_scale(datas, 8);
+	else if (ft_strcmp(datas[0], "offset:") == 0)
+		plane->texture->offset = get_offset(datas, 9);
+	else if (ft_strcmp(datas[0], "path:") == 0)
+	{
+		plane->texture->path = get_path(datas);
+		plane->texture->surface = ft_upload_texture(plane->texture->path);
+	}
 	else
 		ft_bad_arg(5);
 }

@@ -1,0 +1,89 @@
+camera
+coo: 0 0 0
+rot: 0 0 0
+
+sphere
+coo: -4 0 20
+radius: 1
+color: 1 0.1 0.6
+shine: 0.5
+rot: 0 0 0
+texture: 10
+offset: 0 0
+scale: 1 1
+
+sphere
+coo: -4 2 20
+radius: 1
+color: 0.5 0.5 0.5
+shine: 0.5
+rot: 0 0 0
+texture: 4
+offset: 0 0
+scale: 1 1
+
+sphere
+coo: -2 0 20
+radius: 1
+color: 1 1 1
+shine: 0.5
+rot: 0 0 0
+texture: 2
+offset: 0 0
+scale: 1 1
+
+sphere
+coo: -2 2 20
+radius: 1
+color: 0.5 0.5 1
+shine: 0.5
+rot: 0 0 0
+texture: 3
+offset: 0 0
+scale: 1 1
+
+sphere
+coo: 2 0 20
+radius: 1
+color: 0.53 0.8 0.98
+color: 0.6 0.2 0
+shine: 0.5
+rot: 0 0 0
+texture: 5
+offset: 0 0
+scale: 1 1
+
+sphere
+coo: 0 0 20
+radius: 1
+color: 0 1 0
+shine: 0.5
+rot: 0 0 0
+texture: 6
+offset: 0 0
+scale: 1 1
+
+sphere
+coo: 0 2 20
+radius: 1
+color: 0 0.4 0.8
+shine: 0.5
+rot: 0 0 0
+texture: 8
+offset: 0 0
+scale: 1 1
+
+sphere
+coo: 2 2 20
+radius: 1
+color: 1 0.3 0
+shine: 0.5
+rot: 0 0 0
+texture: 9
+offset: 0 0
+scale: 1 1
+
+light
+coo: 0 0 5
+color: 1 1 1
+pow: 0.1

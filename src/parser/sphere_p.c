@@ -44,6 +44,9 @@ t_sphere	*sph_ini(void)
 	sphere->rot = ft_new_vect(0, 0, 0);
 	sphere->radius = -1;
 	sphere->shine = -1;
+	if (!(sphere->texture = (t_texture*)malloc(sizeof(t_texture))))
+		ft_malloc_error();
+	ft_ini_texture(sphere->texture);
 	return (sphere);
 }
 
@@ -87,6 +90,17 @@ void		ft_sphere_line(char **datas, t_sphere *sphere, t_rt *rt, int fd)
 		inter_plane_sphere(sphere, datas);
 	else if (datas[1] == NULL && ft_check_obj(datas[0], fd, rt) == 1)
 		rand = 0;
+	else if (ft_strcmp(datas[0], "texture:") == 0)
+		sphere->texture->type = get_texture_type(datas);
+	else if (ft_strcmp(datas[0], "scale:") == 0)
+		sphere->texture->scale = get_scale(datas, 8);
+	else if (ft_strcmp(datas[0], "offset:") == 0)
+		sphere->texture->offset = get_offset(datas, 9);
+	else if (ft_strcmp(datas[0], "path:") == 0)
+	{
+		sphere->texture->path = get_path(datas);
+		sphere->texture->surface = ft_upload_texture(sphere->texture->path);
+	}
 	else
 		ft_bad_arg(5);
 }

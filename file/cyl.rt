@@ -1,0 +1,18 @@
+camera
+coo: 0 0 0
+rot: 0 0 0
+
+cylinder
+coo: 0 0 30
+radius: 1
+color: 0 1 1
+shine: 0.5
+rot: 0 0 0
+texture: 5
+path: textures/can_beans.jpg
+offset: 0 0
+
+light
+coo: 0 0 5
+color: 1 1 1
+pow: 0.2

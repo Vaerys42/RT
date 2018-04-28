@@ -49,16 +49,14 @@ void		quit_sdl(t_rt *rt)
 	SDL_DestroyWindow(rt->data->info_window);
 	SDL_Quit();
 	IMG_Quit();
+	exit(EXIT_SUCCESS);
 }
 
 int			my_key_press(t_rt *rt, SDL_Keysym key)
 {
 	cpy_image(rt->data->image_int, rt->data->image_base);
 	if (key.sym == SDLK_ESCAPE)
-	{
 		quit_sdl(rt);
-		exit(1);
-	}
 	else if (key.sym == SDLK_s)
 	{
 		rt->op->blwh = 0;
@@ -73,6 +71,8 @@ int			my_key_press(t_rt *rt, SDL_Keysym key)
 		aliasing(rt);
 	else if (key.sym >= SDLK_1 && key.sym <= SDLK_9)
 		switch_file(rt, key.sym);
+	else if (key.sym == SDLK_p)
+		ft_save_img(rt);
 	if (rt->op->blwh)
 		bl_wh(rt);
 	if (rt->op->sepia)
@@ -83,6 +83,5 @@ int			my_key_press(t_rt *rt, SDL_Keysym key)
 int			ft_exit_cross(t_rt *rt)
 {
 	quit_sdl(rt);
-	exit(EXIT_SUCCESS);
 	return (0);
 }

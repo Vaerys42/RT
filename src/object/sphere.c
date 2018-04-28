@@ -35,11 +35,15 @@ double		ft_check_sphere(t_sphere *sphere, t_ray *ray)
 
 void		cam_sphere_inter(t_rt *rt)
 {
+	t_coo			hit;
+
 	rt->inter->obj = SPH;
 	rt->inter->num = rt->sphere->id;
 	rt->inter->col->r = rt->sphere->color->r;
 	rt->inter->col->g = rt->sphere->color->g;
 	rt->inter->col->b = rt->sphere->color->b;
+	hit = ft_local_coo(rt->inter->point, rt->sphere->o, rt->sphere->rot);
+	ft_texture_all(rt, hit, rt->sphere->texture);
 	if (rt->sphere->pln != NULL && rt->sphere->pln->cut == 1)
 	{
 		rt->inter->col->r = rt->sphere->pln->color->r;

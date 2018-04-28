@@ -27,7 +27,7 @@ int			light_amb(t_rt *rt, int fd)
 		{
 			rt->amb = ft_atof(datas[1]);
 			if (rt->amb < 0 || rt->amb > 1)
-				ft_bad_arg(8);
+				ft_bad_arg(11);
 		}
 		else if (datas[1] == NULL && ft_check_obj(datas[0], fd, rt) == 1)
 			ret++;

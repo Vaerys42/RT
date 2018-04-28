@@ -37,11 +37,15 @@ double		ft_check_cone(t_cone *cone, t_ray *ray)
 
 void		cam_cone_inter(t_rt *rt)
 {
+	t_coo		hit;
+
 	rt->inter->obj = CON;
 	rt->inter->num = rt->cone->id;
 	rt->inter->col->r = rt->cone->color->r;
 	rt->inter->col->g = rt->cone->color->g;
 	rt->inter->col->b = rt->cone->color->b;
+	hit = ft_local_coo(rt->inter->point, rt->cone->o, rt->cone->rot);
+	ft_texture_all(rt, hit, rt->cone->texture);
 	if (rt->cone->pln != NULL && rt->cone->pln->cut == 1)
 	{
 		rt->inter->col->r = rt->cone->pln->color->r;

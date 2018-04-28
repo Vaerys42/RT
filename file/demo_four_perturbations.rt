@@ -1,0 +1,38 @@
+camera
+coo: 0 0 -15
+rot: 0 0 0
+
+cone
+coo: -7 2 15
+angle: 40
+color: 0.2 0.7 1
+shine: 0
+rot: 0 0 0
+texture: 8
+
+sphere
+coo: 0 2 15
+radius: 1
+color: 0.9 0.2 0.8
+shine: 0.5
+rot: 0 0 0
+texture: 6
+
+cylinder
+coo: 7 2 15
+radius: 1
+color: 0.2 1 0.7
+shine: 0.5
+rot: 0 0 0
+texture: 9
+
+plane
+coo: 0 -1 0
+norm: 0 1 0
+color: 1 1 1
+texture: 2
+
+light
+coo: 0 0 0
+color: 1 1 1
+pow: 0.2

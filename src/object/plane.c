@@ -34,6 +34,7 @@ void				new_plane_dst(t_rt *rt, int type, double tmp)
 		rt->inter->col->r = rt->plane->color->r;
 		rt->inter->col->g = rt->plane->color->g;
 		rt->inter->col->b = rt->plane->color->b;
+		ft_texture_all(rt, rt->inter->point, rt->plane->texture);
 	}
 	if (type == 1)
 		rt->inter->light = rt->plane->id;

@@ -1,0 +1,74 @@
+camera
+coo: 0 0 0
+rot: 0 0 0
+
+sphere
+coo: -2 0 20
+radius: 1
+color: 0 1 0
+shine: 0.5
+rot: 0 0 0
+texture: 1
+path: textures/TennisBallColorMap.jpg
+offset: 0 0
+scale: 1 1
+
+sphere
+coo: -2 2 20
+radius: 1
+color: 0 1 0
+shine: 0.5
+rot: 0 0 0
+texture: 1
+path: textures/Football.png
+offset: 0 0
+scale: 1 1
+
+sphere
+coo: 0 0 20
+radius: 1
+color: 0 1 0
+shine: 0.5
+rot: 0 0 0
+texture: 1
+path: textures/poolball4.jpg
+offset: 0 0
+scale: 1 1
+
+sphere
+coo: 0 2 20
+radius: 1
+color: 0 1 0
+shine: 0.5
+rot: 0 0 0
+texture: 1
+path: textures/SoftballColor.jpg
+offset: 0 0
+scale: 1 1
+
+sphere
+coo: 2 0 20
+radius: 1
+color: 0 1 0
+shine: 0.5
+rot: 0 0 0
+texture: 1
+path: textures/earthcloudmap.jpg
+offset: 0 0
+scale: 1 1
+
+sphere
+coo: 2 2 20
+radius: 1
+color: 0 1 0
+shine: 0.5
+rot: 0 0 0
+texture: 1
+path: textures/earth_with-clouds.jpg
+offset: 0 0
+scale: 1 1
+
+light
+coo: 0 0 5
+color: 1 1 1
+pow: 0.1

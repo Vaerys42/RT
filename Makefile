@@ -47,6 +47,18 @@ SRC =	src/core/main.c \
 		src/parser/parabol_p.c \
 		src/parser/infos.c \
 		src/parser/ambiant.c \
+		src/texture/texture_all.c \
+		src/texture/texture_checker.c \
+		src/texture/texture_color1.c \
+		src/texture/texture_color2.c \
+		src/texture/texture_get_data.c \
+		src/texture/texture_getpixelcolor.c \
+		src/texture/texture_mapping.c \
+		src/texture/texture_perlin1.c \
+		src/texture/texture_perlin2.c \
+		src/texture/texture_save_img.c \
+		src/texture/texture_scale.c \
+		src/texture/texture_upload.c \
 
 LIBS = libft/libft.a
 
@@ -78,6 +90,7 @@ obj/%.o: src/%.c
 	mkdir -p obj/utilities
 	mkdir -p obj/event
 	mkdir -p obj/core
+	mkdir -p obj/texture
 	gcc -Wall -Wextra -Werror -c $< -o $@ -Ofast -mtune=native
 
 clean :

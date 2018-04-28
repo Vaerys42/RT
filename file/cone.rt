@@ -1,0 +1,17 @@
+camera
+coo: 0 0 0
+rot: 0 0 0
+
+cone
+coo: 0 0 30
+angle: 10
+color: 0 1 0
+shine: 0
+rot: 0 0 90
+texture: 1
+path: textures/rainbow.png
+
+light
+coo: 0 0 5
+color: 1 1 1
+pow: 0.2

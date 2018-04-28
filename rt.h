@@ -56,6 +56,15 @@ typedef	struct			s_coo
 	double				z;
 }						t_coo;
 
+typedef	struct			s_texture
+{
+	int								type;
+	t_coo							offset;
+	t_coo							scale;
+	char							*path;
+	SDL_Surface				*surface;
+}										t_texture;
+
 typedef	struct			s_data
 {
 	unsigned int		*image_int;
@@ -80,6 +89,7 @@ typedef	struct			s_plane
 	double				supp;
 	int					id;
 	int					cut;
+	t_texture			*texture;
 	struct s_plane		*next;
 }						t_plane;
 
@@ -93,6 +103,7 @@ typedef struct			s_cylinder
 	double				shine;
 	t_material			*color;
 	int					id;
+	t_texture			*texture;
 	struct s_cylinder	*next;
 }						t_cylinder;
 
@@ -105,6 +116,7 @@ typedef	struct			s_cone
 	double				angle;
 	double				shine;
 	int					id;
+	t_texture			*texture;
 	t_material			*color;
 	struct s_cone		*next;
 }						t_cone;
@@ -119,6 +131,7 @@ typedef	struct			s_sphere
 	t_plane				*pln;
 	double				shine;
 	int					id;
+	t_texture			*texture;
 	struct s_sphere		*next;
 }						t_sphere;
 
@@ -134,6 +147,7 @@ typedef	struct			s_ellipse
 	t_plane				*pln;
 	double				shine;
 	int					id;
+	t_texture			*texture;
 	struct s_ellipse	*next;
 }						t_ellipse;
 
@@ -532,5 +546,60 @@ t_coo					ft_inv_rot(t_coo vect, t_coo rot);
 void					move_color(t_material *c, double r, double g, double b);
 
 void					rt_infos(t_rt *rt);
+
+/*
+** Textures
+*/
+
+int						ft_texture_all(t_rt *rt, t_coo hit, t_texture *texture);
+int						ft_texture_checker(double L, t_coo hit);
+int  					ft_texture_stripe(double width, t_coo hit, int x_or_y);
+int   					ft_texture_woodgrain(t_coo hit);
+int 					ft_texture_color_rainbow(double x);
+double 					ft_texture_waves(t_coo hit);
+double   				ft_texture_perlin(t_coo hit);
+double   				ft_texture_marble(t_coo hit);
+double   				ft_texture_wood(t_coo hit);
+int						ft_texture_square(t_coo hit, t_rt *rt);
+int						ft_texture_sparkle(void);
+t_material				*ft_mult_color(int n, t_material *color);
+
+t_coo					ft_mapping_all(t_coo hit, t_rt *rt);
+t_coo					ft_mapping_sphere(t_coo hit);
+t_coo					ft_mapping_cylinder(t_coo hit);
+t_coo					ft_mapping_cone(t_coo hit);
+t_coo					ft_mapping_plane(t_coo hit, t_coo origin_plane, t_coo dir_plane);
+
+t_coo					ft_local_coo(t_coo hit, t_coo origin, t_coo rot);
+t_coo					ft_new_coo(double u, double v, t_texture *t, SDL_Surface *s);
+t_coo					ft_texel(double u, double v, SDL_Surface *surface);
+t_coo					ft_uv(t_coo point_2d, int obj, SDL_Surface *surface);
+t_coo 					ft_shift_texture(SDL_Surface *s, t_coo p, double a, double b);
+t_coo					ft_scale_texture(SDL_Surface *s, t_coo p, double a, double b);
+
+t_material  			ft_getpixelcolor(SDL_Surface *surface, double i, double j);
+
+SDL_Surface				*ft_upload_texture(char *path);
+int						ft_check_textures_uploaded(t_data *data, SDL_Surface *surface);
+int    					ft_check_img_path(char *img_path);
+
+int						ft_save_img(t_rt *rt);
+
+void					ft_ini_texture(t_texture *texture);
+
+int						get_texture_type(char **str);
+t_coo					get_scale(char **str, int err);
+t_coo					get_offset(char **str, int err);
+char					*get_path(char **str);
+
+t_coo					ft_local_coo(t_coo hit, t_coo origin, t_coo rot);
+
+int						tab_len(char **str);
+char					*get_path(char **str);
+t_coo					get_scale(char **str, int err);
+t_coo					get_offset(char **str, int err);
+int						get_texture_type(char **str);
+
+double					ft_noise(double vec[3]);
 
 #endif
