@@ -21,7 +21,7 @@ double		sqrt3(double a)
 
 double		disc_eq(double t1, double t2)
 {
-	if (t1 > t2 && t2 > 0)
+	if ((t1 > t2 && t2 > 0) || (t2 > t1 && t1 < 0))
 		return (t2);
 	return (t1);
 }

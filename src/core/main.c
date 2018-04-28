@@ -34,6 +34,8 @@ void		ft_create(t_rt *rt)
 	if (!(rt->data->image_base = (unsigned int*)malloc(WIN_HEIGHT
 	* WIN_LEN * sizeof(unsigned int))))
 		ft_exit();
+	if (IMG_Init(IMG_INIT_PNG) == -1)
+		ft_exit();
 }
 
 void		window(t_rt *rt)
@@ -46,7 +48,7 @@ void		window(t_rt *rt)
 
 void		treat_event(t_rt *rt, SDL_Event ev)
 {
-	if (ev.type == SDL_QUIT)
+	if (ev.type == SDL_WINDOWEVENT && ev.window.event == SDL_WINDOWEVENT_CLOSE)
 		ft_exit_cross(rt);
 	else if (ev.type == SDL_KEYDOWN && ev.key.repeat == 0)
 		my_key_press(rt, ev.key.keysym);

@@ -63,6 +63,8 @@ typedef	struct			s_data
 	SDL_Window			*sdl_window;
 	SDL_Renderer		*sdl_renderer;
 	SDL_Texture			*sdl_texture;
+	SDL_Window			*info_window;
+	SDL_Surface			*info_surface;
 	TTF_Font			*font;
 }						t_data;
 
@@ -239,7 +241,7 @@ typedef struct			s_equa_3
 	double				r;
 	double				y;
 	_Complex double		a0;
-	double				b0;	
+	double				b0;
 }						t_equa_3;
 
 typedef	struct			s_view
@@ -256,8 +258,6 @@ typedef	struct			s_inter
 	t_material			*mat;
 	t_material			*col;
 	t_material			*lgh;
-	//t_material			*kdif;
-	//t_material			*kspe;
 	t_ray				*angle;
 	t_coo				point;
 	int					obj;
@@ -319,6 +319,7 @@ typedef	struct			s_rt
 void					ft_malloc_error(void);
 void					ft_bad_arg(int i);
 void					ft_exit(void);
+void					ttf_exit(void);
 
 /*
 ** Initialisation
@@ -379,8 +380,7 @@ double					disc_eq(double t1, double t2);
 
 double					ft_min(t_rt *rt, t_equa *equa);
 void					ft_equa2(t_equa *equa, double a0, double a1, double a2);
-void					ft_equa3(t_rt *rt, double a0, double a1,
-double a2, double a3);
+void					ft_equa3(t_rt *rt, double a0, t_coo data);
 void					ft_equa4(t_rt *rt);
 double					ft_real(t_equa *equa);
 

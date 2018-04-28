@@ -57,6 +57,8 @@ void		ft_tore_det(t_tore *tore, t_equa *equa, t_ray *ray)
 
 double		ft_check_tore(t_rt *rt, t_ray *ray)
 {
+	t_coo		data;
+
 	ft_tore_det(rt->tore, rt->equa, ray);
 	if (rt->equa->ini[4] == 0 && rt->equa->ini[3] == 0)
 	{
@@ -66,8 +68,10 @@ double		ft_check_tore(t_rt *rt, t_ray *ray)
 	}
 	if (rt->equa->ini[4] == 0 && rt->equa->ini[3] != 0)
 	{
-		ft_equa3(rt, rt->equa->ini[0], rt->equa->ini[1],
-		rt->equa->ini[2], rt->equa->ini[3]);
+		data.x = rt->equa->ini[1];
+		data.y = rt->equa->ini[2];
+		data.z = rt->equa->ini[3];
+		ft_equa3(rt, rt->equa->ini[0], data);
 		return (ft_min(rt, rt->equa));
 	}
 	if (rt->equa->ini[4] != 0)

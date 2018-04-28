@@ -48,25 +48,25 @@ void		pos_equa_3(t_rt *rt, t_equa_2 eq, double a, double b)
 	(2 * eq.p)) * sqrt(-3 / eq.p)) + 4 * M_PI) / 3) - b / (3 * a);
 }
 
-void		ft_equa3(t_rt *rt, double a, double b, double c, double d)
+void		ft_equa3(t_rt *rt, double a, t_coo data)
 {
 	t_equa_2		eq;
 
-	eq = ini_equa_3(a, b, c, d);
+	eq = ini_equa_3(a, data.x, data.y, data.z);
 	if (eq.p == 0 && eq.q == 0)
-		rt->equa->x[0] = -b / (3 * a);
+		rt->equa->x[0] = -data.x / (3 * a);
 	else if (eq.p == 0 && eq.q != 0)
 		rt->equa->x[0] = -eq.q;
 	if (eq.delta < 0)
-		ft_equa3_next(rt, eq, a, b);
+		ft_equa3_next(rt, eq, a, data.x);
 	if (eq.delta == 0)
 	{
-		rt->equa->x[0] = 2 * sqrt3(-eq.q / 2) - b / (3 * a);
-		rt->equa->x[1] = sqrt3(eq.q / 2) - b / (3 * a);
+		rt->equa->x[0] = 2 * sqrt3(-eq.q / 2) - data.x / (3 * a);
+		rt->equa->x[1] = sqrt3(eq.q / 2) - data.x / (3 * a);
 		rt->equa->x[2] = rt->equa->x[1];
 	}
 	if (eq.delta > 0)
-		pos_equa_3(rt, eq, a, b);
+		pos_equa_3(rt, eq, a, data.x);
 }
 
 double		ft_real(t_equa *equa)

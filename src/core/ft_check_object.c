@@ -15,7 +15,7 @@
 void		ft_get_point(t_rt *rt)
 {
 	rt->inter->point = ft_mult_vect(rt->inter->dst, rt->ray->dir);
-	rt->inter->point = ft_add_vect(rt->cam->pos, rt->inter->point);
+	rt->inter->point = ft_add_vect(rt->ray->o, rt->inter->point);
 }
 
 void		check_forms(t_rt *rt, int type)

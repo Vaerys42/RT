@@ -1,0 +1,42 @@
+camera
+coo: 0 0 0
+rot: 0 0 0
+
+cube
+coo: 0 0 10
+radius: 0.5
+color: 1 1 0
+shine: 2
+rot: -15 -10 5
+shine: 1
+
+plane
+coo: 0 0 15
+color: 1 0 1
+norm: 0 0 -1
+
+light
+coo: 0 1 0
+color: 1 1 1
+pow: 0.2
+
+light
+coo: 0 1 0
+color: 1 0 0
+pow: 0.5
+dir: 0 -0.1 1
+angle: 5
+
+light
+coo: 5 -0.1 8
+color: 0 1 0
+pow: 0.5
+dir: -1 0 0
+angle: 30
+
+light
+coo: 0 -4 10
+color: 0 0 1
+pow: 0.5
+dir: 0 1 0
+angle: 25

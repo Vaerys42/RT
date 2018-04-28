@@ -89,7 +89,7 @@ void		check_cylinder_inter(t_rt *rt, int type)
 				tmp = ft_check_cylinder(rt->cylinder, rt->ray);
 			if (type == 1)
 				tmp = ft_check_cylinder(rt->cylinder, rt->light_ray);
-			if (type == 2 && rt->inter->num == rt->cylinder->id && 
+			if (type == 2 && rt->inter->num == rt->cylinder->id &&
 			rt->inter->light == rt->cylinder->id)
 				light_cylinder_inter(rt);
 			if (tmp > 0.01 && tmp < rt->inter->dst)

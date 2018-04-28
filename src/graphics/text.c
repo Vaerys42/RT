@@ -12,83 +12,58 @@
 
 #include "../../rt.h"
 
-Uint8		ft_uint8_to_32(Uint32 pixel, Uint32 mask, Uint32 shift, Uint32 loss)
+void		set_info_window(t_rt *rt, int x, int y)
 {
-	Uint32		tmp;
-	Uint8		color;
-
-	tmp = pixel & mask;
-	tmp = tmp >> shift;
-	tmp = tmp << loss;
-	color = (Uint8)tmp;
-	return (color);
+	if (!(rt->data->info_window = SDL_CreateWindow("Info RT",
+	300, 300, x, y, 0)))
+		ft_exit();
+	if (!(rt->data->info_surface = SDL_GetWindowSurface(rt->data->info_window)))
+		ft_exit();
 }
 
-Uint32		ft_getpixel(SDL_Surface *surface, double i, double j)
+void		apply_surface(SDL_Surface *src, SDL_Surface *dest, int x, int y)
 {
-	Uint32	pixel_32;
-	Uint8	*pixel;
-	Uint32	x;
-	Uint32	y;
+	SDL_Rect	area;
 
-	SDL_LockSurface(surface);
-	x = (Uint32)i;
-	y = (Uint32)j;
-	pixel = (Uint8*)surface->pixels;
-	pixel += (y * surface->pitch) + (x * sizeof(Uint32));
-	pixel_32 = *((Uint32*)pixel);
-	SDL_UnlockSurface(surface);
-	return (pixel_32);
+	area.x = x;
+	area.y = y;
+	area.w = src->w;
+	area.h = src->h;
+	SDL_BlitSurface(src, NULL, dest, &area);
 }
 
-t_material	ft_getpixelcolor(SDL_Surface *surface, double i, double j)
+void		print_line(t_rt *rt, char *str, int x, int y)
 {
-	t_material				color;
-	SDL_PixelFormat			*format;
-	Uint32					pixel;
+	SDL_Surface	*info_box;
 
-	format = surface->format;
-	pixel = ft_getpixel(surface, i, j);
-	color.r = (double)ft_uint8_to_32(pixel, format->Rmask,
-	format->Rshift, format->Rloss);
-	color.g = (double)ft_uint8_to_32(pixel, format->Gmask,
-	format->Gshift, format->Gloss);
-	color.b = (double)ft_uint8_to_32(pixel, format->Bmask,
-	format->Bshift, format->Bloss);
-	return (color);
-}
-
-void		ttf_exit(void)
-{
-	printf("%s\n", TTF_GetError());
-	exit(-1);
+	info_box = TTF_RenderText_Blended(rt->data->font, str,
+	(SDL_Color){0, 0, 0, 255});
+	apply_surface(info_box, rt->data->info_surface, x, y);
+	SDL_FreeSurface(info_box);
 }
 
 void		rt_infos(t_rt *rt)
 {
-	SDL_Surface	*info_box;
-	TTF_Font	*font;
-	t_material	tmp;
-	int			x;
-	int			y;
+	SDL_Surface		*background;
 
 	if (TTF_Init() == -1)
 		ttf_exit();
-	if ((font = TTF_OpenFont("file/police.ttf", 12)) == NULL)
+	if ((rt->data->font = TTF_OpenFont("file/police.ttf", 15)) == NULL)
 		ttf_exit();
-	info_box = TTF_RenderText_Shaded(font, "Raytracer RT", (SDL_Color){255, 255, 255, 255}, (SDL_Color){255, 0, 0, 255});
-	y = -1;
-	while (++y < info_box->h)
-	{
-		x = -1;
-		while (++x < info_box->w)
-		{
-			tmp = ft_getpixelcolor(info_box, x, y);
-			put_pxl(rt->data, x, y, &tmp);
-			put_pxl_base(rt->data, x, y, &tmp);
-		}
-	}
-	SDL_FreeSurface(info_box);
-	TTF_CloseFont(font);
+	background = IMG_Load("file/background.png");
+	if (!background)
+		exit(-1);
+	set_info_window(rt, 400, 400);
+	apply_surface(background, rt->data->info_surface, 0, 0);
+	print_line(rt, "Raytracer", 160, 10);
+	print_line(rt, "Control List :", 5, 50);
+	print_line(rt, "Moving object : Left Click and move the mouse", 5, 80);
+	print_line(rt, "Rotate camera : Right Click and move the mouse", 5, 100);
+	print_line(rt, "Antialiasing : A", 5, 120);
+	print_line(rt, "Sepia Filter : S", 5, 140);
+	print_line(rt, "Black and White Filter : B", 5, 160);
+	print_line(rt, "Switch between files : 1 - 9", 5, 180);
+	SDL_UpdateWindowSurface(rt->data->info_window);
+	TTF_CloseFont(rt->data->font);
 	TTF_Quit();
 }

@@ -45,9 +45,30 @@ void				new_cube_dst(t_rt *rt, int type, double tmp)
 		rt->inter->light = rt->cube->id;
 }
 
-void				check_cube_inter(t_rt *rt, int type)
+void				get_cube_type(t_rt *rt, int type, int i)
 {
 	double		tmp;
+
+	if (type == 0)
+		tmp = ft_check_cube(rt->cube, rt->ray);
+	if (type == 1)
+		tmp = ft_check_cube(rt->cube, rt->light_ray);
+	if (type == 2 && rt->inter->num == rt->cube->id
+	&& rt->inter->light == rt->cube->id && i == rt->cube->id)
+	{
+		rt->light->shine = rt->cube->shine;
+		ft_norm_cube(rt, i);
+	}
+	if (tmp > 0.01 && tmp < rt->inter->dst)
+	{
+		if (type == 0)
+			rt->cube->id = i;
+		new_cube_dst(rt, type, tmp);
+	}
+}
+
+void				check_cube_inter(t_rt *rt, int type)
+{
 	int			i;
 
 	rt->cube = rt->start->cub;
@@ -58,22 +79,7 @@ void				check_cube_inter(t_rt *rt, int type)
 		{
 			ft_angle_cube(rt->cube, i);
 			ft_face_cube(rt->cube, i);
-			if (type == 0)
-				tmp = ft_check_cube(rt->cube, rt->ray);
-			if (type == 1)
-				tmp = ft_check_cube(rt->cube, rt->light_ray);
-			if (type == 2 && rt->inter->num == rt->cube->id 
-			&& rt->inter->light == rt->cube->id && i == rt->cube->id)
-			{
-				rt->light->shine = rt->cube->shine;
-				ft_norm_cube(rt, i);
-			}
-			if (tmp > 0.01 && tmp < rt->inter->dst)
-			{
-				if (type == 0)
-					rt->cube->id = i;
-				new_cube_dst(rt, type, tmp);
-			}
+			get_cube_type(rt, type, i);
 			i++;
 		}
 		rt->cube = rt->cube->next;

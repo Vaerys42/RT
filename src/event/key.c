@@ -45,7 +45,10 @@ void		quit_sdl(t_rt *rt)
 	SDL_DestroyTexture(rt->data->sdl_texture);
 	SDL_DestroyRenderer(rt->data->sdl_renderer);
 	SDL_DestroyWindow(rt->data->sdl_window);
+	SDL_FreeSurface(rt->data->info_surface);
+	SDL_DestroyWindow(rt->data->info_window);
 	SDL_Quit();
+	IMG_Quit();
 }
 
 int			my_key_press(t_rt *rt, SDL_Keysym key)

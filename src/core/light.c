@@ -67,8 +67,8 @@ void		ft_rampe(t_rt *rt)
 	{
 		inter = ft_det_vect(rt->light->norm, rt->light->dir);
 		rt->light_ray->dir = ft_sub_vect(rt->inter->point, rt->light->o);
-		k = ft_norme(rt->light_ray->dir) * scal(ft_normalize(rt->light_ray->dir),
-		ft_normalize(inter)) / ft_norme(inter);
+		k = ft_norme(rt->light_ray->dir) * scal(ft_normalize(
+		rt->light_ray->dir), ft_normalize(inter)) / ft_norme(inter);
 		rt->light_ray->o.x = rt->light->o.x + k * inter.x;
 		rt->light_ray->o.y = rt->light->o.y + k * inter.y;
 		rt->light_ray->o.z = rt->light->o.z + k * inter.z;
@@ -93,7 +93,8 @@ void		ft_get_light(t_rt *rt)
 		rt->light_ray->o = rt->light->o;
 		rt->light_ray->dir = ft_normalize(
 		ft_sub_vect(rt->inter->point, rt->light->o));
-		move_color(rt->inter->lgh, rt->light->color->r, rt->light->color->g, rt->light->color->b);
+		move_color(rt->inter->lgh, rt->light->color->r,
+		rt->light->color->g, rt->light->color->b);
 		rt->light->shine = 0;
 		ft_spot(rt);
 		ft_rampe(rt);

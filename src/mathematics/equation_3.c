@@ -42,6 +42,7 @@ void		ft_equa4_next(t_rt *rt, _Complex double a0, double y, double b0)
 t_equa_3	equa4_mid(t_rt *rt)
 {
 	t_equa_3		eq;
+	t_coo			data;
 
 	eq.p = -3 * pow(rt->equa->a[1], 2) / (8 * pow(rt->equa->a[0], 2))
 	+ rt->equa->a[2] / rt->equa->a[0];
@@ -52,9 +53,23 @@ t_equa_3	equa4_mid(t_rt *rt)
 	rt->equa->a[2] * (pow(rt->equa->a[1] / 4, 2) / pow(rt->equa->a[0], 3)) -
 	(rt->equa->a[1] * rt->equa->a[3] / 4) / pow(rt->equa->a[0], 2)
 	+ rt->equa->a[4] / rt->equa->a[0];
-	ft_equa3(rt, 8, -4 * eq.p, -8 * eq.r, 4 * eq.r * eq.p - (eq.q * eq.q));
+	data.x = -4 * eq.p;
+	data.y = -8 * eq.r;
+	data.z = 4 * eq.r * eq.p - (eq.q * eq.q);
+	ft_equa3(rt, 8, data);
 	eq.y = ft_real(rt->equa);
 	return (eq);
+}
+
+void		ft_equa4_1(t_rt *rt)
+{
+	t_coo		data;
+
+	rt->equa->x[3] = 0;
+	data.x = rt->equa->a[1];
+	data.y = rt->equa->a[2];
+	data.z = rt->equa->a[3];
+	ft_equa3(rt, rt->equa->a[0], data);
 }
 
 void		ft_equa4(t_rt *rt)
@@ -63,11 +78,7 @@ void		ft_equa4(t_rt *rt)
 
 	ft_ini_equa4(rt);
 	if (rt->equa->a[0] == 0)
-	{
-		rt->equa->x[3] = 0;
-		ft_equa3(rt, rt->equa->a[0], rt->equa->a[1],
-		rt->equa->a[2], rt->equa->a[3]);
-	}
+		ft_equa4_1(rt);
 	else
 	{
 		eq = equa4_mid(rt);

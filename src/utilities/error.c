@@ -49,3 +49,9 @@ void		ft_exit(void)
 	printf("%s\n", SDL_GetError());
 	exit(-1);
 }
+
+void		ttf_exit(void)
+{
+	ft_putstr("TTF Error\n");
+	exit(-1);
+}
