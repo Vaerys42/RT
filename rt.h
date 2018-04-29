@@ -409,6 +409,7 @@ int						ft_add_sphere(int fd, t_rt *rt, int id);
 void					ft_sphere_info(t_sphere *sphere);
 void					free_sphere(t_rt *rt);
 void					move_sphere(t_rt *rt, SDL_Event ev);
+void					inter_plane_sphere(t_sphere *sphere, char **datas);
 
 /*
 ** Plane
@@ -430,6 +431,8 @@ int						ft_add_cone(int fd, t_rt *rt, int id);
 void					ft_cone_info(t_cone *cone);
 void					free_cone(t_rt *rt);
 void					move_cone(t_rt *rt, SDL_Event ev);
+void					get_norm_cone(t_rt *rt);
+void					inter_plane_cone(t_cone *cone, char **datas);
 
 /*
 ** Cylinder
@@ -439,6 +442,8 @@ int						ft_add_cylinder(int fd, t_rt *rt, int id);
 void					check_cylinder_inter(t_rt *rt, int type);
 void					free_cylinder(t_rt *rt);
 void					move_cyl(t_rt *rt, SDL_Event ev);
+void					norm_cylinder(t_rt *rt);
+void					inter_plane_cylinder(t_cylinder *cylinder, char **datas);
 
 /*
 ** Parabol

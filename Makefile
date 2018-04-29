@@ -33,6 +33,7 @@ SRC =	src/core/main.c \
 		src/object/tore.c \
 		src/object/tore_2.c \
 		src/object/parabol.c \
+		src/object/normale.c \
 		src/parser/parser.c \
 		src/parser/sphere_p.c \
 		src/parser/get_data.c \
@@ -47,6 +48,7 @@ SRC =	src/core/main.c \
 		src/parser/parabol_p.c \
 		src/parser/infos.c \
 		src/parser/ambiant.c \
+		src/parser/inter_pln.c \
 		src/texture/texture_all.c \
 		src/texture/texture_checker.c \
 		src/texture/texture_color1.c \

@@ -54,26 +54,32 @@ t_cylinder	*cyl_ini(void)
 	return (cylinder);
 }
 
-void		inter_plane_cylinder(t_cylinder *cylinder, char **datas)
+int			ft_cyl_read_line2(char **datas, t_cylinder *cyl, t_rt *rt, int fd)
 {
-	if (cylinder->pln == NULL)
+	int		random;
+
+	if (ft_strcmp(datas[0], "plnn:") == 0 ||
+	ft_strcmp(datas[0], "plnc:") == 0 || ft_strcmp(datas[0], "plno:") == 0)
+		inter_plane_cylinder(cyl, datas);
+	else if (datas[1] == NULL && ft_check_obj(datas[0], fd, rt) == 1)
+		random = 0;
+	else if (ft_strcmp(datas[0], "texture:") == 0)
+		cyl->texture->type = get_texture_type(datas);
+	else if (ft_strcmp(datas[0], "scale:") == 0)
+		cyl->texture->scale = get_scale(datas, 8);
+	else if (ft_strcmp(datas[0], "offset:") == 0)
+		cyl->texture->offset = get_offset(datas, 9);
+	else if (ft_strcmp(datas[0], "path:") == 0)
 	{
-		if (!(cylinder->pln = (t_plane*)malloc(sizeof(t_plane))))
-			ft_malloc_error();
-		cylinder->pln->o = (t_coo){0, 0, 0};
-		cylinder->pln->norm = (t_coo){0, 1, 0};
-		cylinder->pln->color = NULL;
-		cylinder->pln->cut = 0;
+		cyl->texture->path = get_path(datas);
+		cyl->texture->surface = ft_upload_texture(cyl->texture->path);
 	}
-	if (ft_strcmp(datas[0], "plnn:") == 0)
-		cylinder->pln->norm = get_coo(datas, 7);
-	else if (ft_strcmp(datas[0], "plnc:") == 0)
-		cylinder->pln->color = get_color(datas);
-	else if (ft_strcmp(datas[0], "plno:") == 0)
-		cylinder->pln->o = get_coo(datas, 7);
+	else
+		return (0);
+	return (1);
 }
 
-void		ft_cyl_read_line(char **datas, t_cylinder *cyl, t_rt *rt, int fd)
+int			ft_cyl_read_line(char **datas, t_cylinder *cyl)
 {
 	int		rand;
 
@@ -89,24 +95,9 @@ void		ft_cyl_read_line(char **datas, t_cylinder *cyl, t_rt *rt, int fd)
 		cyl->rot = get_coo(datas, 7);
 	else if (ft_strcmp(datas[0], "shine:") == 0)
 		cyl->shine = get_radius(datas);
-	else if (ft_strcmp(datas[0], "plnn:") == 0 ||
-	ft_strcmp(datas[0], "plnc:") == 0 || ft_strcmp(datas[0], "plno:") == 0)
-		inter_plane_cylinder(cyl, datas);
-	else if (datas[1] == NULL && ft_check_obj(datas[0], fd, rt) == 1)
-		rand = 0;
-	else if (ft_strcmp(datas[0], "texture:") == 0)
-		cyl->texture->type = get_texture_type(datas);
-	else if (ft_strcmp(datas[0], "scale:") == 0)
-		cyl->texture->scale = get_scale(datas, 8);
-	else if (ft_strcmp(datas[0], "offset:") == 0)
-		cyl->texture->offset = get_offset(datas, 9);
-	else if (ft_strcmp(datas[0], "path:") == 0)
-	{
-		cyl->texture->path = get_path(datas);
-		cyl->texture->surface = ft_upload_texture(cyl->texture->path);
-	}
 	else
-		ft_bad_arg(5);
+		return (0);
+	return (1);
 }
 
 int			ft_add_cylinder(int fd, t_rt *rt, int id)
@@ -121,7 +112,9 @@ int			ft_add_cylinder(int fd, t_rt *rt, int id)
 	while ((ret = get_next_line(fd, &line)) > 0)
 	{
 		datas = ft_strsplit(line, ' ');
-		ft_cyl_read_line(datas, cylinder, rt, fd);
+		if (ft_cyl_read_line(datas, cylinder) == 0 &&
+		ft_cyl_read_line2(datas, cylinder, rt, fd) == 0)
+			ft_bad_arg(5);
 		ft_freetab(datas);
 		free(line);
 	}

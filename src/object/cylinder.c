@@ -56,17 +56,8 @@ void		cam_cylinder_inter(t_rt *rt)
 
 void		light_cylinder_inter(t_rt *rt)
 {
-	t_coo		point;
-	t_coo		a;
-
 	rt->light->shine = rt->cylinder->shine;
-	point = ft_inv_rot(rt->inter->point, rt->cylinder->rot);
-	a = ft_new_vect(rt->cylinder->o.x, point.y,
-	rt->cylinder->o.z);
-	a = ft_rotation(a, rt->cylinder->rot);
-	rt->inter->angle->dir = ft_sub_vect(rt->inter->point, a);
-	if (rt->cylinder->pln != NULL && rt->cylinder->pln->cut == 1)
-		rt->inter->angle->dir = rt->cylinder->pln->norm;
+	norm_cylinder(rt);
 }
 
 void		new_cylinder_dst(t_rt *rt, int type, double tmp)

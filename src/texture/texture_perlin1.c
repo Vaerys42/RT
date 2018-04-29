@@ -36,54 +36,66 @@ double		lerp(double t, double a, double b)
 	return (a + t * (b - a));
 }
 
-#define SETUP(i,b0,b1,r0,r1) t = vec[i] + N; b0 = ((int)t) & BM; b1 = (b0+1) & BM; r0 = t - (int)t; r1 = r0 - 1.;
+void		setup(double i, double *b0, double *b1, double *r0, double *r1)
+{
+	double t;
+	
+	t = vec[i] + N;
+	b0 = ((int)t) & BM;
+	b1 = (b0+1) & BM;
+	r0 = t - (int)t;
+	r1 = r0 - 1.;
+}
 
 double		ft_noise(double vec[3])
 {
-	int bx0, bx1, by0, by1, bz0, bz1, b00, b10, b01, b11;
-	double rx0, rx1, ry0, ry1, rz0, rz1, *q, sy, sz, a, b, c, d, t, u, v;
-	int i, j;
+	int		b[10];
+	double	r[6];
+	double	p[9];
+	double 	*q;
+	int 	i;
+	int		j;
 
 	if (start)
 	{
 		start = 0;
 		init();
 	}
-	SETUP(0, bx0, bx1, rx0, rx1);
-	SETUP(1, by0, by1, ry0, ry1);
-	SETUP(2, bz0, bz1, rz0, rz1);
-	i = p[bx0];
-	j = p[bx1];
-	b00 = p[i + by0];
-	b10 = p[j + by0];
-	b01 = p[i + by1];
-	b11 = p[j + by1];
-	t = S_CURVE(rx0);
-	sy = S_CURVE(ry0);
-	sz = S_CURVE(rz0);
-	q = g3[b00 + bz0];
-	u = AT3(rx0, ry0, rz0);
-	q = g3[b10 + bz0];
-	v = AT3(rx1, ry0, rz0);
-	a = lerp(t, u, v);
-	q = g3[b01 + bz0];
-	u = AT3(rx0, ry1, rz0);
-	q = g3[b11 + bz0];
-	v = AT3(rx1, ry1, rz0);
-	b = lerp(t, u, v);
-	c = lerp(sy, a, b);
-	q = g3[b00 + bz1];
-	u = AT3(rx0, ry0, rz1);
-	q = g3[b10 + bz1];
-	v = AT3(rx1, ry0, rz1);
-	a = lerp(t, u, v);
-	q = g3[b01 + bz1];
-	u = AT3(rx0, ry1, rz1);
-	q = g3[b11 + bz1];
-	v = AT3(rx1, ry1, rz1);
-	b = lerp(t, u, v);
-	d = lerp(sy, a, b);
-	return (lerp(sz, c, d));
+	SETUP(0, b[0], b[1], r[0], r[1]);
+	SETUP(1, b[2], b[3], r[2], r[3]);
+	SETUP(2, b[4], b[5], r[4], r[5]);
+	i = p[b[0]];
+	j = p[b[1]];
+	b[6] = p[i + b[2]];
+	b[7] = p[j + b[2]];
+	b[8] = p[i + b[3]];
+	b[9] = p[j + b[3]];
+	p[6] = S_CURVE(r[0]);
+	p[0] = S_CURVE(r[2]);
+	p[1] = S_CURVE(r[4]);
+	q = g3[b[6] + b[4]];
+	p[7] = AT3(r[0], r[2], r[4]);
+	q = g3[b[7] + b[4]];
+	p[8] = AT3(r[1], r[2], r[4]);
+	p[2] = lerp(p[6], p[7], p[8]);
+	q = g3[b[8] + b[4]];
+	p[7] = AT3(r[0], r[3], r[4]);
+	q = g3[b[9] + b[4]];
+	p[8] = AT3(r[1], r[3], r[4]);
+	p[3] = lerp(p[6], p[7], p[8]);
+	p[4] = lerp(p[0], p[2], p[3]);
+	q = g3[b[6] + b[5]];
+	p[7] = AT3(r[0], r[2], r[5]);
+	q = g3[b[7] + b[5]];
+	p[8] = AT3(r[1], r[2], r[5]);
+	p[2] = lerp(p[6], p[7], p[8]);
+	q = g3[b[8] + b[5]];
+	p[7] = AT3(r[0], r[3], r[5]);
+	q = g3[b[9] + b[5]];
+	p[8] = AT3(r[1], r[3], r[5]);
+	p[3] = lerp(p[6], p[7], p[8]);
+	p[5] = lerp(p[0], p[2], p[3]);
+	return (lerp(p[1], p[4], p[5]));
 }
 
 static void	normalize2(double v[2])

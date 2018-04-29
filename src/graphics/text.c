@@ -66,4 +66,5 @@ void		rt_infos(t_rt *rt)
 	SDL_UpdateWindowSurface(rt->data->info_window);
 	TTF_CloseFont(rt->data->font);
 	TTF_Quit();
+	SDL_FreeSurface(background);
 }
