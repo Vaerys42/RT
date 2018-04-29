@@ -28,10 +28,10 @@ void				new_plane_dst(t_rt *rt, int type, double tmp)
 {
 	rt->inter->dst = tmp;
 	rt->inter->reflex = rt->plane->reflex;
-	rt->inter->angle->dir = rt->plane->norm;
 	if (type == 0)
 	{
 		rt->inter->obj = PLN;
+		rt->inter->angle->dir = rt->plane->norm;
 		rt->inter->num = rt->plane->id;
 		rt->inter->col->r = rt->plane->color->r;
 		rt->inter->col->g = rt->plane->color->g;
