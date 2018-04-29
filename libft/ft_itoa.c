@@ -56,7 +56,6 @@ static char		*ft_min(void)
 static char		*ft_transfert(int i, char *new, int j, int len)
 {
 	int		neg;
-	char	*tmp;
 
 	neg = 0;
 	if (i < 0)
@@ -80,9 +79,6 @@ static char		*ft_transfert(int i, char *new, int j, int len)
 		new[j + 1] = '-';
 		new[j + 2] = '\0';
 	}
-	tmp = ft_strrev(new);
-	new = tmp;
-	free(tmp);
 	return (new);
 }
 
@@ -91,6 +87,7 @@ char			*ft_itoa(int i)
 	char	*new;
 	int		j;
 	int		len;
+	char	*tmp;
 
 	j = 0;
 	len = ft_nbrlen(i) - 1;
@@ -99,5 +96,8 @@ char			*ft_itoa(int i)
 	if (!(new = (char*)malloc(sizeof(char) * (ft_nbrlen(i) + 1))))
 		ft_malloc_error();
 	new = ft_transfert(i, new, j, len);
+	tmp = ft_strrev(new);
+	new = tmp;
+	free(tmp);
 	return (new);
 }

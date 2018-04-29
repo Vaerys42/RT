@@ -30,5 +30,6 @@ char	*ft_strrev(char *str)
 		j++;
 	}
 	new[j] = '\0';
+	free(str);
 	return (new);
 }
