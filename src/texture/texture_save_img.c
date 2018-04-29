@@ -33,6 +33,7 @@ int					ft_file_exist(char *file_name)
 	if ((fd = open(file_name, O_RDONLY)) != -1)
 	{
 		close(fd);
+		free(file_name);
 		return (1);
 	}
 	return (0);
@@ -59,26 +60,28 @@ int					ft_save_img(t_rt *rt)
 	SDL_Renderer	*renderer;
 	char			*file_name;
 	int				a;
+	char			*tmp;
 
 	if (ft_dir_exist("screenshots") != 1)
 		mkdir("screenshots", S_IRWXU);
-	a = 45;
-	char *b;
-	b = ft_itoa(a);
+	a = 0;
 
-	// file_name = ft_concat(ft_itoa_new(a), ".bmp");
-	// file_name = ft_strcat(b, ".bmp");
-	// while (ft_file_exist(file_name) == 1)
-	// {
-	// 	a += 1;
-	// 	file_name = ft_strcat(ft_itoa_new(a), ".bmp");
-	// }
-	// file_name = "screenshots/0.bmp";
+	tmp = ft_strcat(ft_itoa(a), ".bmp");
+	file_name = ft_concat("screenshots/",tmp);
+	if (tmp)
+		free(tmp);
 
-	// char *new;
-	// new = ft_concat("screenshots/", file_name);
-	// ft_putendl(new);
-	file_name = "0.bmp";
+	while (ft_file_exist(file_name) == 1)
+	{
+		a += 1;
+		tmp = ft_strcat(ft_itoa(a), ".bmp");
+		file_name = ft_concat("screenshots/",tmp);
+		if (tmp)
+			free(tmp);
+	}
+
+	ft_putendl(file_name);
+
 	f = SDL_PIXELFORMAT_ARGB8888;
 	renderer = rt->data->sdl_renderer;
 	if (renderer)
@@ -89,5 +92,8 @@ int					ft_save_img(t_rt *rt)
 			ft_putendl("Error : screenshot couldn't be saved.");
 		SDL_FreeSurface(s);
 	}
+
+if (file_name)
+	free(file_name);
 	return (0);
 }
