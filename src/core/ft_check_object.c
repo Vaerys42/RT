@@ -39,13 +39,19 @@ void		ft_check_object(t_rt *rt)
 	move_color(rt->inter->col, 0, 0, 0);
 	move_color(rt->inter->mat, 0, 0, 0);
 	rt->light = rt->start->lgh;
+	rt->inter->reflex = 0;
 	check_forms(rt, 0);
-	if (rt->inter->dst <= 0.01)
-		rt->inter->dst = 0;
-	if (rt->inter->dst != MAX)
+	if (rt->inter->reflex > 0 && rt->lock == 0)
+		ft_reflexion_ray(rt);
+	else
 	{
-		ft_get_point(rt);
-		ft_get_light(rt);
+		if (rt->inter->dst <= 0.01)
+			rt->inter->dst = 0;
+		if (rt->inter->dst != MAX)
+		{
+			ft_get_point(rt);
+			ft_get_light(rt);
+		}
 	}
 	return ;
 }

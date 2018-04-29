@@ -5,6 +5,7 @@ plane
 coo: 0 -1 0
 norm: 0 1 0
 color: 0.7 0.6 0.7
+reflex: 0.3
 plane
 coo: 0 0 15
 norm: 0 0 -1
@@ -26,6 +27,7 @@ coo: -1.7 -0.6 10
 radius: 0.4
 color: 1 0 0
 shine: 3
+reflex: 0.5
 sphere
 coo: 1.7 -0.6 10
 radius: 0.4

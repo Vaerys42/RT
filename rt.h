@@ -41,6 +41,7 @@
 # include "frameworks/SDL2_image.framework/Headers/SDL_image.h"
 # include <math.h>
 # include <complex.h>
+# include <pthread.h>
 
 typedef	struct			s_material
 {
@@ -90,6 +91,7 @@ typedef	struct			s_plane
 	int					id;
 	int					cut;
 	t_texture			*texture;
+	double				reflex;
 	struct s_plane		*next;
 }						t_plane;
 
@@ -104,6 +106,7 @@ typedef struct			s_cylinder
 	t_material			*color;
 	int					id;
 	t_texture			*texture;
+	double				reflex;
 	struct s_cylinder	*next;
 }						t_cylinder;
 
@@ -118,6 +121,7 @@ typedef	struct			s_cone
 	int					id;
 	t_texture			*texture;
 	t_material			*color;
+	double				reflex;
 	struct s_cone		*next;
 }						t_cone;
 
@@ -132,6 +136,7 @@ typedef	struct			s_sphere
 	double				shine;
 	int					id;
 	t_texture			*texture;
+	double				reflex;
 	struct s_sphere		*next;
 }						t_sphere;
 
@@ -277,6 +282,7 @@ typedef	struct			s_inter
 	int					obj;
 	int					num;
 	int					light;
+	double				reflex;
 }						t_inter;
 
 typedef	struct			s_start
@@ -324,6 +330,10 @@ typedef	struct			s_rt
 	t_options			*op;
 	double				amb;
 	t_equa				*equa;
+	t_coo				tmp;
+	int					lock;
+	int					depth;
+	double				reflex;
 }						t_rt;
 
 /*
@@ -606,5 +616,16 @@ t_coo					get_offset(char **str, int err);
 int						get_texture_type(char **str);
 
 double					ft_noise(double vec[3]);
+
+/*
+** Threads Functions
+*/
+
+void                   *thread_render_1(void *);
+void                   *thread_render_2(void *);
+void                   *thread_render_3(void *);
+void                   *thread_render_4(void *);
+
+void					ft_reflexion_ray(t_rt *rt);
 
 #endif

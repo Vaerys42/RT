@@ -6,7 +6,7 @@
 /*   By: kboucaud <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/03 20:11:06 by kboucaud          #+#    #+#             */
-/*   Updated: 2017/11/03 20:11:08 by kboucaud         ###   ########.fr       */
+/*   Updated: 2018/04/29 21:47:07 by kboucaud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@ void		ft_convert(t_rt *rt)
 
 void		ft_ray(t_rt *rt, int x, int y, int type)
 {
+	rt->tmp = rt->ray->dir;
+	rt->depth = 0;
+	rt->lock = 0;
 	ft_check_object(rt);
 	ft_convert(rt);
 	if (type == 2)
@@ -46,20 +49,17 @@ void		ft_ini_ray(t_rt *rt, double x, double y)
 
 void		ft_raytracing(t_rt *rt)
 {
-	int			x;
-	int			y;
+	pthread_t	thread_1;
+	pthread_t	thread_2;
+	pthread_t	thread_3;
+	pthread_t	thread_4;
 
-	y = -1;
-	rt->light = rt->start->lgh;
-	if (rt->light == NULL)
-		return ;
-	while (++y < WIN_HEIGHT)
-	{
-		x = -1;
-		while (++x < WIN_LEN)
-		{
-			ft_ini_ray(rt, x, y);
-			ft_ray(rt, x, y, 1);
-		}
-	}
+	pthread_create(&thread_1, NULL, &thread_render_1, rt);
+	pthread_join(thread_1, NULL);
+	pthread_create(&thread_2, NULL, &thread_render_2, rt);
+	pthread_join(thread_2, NULL);
+	pthread_create(&thread_3, NULL, &thread_render_3, rt);
+	pthread_join(thread_3, NULL);
+	pthread_create(&thread_4, NULL, &thread_render_4, rt);
+	pthread_join(thread_4, NULL);
 }

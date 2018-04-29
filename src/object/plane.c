@@ -27,6 +27,8 @@ double				ft_check_plane(t_plane *plane, t_ray *ray)
 void				new_plane_dst(t_rt *rt, int type, double tmp)
 {
 	rt->inter->dst = tmp;
+	rt->inter->reflex = rt->plane->reflex;
+	rt->inter->angle->dir = rt->plane->norm;
 	if (type == 0)
 	{
 		rt->inter->obj = PLN;

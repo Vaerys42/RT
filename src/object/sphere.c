@@ -50,6 +50,12 @@ void		cam_sphere_inter(t_rt *rt)
 		rt->inter->col->g = rt->sphere->pln->color->g;
 		rt->inter->col->b = rt->sphere->pln->color->b;
 	}
+	 ft_get_point(rt);
+    rt->inter->angle->o = ft_sub_vect(rt->inter->point, rt->sphere->o);
+    rt->inter->angle->dir = ft_rotation(rt->inter->angle->dir, rt->sphere->rot);
+    if (rt->sphere->pln != NULL && rt->sphere->pln->cut == 1)
+        rt->inter->angle->dir = rt->sphere->pln->norm;
+    rt->inter->angle->dir = ft_normalize(rt->inter->angle->o);
 }
 
 void		light_sphere_inter(t_rt *rt)
@@ -66,6 +72,7 @@ void		light_sphere_inter(t_rt *rt)
 void		new_sphere_dst(t_rt *rt, int type, double tmp)
 {
 	rt->inter->dst = tmp;
+	rt->inter->reflex = rt->sphere->reflex;
 	if (type == 0)
 		cam_sphere_inter(rt);
 	if (type == 1)

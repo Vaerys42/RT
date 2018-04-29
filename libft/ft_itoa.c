@@ -13,31 +13,31 @@
 #include <stdlib.h>
 #include "includes/libft.h"
 
-static int		ft_nbrlen(int i)
+static	int		ft_nblen(int n)
 {
 	int		len;
 
 	len = 0;
-	if (i < 0)
+	if (n < 0)
 	{
-		i = -i;
 		len++;
+		n = -n;
 	}
-	while (i > 9)
+	while (n > 0)
 	{
-		i = i / 10;
 		len++;
+		n = n / 10;
 	}
-	len++;
 	return (len);
 }
 
-static char		*ft_min(void)
+static	char	*ft_intmin(void)
 {
 	char	*str;
 
-	if (!(str = (char*)malloc(sizeof(char) * 12)))
-		ft_malloc_error();
+	str = (char*)malloc(sizeof(char) * 12);
+	if (str == NULL)
+		return (NULL);
 	str[0] = '-';
 	str[1] = '2';
 	str[2] = '1';
@@ -53,47 +53,51 @@ static char		*ft_min(void)
 	return (str);
 }
 
-static char		*ft_transfert(int i, char *new, int j, int len)
+static	char	*ft_zero(void)
 {
-	int		neg;
+	char	*str;
 
-	neg = 0;
-	if (i < 0)
-	{
-		neg = 1;
-		i = -i;
-		len--;
-	}
-	while (len > 0)
-	{
-		new[j] = (i % 10) + 48;
-		i = i / 10;
-		j++;
-		len--;
-	}
-	new[j] = (i % 10) + 48;
-	if (neg == 0)
-		new[j + 1] = '\0';
-	else
-	{
-		new[j + 1] = '-';
-		new[j + 2] = '\0';
-	}
-	return (ft_strrev(new));
+	str = (char*)malloc(sizeof(char) * 2);
+	if (str == NULL)
+		return (NULL);
+	str[0] = '0';
+	str[1] = '\0';
+	return (str);
 }
 
-char			*ft_itoa(int i)
+static	char	*ft_fillstr(int n, int i, char *str, int len)
 {
-	char	*new;
-	int		j;
-	int		len;
+	while (len >= i)
+	{
+		str[len - 1] = (n % 10) + '0';
+		n = n / 10;
+		len--;
+	}
+	return (str);
+}
 
-	j = 0;
-	len = ft_nbrlen(i) - 1;
-	if (i == -2147483648)
-		return (ft_min());
-	if (!(new = (char*)malloc(sizeof(char) * (ft_nbrlen(i) + 1))))
-		ft_malloc_error();
-	new = ft_transfert(i, new, j, len);
-	return (new);
+char			*ft_itoa(int n)
+{
+	char	*str;
+	int		len;
+	int		i;
+
+	if (n == -2147483648)
+		return (ft_intmin());
+	if (n == 0)
+		return (ft_zero());
+	len = ft_nblen(n);
+	str = (char*)malloc(sizeof(char) * (len + 1));
+	if (str == NULL)
+		return (NULL);
+	i = 1;
+	if (n < 0)
+	{
+		str[0] = '-';
+		n = -n;
+		i = 2;
+	}
+	str = ft_fillstr(n, i, str, len);
+	str[len] = '\0';
+	return (str);
 }

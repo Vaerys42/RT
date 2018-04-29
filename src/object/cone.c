@@ -64,6 +64,7 @@ void		light_cone_inter(t_rt *rt)
 void		new_cone_dst(t_rt *rt, int type, double tmp)
 {
 	rt->inter->dst = tmp;
+	rt->inter->reflex = rt->cone->reflex;
 	if (type == 0)
 		cam_cone_inter(rt);
 	if (type == 1)

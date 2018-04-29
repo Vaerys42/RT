@@ -8,7 +8,7 @@ radius: 1
 color: 0 1 1
 shine: 0.5
 rot: 0 0 0
-texture: 5
+texture: 1
 path: textures/can_beans.jpg
 offset: 0 0
 

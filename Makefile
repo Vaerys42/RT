@@ -16,6 +16,8 @@ SRC =	src/core/main.c \
 		src/graphics/text.c \
 		src/graphics/aliasing.c \
 		src/graphics/filter.c \
+		src/graphics/threads.c \
+		src/graphics/reflexion.c \
 		src/mathematics/rotation.c \
 		src/mathematics/rot_objects.c \
 		src/mathematics/vect.c \

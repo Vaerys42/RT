@@ -48,6 +48,7 @@ t_cylinder	*cyl_ini(void)
 	cylinder->radius = 1;
 	cylinder->shine = 0.5;
 	cylinder->pln = NULL;
+	cylinder->reflex = 0;
 	if (!(cylinder->texture = (t_texture*)malloc(sizeof(t_texture))))
 		ft_malloc_error();
 	ft_ini_texture(cylinder->texture);
@@ -95,6 +96,8 @@ int			ft_cyl_read_line(char **datas, t_cylinder *cyl)
 		cyl->rot = get_coo(datas, 7);
 	else if (ft_strcmp(datas[0], "shine:") == 0)
 		cyl->shine = get_radius(datas);
+	else if (ft_strcmp(datas[0], "reflex:") == 0)
+		cyl->reflex = get_radius(datas);
 	else
 		return (0);
 	return (1);

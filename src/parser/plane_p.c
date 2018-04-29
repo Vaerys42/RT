@@ -31,6 +31,7 @@ t_plane		*ini_plane(void)
 	plane->o = ft_new_vect(0, 0, 0);
 	plane->color = NULL;
 	plane->norm = ft_new_vect(0, 1, 0);
+	plane->reflex = 0;
 	if (!(plane->texture = (t_texture*)malloc(sizeof(t_texture))))
 		ft_malloc_error();
 	ft_ini_texture(plane->texture);
@@ -69,6 +70,8 @@ void		ft_plane_line(char **datas, int fd, t_rt *rt, t_plane *plane)
 		plane->color = get_color(datas);
 	else if (ft_strcmp(datas[0], "norm:") == 0)
 		plane->norm = get_coo(datas, 6);
+	else if (ft_strcmp(datas[0], "reflex:") == 0)
+		plane->reflex = get_radius(datas);
 	else if (datas[1] == NULL && ft_check_obj(datas[0], fd, rt) == 1)
 		rand = 0;
 	else if (ft_strcmp(datas[0], "texture:") == 0)

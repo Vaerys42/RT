@@ -36,17 +36,6 @@ double		lerp(double t, double a, double b)
 	return (a + t * (b - a));
 }
 
-void		setup(double i, double *b0, double *b1, double *r0, double *r1)
-{
-	double t;
-	
-	t = vec[i] + N;
-	b0 = ((int)t) & BM;
-	b1 = (b0+1) & BM;
-	r0 = t - (int)t;
-	r1 = r0 - 1.;
-}
-
 double		ft_noise(double vec[3])
 {
 	int		b[10];
@@ -61,9 +50,21 @@ double		ft_noise(double vec[3])
 		start = 0;
 		init();
 	}
-	SETUP(0, b[0], b[1], r[0], r[1]);
-	SETUP(1, b[2], b[3], r[2], r[3]);
-	SETUP(2, b[4], b[5], r[4], r[5]);
+	p[6] = vec[0] + N;
+	b[0] = ((int)p[6]) & BM;
+	b[1] = (b[0] + 1) & BM;
+	r[0] = p[6] - (int)p[6];
+	r[1] = r[0] - 1.;
+	p[6] = vec[1] + N;
+	b[2] = ((int)p[6]) & BM;
+	b[3] = (b[2] + 1) & BM;
+	r[2] = p[6] - (int)p[6];
+	r[3] = r[2] - 1.;
+	p[6] = vec[2] + N;
+	b[4] = ((int)p[6]) & BM;
+	b[5] = (b[4] + 1) & BM;
+	r[4] = p[6] - (int)p[6];
+	r[5] = r[4] - 1.;
 	i = p[b[0]];
 	j = p[b[1]];
 	b[6] = p[i + b[2]];

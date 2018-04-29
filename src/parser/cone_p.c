@@ -26,6 +26,7 @@ t_cone		*new_cone(void)
 	cone->rot = ft_new_vect(0, 0, 0);
 	cone->angle = -1;
 	cone->shine = -1;
+	cone->reflex = 0;
 	if (!(cone->texture = (t_texture*)malloc(sizeof(t_texture))))
 		ft_malloc_error();
 	ft_ini_texture(cone->texture);
@@ -93,6 +94,8 @@ int			ft_read_line(char **datas, t_cone *cone)
 		cone->angle = get_radius(datas);
 	else if (ft_strcmp(datas[0], "shine:") == 0)
 		cone->shine = get_radius(datas);
+	else if (ft_strcmp(datas[0], "reflex:") == 0)
+		cone->reflex = get_radius(datas);
 	else
 		return (0);
 	return (1);

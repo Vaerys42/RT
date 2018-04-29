@@ -44,6 +44,7 @@ t_sphere	*sph_ini(void)
 	sphere->rot = ft_new_vect(0, 0, 0);
 	sphere->radius = -1;
 	sphere->shine = -1;
+	sphere->reflex = 0;
 	if (!(sphere->texture = (t_texture*)malloc(sizeof(t_texture))))
 		ft_malloc_error();
 	ft_ini_texture(sphere->texture);
@@ -89,6 +90,8 @@ int			ft_sphere_line(char **datas, t_sphere *sphere)
 		sphere->radius = get_radius(datas);
 	else if (ft_strcmp(datas[0], "shine:") == 0)
 		sphere->shine = get_radius(datas);
+	else if (ft_strcmp(datas[0], "reflex:") == 0)
+		sphere->reflex = get_radius(datas);
 	else if (ft_strcmp(datas[0], "rot:") == 0)
 		sphere->rot = get_coo(datas, 7);
 	else
