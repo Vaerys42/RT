@@ -44,6 +44,8 @@ void		cam_cylinder_inter(t_rt *rt)
 	rt->inter->col->r = rt->cylinder->color->r;
 	rt->inter->col->g = rt->cylinder->color->g;
 	rt->inter->col->b = rt->cylinder->color->b;
+	ft_get_point(rt);
+	norm_cylinder(rt);
 	hit = ft_local_coo(rt->inter->point, rt->cylinder->o, rt->cylinder->rot);
 	ft_texture_all(rt, hit, rt->cylinder->texture);
 	if (rt->cylinder->pln != NULL && rt->cylinder->pln->cut == 1)

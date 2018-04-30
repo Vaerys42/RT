@@ -102,9 +102,9 @@ void		parser(t_rt *rt, char *file)
 	}
 	if (ret == -1)
 		ft_bad_arg(-1);
-	if (rt->cam == NULL)
+	if (rt->cam == NULL || rt->cam->pos.z < -99)
 	{
-		ft_putstr("Needs a cam\n");
+		ft_putstr("Needs a cam or cam too far\n");
 		exit(-1);
 	}
 	close(fd);

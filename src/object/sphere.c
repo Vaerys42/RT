@@ -42,6 +42,7 @@ void		cam_sphere_inter(t_rt *rt)
 	rt->inter->col->r = rt->sphere->color->r;
 	rt->inter->col->g = rt->sphere->color->g;
 	rt->inter->col->b = rt->sphere->color->b;
+	ft_get_point(rt);
 	hit = ft_local_coo(rt->inter->point, rt->sphere->o, rt->sphere->rot);
 	ft_texture_all(rt, hit, rt->sphere->texture);
 	if (rt->sphere->pln != NULL && rt->sphere->pln->cut == 1)
@@ -50,7 +51,6 @@ void		cam_sphere_inter(t_rt *rt)
 		rt->inter->col->g = rt->sphere->pln->color->g;
 		rt->inter->col->b = rt->sphere->pln->color->b;
 	}
-	ft_get_point(rt);
 	rt->inter->angle->o = ft_sub_vect(rt->inter->point, rt->sphere->o);
 	rt->inter->angle->dir = ft_rotation(rt->inter->angle->dir, rt->sphere->rot);
 	if (rt->sphere->pln != NULL && rt->sphere->pln->cut == 1)

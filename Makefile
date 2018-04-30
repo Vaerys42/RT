@@ -61,6 +61,8 @@ SRC =	src/core/main.c \
 		src/texture/texture_mapping.c \
 		src/texture/texture_perlin1.c \
 		src/texture/texture_perlin2.c \
+		src/texture/texture_perlin3.c \
+		src/texture/texture_perlin4.c \
 		src/texture/texture_save_img.c \
 		src/texture/texture_scale.c \
 		src/texture/texture_upload.c \

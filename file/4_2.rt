@@ -1,6 +1,6 @@
 camera
-coo: 0 0 0
-rot: 0 0 0
+coo: -7 1 8
+rot: -5 -80 0
 plane
 coo: 0 -1 0
 norm: 0 1 0

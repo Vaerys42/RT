@@ -87,6 +87,7 @@ int			main(int argc, char **argv)
 		ft_bad_arg(0);
 	if (!(rt = (t_rt*)malloc(sizeof(t_rt))))
 		ft_malloc_error();
+	system("afplay DokiDoki.mp3 &");
 	parser(rt, argv[1]);
 	ft_ini(rt);
 	ft_raytracing(rt);

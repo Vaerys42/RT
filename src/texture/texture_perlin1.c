@@ -6,155 +6,108 @@
 /*   By: lagirard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/28 18:08:40 by lagirard          #+#    #+#             */
-/*   Updated: 2018/04/28 18:08:45 by lagirard         ###   ########.fr       */
+/*   Updated: 2018/04/30 19:20:18 by lagirard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../rt.h"
 
-#define B 0x100
-#define BM 0xff
-
-#define N 0x1000
-#define NP 12
-#define NM 0xfff
-
-static int p[B + B + 2];
-static double g3[B + B + 2][3];
-static double g2[B + B + 2][2];
-static double g1[B + B + 2];
-static int start = 1;
-
-static void init(void);
-
-#define S_CURVE(t) (t * t * (3. - 2. * t))
-
-#define AT3(rx,ry,rz) (rx * q[0] + ry * q[1] + rz * q[2])
-
-double		lerp(double t, double a, double b)
+t_perlin			*ft_init(t_perlin *l, double g3[B + B + 2][3])
 {
-	return (a + t * (b - a));
-}
-
-double		ft_noise(double vec[3])
-{
-	int		b[10];
-	double	r[6];
-	double	p[9];
-	double 	*q;
-	int 	i;
-	int		j;
-
-	if (start)
-	{
-		start = 0;
-		init();
-	}
-	p[6] = vec[0] + N;
-	b[0] = ((int)p[6]) & BM;
-	b[1] = (b[0] + 1) & BM;
-	r[0] = p[6] - (int)p[6];
-	r[1] = r[0] - 1.;
-	p[6] = vec[1] + N;
-	b[2] = ((int)p[6]) & BM;
-	b[3] = (b[2] + 1) & BM;
-	r[2] = p[6] - (int)p[6];
-	r[3] = r[2] - 1.;
-	p[6] = vec[2] + N;
-	b[4] = ((int)p[6]) & BM;
-	b[5] = (b[4] + 1) & BM;
-	r[4] = p[6] - (int)p[6];
-	r[5] = r[4] - 1.;
-	i = p[b[0]];
-	j = p[b[1]];
-	b[6] = p[i + b[2]];
-	b[7] = p[j + b[2]];
-	b[8] = p[i + b[3]];
-	b[9] = p[j + b[3]];
-	p[6] = S_CURVE(r[0]);
-	p[0] = S_CURVE(r[2]);
-	p[1] = S_CURVE(r[4]);
-	q = g3[b[6] + b[4]];
-	p[7] = AT3(r[0], r[2], r[4]);
-	q = g3[b[7] + b[4]];
-	p[8] = AT3(r[1], r[2], r[4]);
-	p[2] = lerp(p[6], p[7], p[8]);
-	q = g3[b[8] + b[4]];
-	p[7] = AT3(r[0], r[3], r[4]);
-	q = g3[b[9] + b[4]];
-	p[8] = AT3(r[1], r[3], r[4]);
-	p[3] = lerp(p[6], p[7], p[8]);
-	p[4] = lerp(p[0], p[2], p[3]);
-	q = g3[b[6] + b[5]];
-	p[7] = AT3(r[0], r[2], r[5]);
-	q = g3[b[7] + b[5]];
-	p[8] = AT3(r[1], r[2], r[5]);
-	p[2] = lerp(p[6], p[7], p[8]);
-	q = g3[b[8] + b[5]];
-	p[7] = AT3(r[0], r[3], r[5]);
-	q = g3[b[9] + b[5]];
-	p[8] = AT3(r[1], r[3], r[5]);
-	p[3] = lerp(p[6], p[7], p[8]);
-	p[5] = lerp(p[0], p[2], p[3]);
-	return (lerp(p[1], p[4], p[5]));
-}
-
-static void	normalize2(double v[2])
-{
-	double s;
-
-	s = sqrt(v[0] * v[0] + v[1] * v[1]);
-	v[0] = v[0] / s;
-	v[1] = v[1] / s;
-}
-
-static void	normalize3(double v[3])
-{
-	double s;
-
-	s = sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
-	v[0] = v[0] / s;
-	v[1] = v[1] / s;
-	v[2] = v[2] / s;
-}
-
-static void	init(void)
-{
-	int		i;
-	int		j;
-	int		k;
+	int				i;
+	int				j;
+	int				k;
 
 	i = -1;
 	while (++i < B)
 	{
-		p[i] = i;
-		g1[i] = (double)((random() % (B + B)) - B) / B;
-		j = -1;
-		while (++j < 2)
-			g2[i][j] = (double)((random() % (B + B)) - B) / B;
-		normalize2(g2[i]);
-		j = -1;
-		while (++j < 3)
-			g3[i][j] = (double)((random() % (B + B)) - B) / B;
-		normalize3(g3[i]);
+		l->p[i] = i;
+		l = ft_rndm(l, g3, i);
 	}
 	while (--i)
 	{
-		k = p[i];
+		k = l->p[i];
 		j = random() % B;
-		p[i] = p[j];
-		p[j] = k;
+		l->p = ft_init_p(l, i, j, k);
 	}
 	i = -1;
 	while (++i < B + 2)
 	{
-		p[B + i] = p[i];
-		g1[B + i] = g1[i];
-		j = -1;
-		while (++j < 2)
-			g2[B + i][j] = g2[i][j];
+		l->p[B + i] = l->p[i];
 		j = -1;
 		while (++j < 3)
 			g3[B + i][j] = g3[i][j];
 	}
+	return (l);
+}
+
+t_perlin			*ft_q(t_perlin *l, int m, int n, double g3[B + B + 2][3])
+{
+	double			*q;
+
+	q = g3[l->b[0][m] + l->b_tmp[2][n]];
+	l->tab_2[1] = at3(l->r[0][0], l->r[1][m], l->r[2][n], q);
+	q = g3[l->b[1][m] + l->b_tmp[2][n]];
+	l->tab_2[2] = at3(l->r[0][1], l->r[1][m], l->r[2][n], q);
+	return (l);
+}
+
+double				*ft_q_all(t_perlin *l, double sy, double g3[B + B + 2][3])
+{
+	double			*tab;
+
+	if (!(tab = (double *)malloc(sizeof(double) * 4)))
+		return (NULL);
+	l = ft_q(l, 0, 0, g3);
+	tab[0] = lerp(l->tab_2[0], l->tab_2[1], l->tab_2[2]);
+	l = ft_q(l, 1, 0, g3);
+	tab[1] = lerp(l->tab_2[0], l->tab_2[1], l->tab_2[2]);
+	tab[2] = lerp(sy, tab[0], tab[1]);
+	l = ft_q(l, 0, 1, g3);
+	tab[0] = lerp(l->tab_2[0], l->tab_2[1], l->tab_2[2]);
+	l = ft_q(l, 1, 1, g3);
+	tab[1] = lerp(l->tab_2[0], l->tab_2[1], l->tab_2[2]);
+	tab[3] = lerp(sy, tab[0], tab[1]);
+	return (tab);
+}
+
+int					**ft_b(t_perlin *l)
+{
+	int				**b;
+
+	if ((b = (int **)malloc(sizeof(int *) * 2)) == NULL)
+		return (NULL);
+	if ((b[0] = (int *)malloc(sizeof(int) * 2)) == NULL)
+		return (NULL);
+	if ((b[1] = (int *)malloc(sizeof(int) * 2)) == NULL)
+		return (NULL);
+	b[0][0] = l->p[l->p[l->b_tmp[0][0]] + l->b_tmp[1][0]];
+	b[1][0] = l->p[l->p[l->b_tmp[0][1]] + l->b_tmp[1][0]];
+	b[0][1] = l->p[l->p[l->b_tmp[0][0]] + l->b_tmp[1][1]];
+	b[1][1] = l->p[l->p[l->b_tmp[0][1]] + l->b_tmp[1][1]];
+	return (b);
+}
+
+double				ft_noise(double vec[3])
+{
+	t_perlin		*l;
+	static int		start = 1;
+	static int		p[B + B + 2];
+	static double	g3[B + B + 2][3];
+
+	if ((l = (t_perlin *)malloc(sizeof(t_perlin) * 1)) == NULL)
+		return (1);
+	l->p = p;
+	if (start)
+	{
+		start = 0;
+		l = ft_init(l, g3);
+	}
+	l = ft_setup(l, vec);
+	l->b = ft_b(l);
+	l->tab_2[0] = s_curve(l->r[0][0]);
+	if ((l->tab = ft_q_all(l, s_curve(l->r[1][0]), g3)) == NULL)
+		return (0);
+	ft_free_bl(l, l->b);
+	return (ft_lerp(s_curve(l->r[2][0]), l->tab));
 }

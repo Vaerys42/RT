@@ -44,6 +44,7 @@ void		cam_cone_inter(t_rt *rt)
 	rt->inter->col->r = rt->cone->color->r;
 	rt->inter->col->g = rt->cone->color->g;
 	rt->inter->col->b = rt->cone->color->b;
+	ft_get_point(rt);
 	get_norm_cone(rt);
 	hit = ft_local_coo(rt->inter->point, rt->cone->o, rt->cone->rot);
 	ft_texture_all(rt, hit, rt->cone->texture);

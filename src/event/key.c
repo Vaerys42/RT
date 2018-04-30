@@ -49,6 +49,7 @@ void		quit_sdl(t_rt *rt)
 	SDL_DestroyWindow(rt->data->info_window);
 	SDL_Quit();
 	IMG_Quit();
+	system("killall afplay &");
 	exit(EXIT_SUCCESS);
 }
 

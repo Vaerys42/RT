@@ -43,6 +43,10 @@
 # include <complex.h>
 # include <pthread.h>
 
+# define B 0x100
+# define BM 0xff
+# define N 0x1000
+
 typedef	struct			s_material
 {
 	double				r;
@@ -233,6 +237,16 @@ typedef	struct			s_cam
 ** Equations structs
 */
 
+typedef	struct			s_perlin
+{
+	int					b_tmp[3][2];
+	double				r[3][2];
+	double				tab_2[3];
+	int					*p;
+	int					**b;
+	double				*tab;
+}						t_perlin;
+
 typedef struct			s_equa
 {
 	double				ini[5];
@@ -306,6 +320,7 @@ typedef	struct			s_options
 	int					obj;
 	int					id;
 	int					cam_move;
+	int					max_depth;
 }						t_options;
 
 typedef	struct			s_rt
@@ -623,6 +638,14 @@ t_coo					get_offset(char **str, int err);
 int						get_texture_type(char **str);
 
 double					ft_noise(double vec[3]);
+double					s_curve(double t);
+double					at3(double rx, double ry, double rz, double *q);
+double					lerp(double t, double a, double b);
+t_perlin				*ft_setup(t_perlin *l, double *vec);
+void					ft_free_bl(t_perlin *l, int **b);
+double					ft_lerp(double s1, double *tab);
+t_perlin				*ft_rndm(t_perlin *l, double g3[B + B + 2][3], int i);
+int						*ft_init_p(t_perlin *l, int i, int j, int k);
 
 /*
 ** Threads Functions
