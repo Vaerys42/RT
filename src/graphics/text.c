@@ -6,7 +6,7 @@
 /*   By: kboucaud <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/18 18:51:43 by kboucaud          #+#    #+#             */
-/*   Updated: 2018/04/18 18:51:44 by kboucaud         ###   ########.fr       */
+/*   Updated: 2018/04/30 21:38:18 by mguyout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,11 @@ void		rt_infos(t_rt *rt)
 	print_line(rt, "Control List :", 5, 50);
 	print_line(rt, "Moving object : Left Click and move the mouse", 5, 80);
 	print_line(rt, "Rotate camera : Right Click and move the mouse", 5, 100);
-	print_line(rt, "Antialiasing : A", 5, 120);
+	print_line(rt, "Reflexion depth : PageUp - PageDown", 5, 120);
 	print_line(rt, "Sepia Filter : S", 5, 140);
 	print_line(rt, "Black and White Filter : B", 5, 160);
 	print_line(rt, "Switch between files : 1 - 9", 5, 180);
+	print_line(rt, "Screenshot / Video : P / V", 5, 200);
 	SDL_UpdateWindowSurface(rt->data->info_window);
 	TTF_CloseFont(rt->data->font);
 	TTF_Quit();
