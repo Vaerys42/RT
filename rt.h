@@ -6,7 +6,7 @@
 /*   By: kboucaud <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/21 01:04:26 by kboucaud          #+#    #+#             */
-/*   Updated: 2017/10/21 03:59:13 by kboucaud         ###   ########.fr       */
+/*   Updated: 2018/04/30 21:18:51 by mguyout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -347,6 +347,7 @@ typedef	struct			s_rt
 	t_coo				tmp;
 	int					lock;
 	int					depth;
+	int					maxdepth;
 	double				reflex;
 }						t_rt;
 

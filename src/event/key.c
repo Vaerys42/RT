@@ -6,7 +6,7 @@
 /*   By: kboucaud <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/25 12:49:06 by kboucaud          #+#    #+#             */
-/*   Updated: 2017/11/25 12:49:09 by kboucaud         ###   ########.fr       */
+/*   Updated: 2018/04/30 21:24:21 by mguyout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,15 @@ void		quit_sdl(t_rt *rt)
 	exit(EXIT_SUCCESS);
 }
 
+void		reflexion_maxdepth(t_rt *rt, SDL_Keysym key)
+{
+	if (key.sym == SDLK_PAGEUP)
+		rt->maxdepth++;
+	if (key.sym == SDLK_PAGEDOWN && rt->maxdepth > 1)
+		rt->maxdepth--;
+	ft_raytracing(rt);
+}
+
 int			my_key_press(t_rt *rt, SDL_Keysym key)
 {
 	cpy_image(rt->data->image_int, rt->data->image_base);
@@ -72,6 +81,7 @@ int			my_key_press(t_rt *rt, SDL_Keysym key)
 		switch_file(rt, key.sym);
 	else if (key.sym == SDLK_p)
 		ft_save_img(rt);
+	reflexion_maxdepth(rt, key);
 	if (rt->op->blwh)
 		bl_wh(rt);
 	if (rt->op->sepia)

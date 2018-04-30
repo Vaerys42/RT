@@ -6,7 +6,7 @@
 /*   By: kboucaud <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/21 01:04:42 by kboucaud          #+#    #+#             */
-/*   Updated: 2017/10/21 01:09:54 by kboucaud         ###   ########.fr       */
+/*   Updated: 2018/04/30 21:19:45 by mguyout          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,5 @@ void	ft_ini(t_rt *rt)
 	rt->op->sepia = 0;
 	rt->op->blwh = 0;
 	rt->op->maintain = 0;
+	rt->maxdepth = 3;
 }
