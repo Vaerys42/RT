@@ -22,6 +22,9 @@ void		free_plane(t_rt *rt)
 		tmp = rt->plane;
 		rt->plane = rt->plane->next;
 		free(tmp->color);
+		free(tmp->texture->path);
+		SDL_FreeSurface(tmp->texture->surface);
+		free(tmp->texture);
 		free(tmp);
 	}
 }

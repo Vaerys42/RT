@@ -45,7 +45,6 @@ scale: 1 1
 sphere
 coo: 2 0 20
 radius: 1
-color: 0.53 0.8 0.98
 color: 0.6 0.2 0
 shine: 0.5
 rot: 0 0 0

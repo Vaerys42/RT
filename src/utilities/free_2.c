@@ -27,6 +27,9 @@ void		free_sphere(t_rt *rt)
 			free(tmp->pln);
 		}
 		free(tmp->color);
+		free(tmp->texture->path);
+		SDL_FreeSurface(tmp->texture->surface);
+		free(tmp->texture);
 		free(tmp);
 	}
 }
@@ -46,6 +49,9 @@ void		free_cylinder(t_rt *rt)
 			free(tmp->pln);
 		}
 		free(tmp->color);
+		free(tmp->texture->path);
+		SDL_FreeSurface(tmp->texture->surface);
+		free(tmp->texture);
 		free(tmp);
 	}
 }
@@ -65,6 +71,9 @@ void		free_cone(t_rt *rt)
 			free(tmp->pln);
 		}
 		free(tmp->color);
+		free(tmp->texture->path);
+		SDL_FreeSurface(tmp->texture->surface);
+		free(tmp->texture);
 		free(tmp);
 	}
 }

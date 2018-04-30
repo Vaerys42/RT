@@ -86,6 +86,7 @@ SDL2_IMG_I = -I ./frameworks/SDL2_image.framework/Headers
 all : $(NAME)
 
 $(NAME) : $(OBJ)
+		@make -C libft/
 		gcc $(LIBS) $(SDL2_F) $(OBJ) -o $(NAME) $(SDL2_P) $(SDL2_I) $(SDL2_TTF_I) $(SDL2_IMG_i)
 
 obj/%.o: src/%.c
@@ -98,13 +99,15 @@ obj/%.o: src/%.c
 	mkdir -p obj/event
 	mkdir -p obj/core
 	mkdir -p obj/texture
-	gcc -Wall -Wextra -Werror -c $< -o $@ -Ofast -mtune=native
+	gcc -Wall -Wextra -Werror -c $< -o $@
 
 clean :
 	/bin/rm -rf obj
+	@make -C libft fclean
 
 fclean : clean
 	/bin/rm -rf $(NAME)
+	@make -C libft fclean
 
 re : fclean all
 
