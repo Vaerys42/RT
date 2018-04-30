@@ -62,4 +62,5 @@ void		ft_raytracing(t_rt *rt)
 	pthread_join(thread_3, NULL);
 	pthread_create(&thread_4, NULL, &thread_render_4, rt);
 	pthread_join(thread_4, NULL);
+	aliasing(rt);
 }

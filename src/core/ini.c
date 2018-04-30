@@ -59,7 +59,6 @@ void	ft_reset(t_rt *rt)
 {
 	rt->ray->o = rt->cam->pos;
 	rt->inter->obj = -1;
-	rt->op->aa = 0;
 }
 
 void	ft_ini(t_rt *rt)

@@ -12,15 +12,6 @@
 
 #include "../../rt.h"
 
-void		ft_plane_info(t_plane *plane)
-{
-	if (plane->color == NULL)
-		ft_putstr("Needs color for plane (0 to 1). Ex : color: 1 0 1\n");
-	else
-		return ;
-	exit(-1);
-}
-
 t_plane		*ini_plane(void)
 {
 	t_plane		*plane;
@@ -58,25 +49,9 @@ int			plane_lst(t_rt *rt, t_plane *plane)
 	return (1);
 }
 
-void		ft_plane_line(char **datas, int fd, t_rt *rt, t_plane *plane)
+int			ft_plane_line2(char **datas, int fd, t_rt *rt, t_plane *plane)
 {
-	int		rand;
-
-	if (datas[0] == 0)
-		rand = 0;
-	else if (ft_strcmp(datas[0], "coo:") == 0)
-		plane->o = get_coo(datas, 2);
-	else if (ft_strcmp(datas[0], "color:") == 0)
-		plane->color = get_color(datas);
-	else if (ft_strcmp(datas[0], "norm:") == 0)
-		plane->norm = get_coo(datas, 6);
-	else if (ft_strcmp(datas[0], "reflex:") == 0)
-		plane->reflex = get_radius(datas);
-	else if (datas[1] == NULL && ft_check_obj(datas[0], fd, rt) == 1)
-		rand = 0;
-	else if (ft_strcmp(datas[0], "texture:") == 0)
-		plane->texture->type = get_texture_type(datas);
-	else if (ft_strcmp(datas[0], "scale:") == 0)
+	if (ft_strcmp(datas[0], "scale:") == 0)
 		plane->texture->scale = get_scale(datas, 8);
 	else if (ft_strcmp(datas[0], "offset:") == 0)
 		plane->texture->offset = get_offset(datas, 9);
@@ -85,8 +60,30 @@ void		ft_plane_line(char **datas, int fd, t_rt *rt, t_plane *plane)
 		plane->texture->path = get_path(datas);
 		plane->texture->surface = ft_upload_texture(plane->texture->path);
 	}
+	else if (datas[1] == NULL && ft_check_obj(datas[0], fd, rt) == 1)
+		return (1);
 	else
-		ft_bad_arg(5);
+		return (0);
+	return (1);
+}
+
+int			ft_plane_line(char **datas, t_plane *plane)
+{
+	if (datas[0] == 0)
+		return (1);
+	else if (ft_strcmp(datas[0], "coo:") == 0)
+		plane->o = get_coo(datas, 2);
+	else if (ft_strcmp(datas[0], "color:") == 0)
+		plane->color = get_color(datas);
+	else if (ft_strcmp(datas[0], "norm:") == 0)
+		plane->norm = get_coo(datas, 6);
+	else if (ft_strcmp(datas[0], "reflex:") == 0)
+		plane->reflex = get_radius(datas);
+	else if (ft_strcmp(datas[0], "texture:") == 0)
+		plane->texture->type = get_texture_type(datas);
+	else
+		return (0);
+	return (1);
 }
 
 int			ft_add_plane(int fd, t_rt *rt, int id)
@@ -101,7 +98,9 @@ int			ft_add_plane(int fd, t_rt *rt, int id)
 	while ((ret = get_next_line(fd, &line)) > 0)
 	{
 		datas = ft_strsplit(line, ' ');
-		ft_plane_line(datas, fd, rt, plane);
+		if (ft_plane_line(datas, plane) == 0 &&
+		ft_plane_line2(datas, fd, rt, plane) == 0)
+			ft_bad_arg(5);
 		ft_freetab(datas);
 		free(line);
 	}

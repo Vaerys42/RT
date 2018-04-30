@@ -49,6 +49,7 @@ SRC =	src/core/main.c \
 		src/parser/tore_p.c \
 		src/parser/parabol_p.c \
 		src/parser/infos.c \
+		src/parser/infos2.c \
 		src/parser/ambiant.c \
 		src/parser/inter_pln.c \
 		src/texture/texture_all.c \

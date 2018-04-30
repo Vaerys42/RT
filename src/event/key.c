@@ -67,8 +67,6 @@ int			my_key_press(t_rt *rt, SDL_Keysym key)
 		rt->op->blwh = !rt->op->blwh;
 		rt->op->sepia = 0;
 	}
-	else if (key.sym == SDLK_a)
-		aliasing(rt);
 	else if (key.sym >= SDLK_1 && key.sym <= SDLK_9)
 		switch_file(rt, key.sym);
 	else if (key.sym == SDLK_p)

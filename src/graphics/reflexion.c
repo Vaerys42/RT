@@ -14,8 +14,8 @@
 
 t_coo	ft_reflexion(t_rt *rt)
 {
-	t_coo newray;
-	double dotp;
+	t_coo	newray;
+	double	dotp;
 
 	rt->inter->angle->dir = ft_normalize(rt->inter->angle->dir);
 	rt->ray->dir = ft_normalize(rt->ray->dir);
@@ -41,9 +41,12 @@ void	reflexion_transparency(t_rt *rt)
 	rt->ray->o = rt->cam->pos;
 	rt->ray->dir = rt->tmp;
 	ft_check_object(rt);
-	rt->inter->mat->r = (float)rt->reflex * color.r + (1 - (float)rt->reflex) * rt->inter->mat->r;
-	rt->inter->mat->g = (float)rt->reflex * color.g + (1 - (float)rt->reflex) * rt->inter->mat->g;
-	rt->inter->mat->b = (float)rt->reflex * color.b + (1 - (float)rt->reflex) * rt->inter->mat->b;
+	rt->inter->mat->r = (float)rt->reflex * color.r +
+	(1 - (float)rt->reflex) * rt->inter->mat->r;
+	rt->inter->mat->g = (float)rt->reflex * color.g +
+	(1 - (float)rt->reflex) * rt->inter->mat->g;
+	rt->inter->mat->b = (float)rt->reflex * color.b +
+	(1 - (float)rt->reflex) * rt->inter->mat->b;
 	ft_check_expose(rt->inter->mat, 1.0);
 }
 
@@ -69,7 +72,7 @@ void	reflexion_depth(t_rt *rt)
 void	ft_reflexion_ray(t_rt *rt)
 {
 	rt->reflex = rt->inter->reflex;
-	reflexion_depth(rt); // calcul du rayon reflechi final
+	reflexion_depth(rt);
 	if (rt->inter->dst <= 0.01)
 		rt->inter->dst = 0;
 	if (rt->inter->dst != MAX)
@@ -79,9 +82,8 @@ void	ft_reflexion_ray(t_rt *rt)
 		rt->ray->dir = rt->inter->point;
 		rt->ray->dir = ft_normalize(rt->ray->dir);
 		rt->light = rt->start->lgh;
-		if (rt->inter->reflex <= 0) // si reflexion infini alors on affiche noir
+		if (rt->inter->reflex <= 0)
 			ft_get_light(rt);
-	//	rt->tmp = rt->ray->dir;
 	}
-	reflexion_transparency(rt); //calcul du pourcentage de reflexion
+	reflexion_transparency(rt);
 }
