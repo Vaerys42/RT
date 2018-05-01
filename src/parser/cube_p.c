@@ -69,7 +69,7 @@ void		ft_cube_line(char **datas, int fd, t_rt *rt, t_cube *cube)
 	else if (ft_strcmp(datas[0], "coo:") == 0)
 		cube->o = get_coo(datas, 2);
 	else if (ft_strcmp(datas[0], "color:") == 0)
-		cube->color = get_color(datas);
+		cube->color = check_color(cube->color, datas);
 	else if (ft_strcmp(datas[0], "norm:") == 0)
 		cube->dir = get_coo(datas, 6);
 	else if (ft_strcmp(datas[0], "rot:") == 0)

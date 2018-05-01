@@ -51,7 +51,7 @@ t_ellipse	*ell_ini(void)
 
 void		inter_plane_ellipse(t_ellipse *ellipse, char **datas)
 {
-	if (ellipse->pln != NULL)
+	if (ellipse->pln == NULL)
 	{
 		if (!(ellipse->pln = (t_plane*)malloc(sizeof(t_plane))))
 			ft_malloc_error();
@@ -63,7 +63,7 @@ void		inter_plane_ellipse(t_ellipse *ellipse, char **datas)
 	if (ft_strcmp(datas[0], "plnn:") == 0)
 		ellipse->pln->norm = get_coo(datas, 7);
 	else if (ft_strcmp(datas[0], "plnc:") == 0)
-		ellipse->pln->color = get_color(datas);
+		ellipse->pln->color = check_color(ellipse->pln->color, datas);
 	else if (ft_strcmp(datas[0], "plno:") == 0)
 		ellipse->pln->o = get_coo(datas, 7);
 }
@@ -77,7 +77,7 @@ void		ft_ellipse_line(char **datas, t_ellipse *ellipse, t_rt *rt, int fd)
 	else if (ft_strcmp(datas[0], "coo:") == 0)
 		ellipse->o = get_coo(datas, 2);
 	else if (ft_strcmp(datas[0], "color:") == 0)
-		ellipse->color = get_color(datas);
+		ellipse->color = check_color(ellipse->color, datas);
 	else if (ft_strcmp(datas[0], "rad1:") == 0)
 		ellipse->rad1 = get_coo(datas, 7);
 	else if (ft_strcmp(datas[0], "rad2:") == 0)

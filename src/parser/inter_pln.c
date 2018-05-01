@@ -26,7 +26,7 @@ void		inter_plane_sphere(t_sphere *sphere, char **datas)
 	if (ft_strcmp(datas[0], "plnn:") == 0)
 		sphere->pln->norm = get_coo(datas, 7);
 	else if (ft_strcmp(datas[0], "plnc:") == 0)
-		sphere->pln->color = get_color(datas);
+		sphere->pln->color = check_color(sphere->pln->color, datas);
 	else if (ft_strcmp(datas[0], "plno:") == 0)
 		sphere->pln->o = get_coo(datas, 7);
 }
@@ -45,7 +45,7 @@ void		inter_plane_cylinder(t_cylinder *cylinder, char **datas)
 	if (ft_strcmp(datas[0], "plnn:") == 0)
 		cylinder->pln->norm = get_coo(datas, 7);
 	else if (ft_strcmp(datas[0], "plnc:") == 0)
-		cylinder->pln->color = get_color(datas);
+		cylinder->pln->color = check_color(cylinder->pln->color, datas);
 	else if (ft_strcmp(datas[0], "plno:") == 0)
 		cylinder->pln->o = get_coo(datas, 7);
 }
@@ -64,7 +64,7 @@ void		inter_plane_cone(t_cone *cone, char **datas)
 	if (ft_strcmp(datas[0], "plnn:") == 0)
 		cone->pln->norm = get_coo(datas, 7);
 	else if (ft_strcmp(datas[0], "plnc:") == 0)
-		cone->pln->color = get_color(datas);
+		cone->pln->color = check_color(cone->pln->color, datas);
 	else if (ft_strcmp(datas[0], "plno:") == 0)
 		cone->pln->o = get_coo(datas, 7);
 }

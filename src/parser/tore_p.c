@@ -62,7 +62,7 @@ void		inter_plane_tore(t_tore *tore, char **datas)
 	if (ft_strcmp(datas[0], "plnn:") == 0)
 		tore->pln->norm = get_coo(datas, 7);
 	else if (ft_strcmp(datas[0], "plnc:") == 0)
-		tore->pln->color = get_color(datas);
+		tore->pln->color = check_color(tore->pln->color, datas);
 	else if (ft_strcmp(datas[0], "plno:") == 0)
 		tore->pln->o = get_coo(datas, 7);
 }
@@ -76,7 +76,7 @@ void		ft_tore_line(char **datas, t_tore *tore, t_rt *rt, int fd)
 	else if (ft_strcmp(datas[0], "coo:") == 0)
 		tore->o = get_coo(datas, 2);
 	else if (ft_strcmp(datas[0], "color:") == 0)
-		tore->color = get_color(datas);
+		tore->color = check_color(tore->color, datas);
 	else if (ft_strcmp(datas[0], "radiusa:") == 0)
 		tore->radiusa = get_radius(datas);
 	else if (ft_strcmp(datas[0], "radiusb:") == 0)

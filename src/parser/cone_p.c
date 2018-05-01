@@ -89,7 +89,7 @@ int			ft_read_line(char **datas, t_cone *cone)
 	else if (ft_strcmp(datas[0], "rot:") == 0)
 		cone->rot = get_coo(datas, 7);
 	else if (ft_strcmp(datas[0], "color:") == 0)
-		cone->color = get_color(datas);
+		cone->color = check_color(cone->color, datas);
 	else if (ft_strcmp(datas[0], "angle:") == 0)
 		cone->angle = get_radius(datas);
 	else if (ft_strcmp(datas[0], "shine:") == 0)

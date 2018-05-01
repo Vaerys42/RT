@@ -89,7 +89,7 @@ int			ft_cyl_read_line(char **datas, t_cylinder *cyl)
 	else if (ft_strcmp(datas[0], "coo:") == 0)
 		cyl->o = get_coo(datas, 2);
 	else if (ft_strcmp(datas[0], "color:") == 0)
-		cyl->color = get_color(datas);
+		cyl->color = check_color(cyl->color, datas);
 	else if (ft_strcmp(datas[0], "radius:") == 0)
 		cyl->radius = get_radius(datas);
 	else if (ft_strcmp(datas[0], "rot:") == 0)

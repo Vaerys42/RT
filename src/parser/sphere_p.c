@@ -85,7 +85,7 @@ int			ft_sphere_line(char **datas, t_sphere *sphere)
 	else if (ft_strcmp(datas[0], "coo:") == 0)
 		sphere->o = get_coo(datas, 2);
 	else if (ft_strcmp(datas[0], "color:") == 0)
-		sphere->color = get_color(datas);
+		sphere->color = check_color(sphere->color, datas);
 	else if (ft_strcmp(datas[0], "radius:") == 0)
 		sphere->radius = get_radius(datas);
 	else if (ft_strcmp(datas[0], "shine:") == 0)

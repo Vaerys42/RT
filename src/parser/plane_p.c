@@ -74,7 +74,7 @@ int			ft_plane_line(char **datas, t_plane *plane)
 	else if (ft_strcmp(datas[0], "coo:") == 0)
 		plane->o = get_coo(datas, 2);
 	else if (ft_strcmp(datas[0], "color:") == 0)
-		plane->color = get_color(datas);
+		plane->color = check_color(plane->color, datas);
 	else if (ft_strcmp(datas[0], "norm:") == 0)
 		plane->norm = get_coo(datas, 6);
 	else if (ft_strcmp(datas[0], "reflex:") == 0)

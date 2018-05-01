@@ -376,6 +376,7 @@ void					ft_reset(t_rt *rt);
 ** Parser Datas
 */
 
+t_material				*check_color(t_material *color, char **str);
 int						tab_len(char **str);
 t_coo					get_coo(char **str, int err);
 t_material				*get_color(char **str);

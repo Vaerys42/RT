@@ -12,6 +12,13 @@
 
 #include "../../rt.h"
 
+t_material	*check_color(t_material *color, char **str)
+{
+	if (color)
+		free(color);
+	return (get_color(str));
+}
+
 int			tab_len(char **str)
 {
 	int		i;

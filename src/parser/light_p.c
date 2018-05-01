@@ -68,7 +68,7 @@ void		ft_light_line(char **datas, t_light *light, t_rt *rt, int fd)
 	else if (ft_strcmp(datas[0], "norm:") == 0)
 		light->norm = get_coo(datas, 2);
 	else if (ft_strcmp(datas[0], "color:") == 0)
-		light->color = get_color(datas);
+		light->color = check_color(light->color, datas);
 	else if (ft_strcmp(datas[0], "angle:") == 0)
 		light->angle = get_radius(datas);
 	else if (ft_strcmp(datas[0], "pow:") == 0)

@@ -62,7 +62,7 @@ void		inter_plane_parabol(t_parabol *parabol, char **datas)
 	if (ft_strcmp(datas[0], "plnn:") == 0)
 		parabol->pln->norm = get_coo(datas, 7);
 	else if (ft_strcmp(datas[0], "plnc:") == 0)
-		parabol->pln->color = get_color(datas);
+		parabol->pln->color = check_color(parabol->pln->color, datas);
 	else if (ft_strcmp(datas[0], "plno:") == 0)
 		parabol->pln->o = get_coo(datas, 7);
 }
@@ -76,7 +76,7 @@ void		ft_parabol_line(char **datas, t_parabol *parabol, t_rt *rt, int fd)
 	else if (ft_strcmp(datas[0], "coo:") == 0)
 		parabol->o = get_coo(datas, 2);
 	else if (ft_strcmp(datas[0], "color:") == 0)
-		parabol->color = get_color(datas);
+		parabol->color = check_color(parabol->color, datas);
 	else if (ft_strcmp(datas[0], "rad1:") == 0)
 		parabol->rad1 = get_radius(datas);
 	else if (ft_strcmp(datas[0], "rad2:") == 0)
